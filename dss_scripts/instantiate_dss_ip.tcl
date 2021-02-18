@@ -1,4 +1,4 @@
-proc create_data_bram_ds {portName dsCellPath memSize sel axiMaster clk rstn} {
+proc create_data_bram_ds {portName dsCellPath memSize sel axiMaster clk rst rstn} {
     set axi_ctrl axi_bram_ctrl_${portName}
     set mux1 bram_mux_${portName}0
     set mux2 bram_mux_${portName}1
@@ -24,14 +24,10 @@ proc create_data_bram_ds {portName dsCellPath memSize sel axiMaster clk rstn} {
     connect_bd_intf_net [get_bd_intf_pins ${dsCellPath}/${portName}0] [get_bd_intf_pins ${mux1}/S_AUX]
     connect_bd_intf_net [get_bd_intf_pins ${dsCellPath}/${portName}1] [get_bd_intf_pins ${mux2}/S_AUX]
 
-    # silence warnings about clk1 & rst1
-    set zero_cell xlconstant_0
-    create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 $zero_cell
-    set_property -dict [list CONFIG.CONST_VAL {0}] [get_bd_cells $zero_cell]
-    connect_bd_net [get_bd_pins $zero_cell/dout] [get_bd_pins bram_mux_${portName}0/clk1]
-    connect_bd_net [get_bd_pins $zero_cell/dout] [get_bd_pins bram_mux_${portName}1/clk1]
-    connect_bd_net [get_bd_pins $zero_cell/dout] [get_bd_pins bram_mux_${portName}0/rst1]
-    connect_bd_net [get_bd_pins $zero_cell/dout] [get_bd_pins bram_mux_${portName}1/rst1]
+    connect_bd_net $clk [get_bd_pins bram_mux_${portName}0/clk1]
+    connect_bd_net $clk [get_bd_pins bram_mux_${portName}1/clk1]
+    connect_bd_net $rst [get_bd_pins bram_mux_${portName}0/rst1]
+    connect_bd_net $rst [get_bd_pins bram_mux_${portName}1/rst1]
 
     # wire up AXI
     connect_bd_intf_net $axiMaster [get_bd_intf_pins ${axi_ctrl}/S_AXI]
@@ -47,14 +43,14 @@ proc create_data_bram_ds {portName dsCellPath memSize sel axiMaster clk rstn} {
     set_property range ${memSize} [get_bd_addr_segs microblaze_0/Data/SEG_axi_bram_ctrl_${portName}_Mem0]
 
     # create hierarchy for less eye-sore
-    group_bd_cells bram_${portName} [get_bd_cells ${axi_ctrl}] [get_bd_cells ${mux1}] [get_bd_cells ${mux2}] [get_bd_cells ${bmg}] [get_bd_cells ${zero_cell}]
+    group_bd_cells bram_${portName} [get_bd_cells ${axi_ctrl}] [get_bd_cells ${mux1}] [get_bd_cells ${mux2}] [get_bd_cells ${bmg}]
 }
 
-proc create_ds_mems {dsCellPath memdef axiInterconnectPath axiBase sel clk rstn} {
+proc create_ds_mems {dsCellPath memdef axiInterconnectPath axiBase sel clk rst rstn} {
     foreach {mem size} $memdef {
         set axiMasterPath [format "${axiInterconnectPath}/M%02d_AXI" $axiBase]
         set axiMaster [get_bd_intf_pins $axiMasterPath]
-        create_data_bram_ds ${mem} ${dsCellPath} ${size} ${sel} ${axiMaster} ${clk} ${rstn}
+        create_data_bram_ds ${mem} ${dsCellPath} ${size} ${sel} ${axiMaster} ${clk} ${rst} ${rstn}
         incr axiBase
     }
 }
@@ -87,8 +83,14 @@ proc create_dut {dutName dsMemdef ssMemdef upstream clk rst rstn intr_out} {
     connect_bd_net [get_bd_pins $sel_name/Din] [get_bd_pins gpio_ctrl/gpio_io_o]
     set sel [get_bd_pins $sel_name/Dout]
 
+    # constant zero
+    set zero_cell xlconstant_0
+    create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 $zero_cell
+    set_property -dict [list CONFIG.CONST_VAL {0}] [get_bd_cells $zero_cell]
+    set zero [get_bd_pins $zero_cell/dout]
+
     create_bd_cell -type ip -vlnv xilinx.com:ip:xlconcat:2.1 $c_ctrl
-    set_property -dict [list CONFIG.NUM_PORTS {3}] [get_bd_cells $c_ctrl]
+    set_property -dict [list CONFIG.NUM_PORTS {4}] [get_bd_cells $c_ctrl]
     connect_bd_net [get_bd_pins $c_ctrl/dout] [get_bd_pins gpio_ctrl/gpio_io_i]
 
     set dut ${dutName}_0
@@ -96,6 +98,8 @@ proc create_dut {dutName dsMemdef ssMemdef upstream clk rst rstn intr_out} {
     connect_bd_net [get_bd_pins $dut/start_ready] [get_bd_pins $c_ctrl/In0]
     connect_bd_net [get_bd_pins $dut/end_out] [get_bd_pins $c_ctrl/In1]
     connect_bd_net [get_bd_pins $dut/end_valid] [get_bd_pins $c_ctrl/In2]
+    connect_bd_net $zero [get_bd_pins $c_ctrl/In3]
+
     connect_bd_net [get_bd_pins $s_si/Dout] [get_bd_pins $dut/start_in]
     connect_bd_net [get_bd_pins $s_sv/Dout] [get_bd_pins $dut/start_valid]
     connect_bd_net [get_bd_pins $s_er/Dout] [get_bd_pins $dut/end_ready]
@@ -135,7 +139,7 @@ proc create_dut {dutName dsMemdef ssMemdef upstream clk rst rstn intr_out} {
 
     # DS memory
     set axiBase 1
-    create_ds_mems $dut $dsMemdefDict $interconnect $axiBase $sel $clk $rstn
+    create_ds_mems $dut $dsMemdefDict $interconnect $axiBase $sel $clk $rst $rstn
     set axiBase [expr $axiBase+$dsMemCount]
 
     # SS memory - WIP
@@ -150,7 +154,7 @@ proc create_dut {dutName dsMemdef ssMemdef upstream clk rst rstn intr_out} {
     }
 
     group_bd_cells ${dutName}_system \
-        [get_bd_cells $dut] [get_bd_cells $interconnect] \
+        [get_bd_cells $dut] [get_bd_cells $interconnect] [get_bd_cells $zero_cell] \
         $gpio_ctrl [get_bd_cells $sel_name] [get_bd_cells $s_sv] [get_bd_cells $c_ctrl] [get_bd_cells $s_er] [get_bd_cells $s_si] \
         {*}$cellsList
 
