@@ -2,10 +2,10 @@
 <Root MajorVersion="0" MinorVersion="37">
   <CompositeFile CompositeFileTopName="design_1" CanBeSetAsTop="false" CanDisplayChildGraph="true">
     <Description>Composite Fileset</Description>
-    <Generation Name="SYNTHESIS" State="GENERATED" Timestamp="1613646029"/>
-    <Generation Name="IMPLEMENTATION" State="GENERATED" Timestamp="1613646029"/>
-    <Generation Name="SIMULATION" State="GENERATED" Timestamp="1613646029"/>
-    <Generation Name="HW_HANDOFF" State="GENERATED" Timestamp="1613646029"/>
+    <Generation Name="SYNTHESIS" State="GENERATED" Timestamp="1613665524"/>
+    <Generation Name="IMPLEMENTATION" State="GENERATED" Timestamp="1613665524"/>
+    <Generation Name="SIMULATION" State="GENERATED" Timestamp="1613665524"/>
+    <Generation Name="HW_HANDOFF" State="GENERATED" Timestamp="1613665524"/>
     <FileCollection Name="SOURCES" Type="SOURCES">
       <File Name="ip\design_1_ddr4_0_0\design_1_ddr4_0_0.xci" Type="IP">
         <Instance HierarchyPath="ddr/ddr4_0"/>
@@ -231,19 +231,616 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="synth\design_1.v" Type="Verilog">
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
+      <File Name="ip\design_1_sparseDemo_0_0\design_1_sparseDemo_0_0.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/sparseDemo_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SYNTHESIS"/>
         <UsedIn Val="IMPLEMENTATION"/>
-      </File>
-      <File Name="sim\design_1.v" Type="Verilog">
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
-        <Library Name="xil_defaultlib"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip\design_1_auto_pc_2\design_1_auto_pc_2.xci" Type="IP">
+      <File Name="ip\design_1_xbar_5\design_1_xbar_5.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/axi_interconnect_0/xbar"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_axi_interconnect_0_2\design_1_axi_interconnect_0_2.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/axi_interconnect_0"/>
+        <Properties IsEditable="false" IsVisible="false" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_xlconstant_0_2\design_1_xlconstant_0_2.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/xlconstant_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_ctrl_sparseDemo_0\design_1_ctrl_sparseDemo_0.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/ctrl_sparseDemo"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_xlslice_sel_1\design_1_xlslice_sel_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/xlslice_sel"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_xlslice_start_valid_1\design_1_xlslice_start_valid_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/xlslice_start_valid"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_xlconcat_ctrl_1\design_1_xlconcat_ctrl_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/xlconcat_ctrl"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_xlslice_end_ready_1\design_1_xlslice_end_ready_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/xlslice_end_ready"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_xlslice_start_in_1\design_1_xlslice_start_in_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/xlslice_start_in"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_rc_A_id_sparseDemo_0_0\design_1_rc_A_id_sparseDemo_0_0.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/bram_A_id/rc_A_id_sparseDemo_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_mux_A_id0_1\design_1_mux_A_id0_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/bram_A_id/mux_A_id0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_mux_A_id1_1\design_1_mux_A_id1_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/bram_A_id/mux_A_id1"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_bmg_A_id_sparseDemo_0_0\design_1_bmg_A_id_sparseDemo_0_0.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/bram_A_id/bmg_A_id_sparseDemo_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_rc_A_ptr_sparseDemo_0_0\design_1_rc_A_ptr_sparseDemo_0_0.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/bram_A_ptr/rc_A_ptr_sparseDemo_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_mux_A_ptr0_1\design_1_mux_A_ptr0_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/bram_A_ptr/mux_A_ptr0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_mux_A_ptr1_1\design_1_mux_A_ptr1_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/bram_A_ptr/mux_A_ptr1"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_bmg_A_ptr_sparseDemo_0_0\design_1_bmg_A_ptr_sparseDemo_0_0.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/bram_A_ptr/bmg_A_ptr_sparseDemo_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_rc_A_val_sparseDemo_0_0\design_1_rc_A_val_sparseDemo_0_0.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/bram_A_val/rc_A_val_sparseDemo_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_mux_A_val0_1\design_1_mux_A_val0_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/bram_A_val/mux_A_val0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_mux_A_val1_1\design_1_mux_A_val1_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/bram_A_val/mux_A_val1"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_bmg_A_val_sparseDemo_0_0\design_1_bmg_A_val_sparseDemo_0_0.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/bram_A_val/bmg_A_val_sparseDemo_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_rc_B_ptr_sparseDemo_0_0\design_1_rc_B_ptr_sparseDemo_0_0.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/bram_B_ptr/rc_B_ptr_sparseDemo_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_mux_B_ptr0_1\design_1_mux_B_ptr0_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/bram_B_ptr/mux_B_ptr0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_mux_B_ptr1_1\design_1_mux_B_ptr1_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/bram_B_ptr/mux_B_ptr1"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_bmg_B_ptr_sparseDemo_0_0\design_1_bmg_B_ptr_sparseDemo_0_0.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/bram_B_ptr/bmg_B_ptr_sparseDemo_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_rc_B_id_sparseDemo_0_0\design_1_rc_B_id_sparseDemo_0_0.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/bram_B_id/rc_B_id_sparseDemo_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_mux_B_id_0\design_1_mux_B_id_0.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/bram_B_id/mux_B_id"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_bmg_B_id_sparseDemo_0_0\design_1_bmg_B_id_sparseDemo_0_0.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/bram_B_id/bmg_B_id_sparseDemo_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_xlconstant_zero_0\design_1_xlconstant_zero_0.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/bram_B_id/xlconstant_zero"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_rc_B_val_sparseDemo_0_0\design_1_rc_B_val_sparseDemo_0_0.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/bram_B_val/rc_B_val_sparseDemo_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_mux_B_val_0\design_1_mux_B_val_0.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/bram_B_val/mux_B_val"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_bmg_B_val_sparseDemo_0_0\design_1_bmg_B_val_sparseDemo_0_0.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/bram_B_val/bmg_B_val_sparseDemo_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_xlconstant_zero_1\design_1_xlconstant_zero_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/bram_B_val/xlconstant_zero"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_rc_C_sparseDemo_0_0\design_1_rc_C_sparseDemo_0_0.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/bram_C/rc_C_sparseDemo_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_mux_C_0\design_1_mux_C_0.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/bram_C/mux_C"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_bmg_C_sparseDemo_0_0\design_1_bmg_C_sparseDemo_0_0.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/bram_C/bmg_C_sparseDemo_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_sparseDemoDS_0_1\design_1_sparseDemoDS_0_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/sparseDemoDS_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_xbar_6\design_1_xbar_6.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/axi_interconnect_0/xbar"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_axi_interconnect_0_3\design_1_axi_interconnect_0_3.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/axi_interconnect_0"/>
+        <Properties IsEditable="false" IsVisible="false" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_xlconstant_0_3\design_1_xlconstant_0_3.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/xlconstant_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_ctrl_sparseDemoDS_1\design_1_ctrl_sparseDemoDS_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/ctrl_sparseDemoDS"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_xlslice_sel_2\design_1_xlslice_sel_2.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/xlslice_sel"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_xlslice_start_valid_2\design_1_xlslice_start_valid_2.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/xlslice_start_valid"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_xlconcat_ctrl_2\design_1_xlconcat_ctrl_2.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/xlconcat_ctrl"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_xlslice_end_ready_2\design_1_xlslice_end_ready_2.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/xlslice_end_ready"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_xlslice_start_in_2\design_1_xlslice_start_in_2.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/xlslice_start_in"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_rc_A_id_sparseDemoDS_0_0\design_1_rc_A_id_sparseDemoDS_0_0.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_A_id/rc_A_id_sparseDemoDS_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_mux_A_id0_2\design_1_mux_A_id0_2.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_A_id/mux_A_id0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_mux_A_id1_2\design_1_mux_A_id1_2.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_A_id/mux_A_id1"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_bmg_A_id_sparseDemoDS_0_1\design_1_bmg_A_id_sparseDemoDS_0_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_A_id/bmg_A_id_sparseDemoDS_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_rc_A_ptr_sparseDemoDS_0_0\design_1_rc_A_ptr_sparseDemoDS_0_0.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_A_ptr/rc_A_ptr_sparseDemoDS_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_mux_A_ptr0_2\design_1_mux_A_ptr0_2.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_A_ptr/mux_A_ptr0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_mux_A_ptr1_2\design_1_mux_A_ptr1_2.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_A_ptr/mux_A_ptr1"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_bmg_A_ptr_sparseDemoDS_0_1\design_1_bmg_A_ptr_sparseDemoDS_0_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_A_ptr/bmg_A_ptr_sparseDemoDS_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_rc_A_val_sparseDemoDS_0_0\design_1_rc_A_val_sparseDemoDS_0_0.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_A_val/rc_A_val_sparseDemoDS_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_mux_A_val0_2\design_1_mux_A_val0_2.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_A_val/mux_A_val0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_mux_A_val1_2\design_1_mux_A_val1_2.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_A_val/mux_A_val1"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_bmg_A_val_sparseDemoDS_0_1\design_1_bmg_A_val_sparseDemoDS_0_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_A_val/bmg_A_val_sparseDemoDS_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_rc_B_id_sparseDemoDS_0_0\design_1_rc_B_id_sparseDemoDS_0_0.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_B_id/rc_B_id_sparseDemoDS_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_mux_B_id0_1\design_1_mux_B_id0_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_B_id/mux_B_id0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_mux_B_id1_1\design_1_mux_B_id1_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_B_id/mux_B_id1"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_bmg_B_id_sparseDemoDS_0_1\design_1_bmg_B_id_sparseDemoDS_0_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_B_id/bmg_B_id_sparseDemoDS_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_rc_B_ptr_sparseDemoDS_0_0\design_1_rc_B_ptr_sparseDemoDS_0_0.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_B_ptr/rc_B_ptr_sparseDemoDS_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_mux_B_ptr0_2\design_1_mux_B_ptr0_2.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_B_ptr/mux_B_ptr0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_mux_B_ptr1_2\design_1_mux_B_ptr1_2.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_B_ptr/mux_B_ptr1"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_bmg_B_ptr_sparseDemoDS_0_1\design_1_bmg_B_ptr_sparseDemoDS_0_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_B_ptr/bmg_B_ptr_sparseDemoDS_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_rc_B_val_sparseDemoDS_0_0\design_1_rc_B_val_sparseDemoDS_0_0.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_B_val/rc_B_val_sparseDemoDS_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_mux_B_val0_1\design_1_mux_B_val0_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_B_val/mux_B_val0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_mux_B_val1_1\design_1_mux_B_val1_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_B_val/mux_B_val1"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_bmg_B_val_sparseDemoDS_0_1\design_1_bmg_B_val_sparseDemoDS_0_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_B_val/bmg_B_val_sparseDemoDS_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_rc_C_sparseDemoDS_0_0\design_1_rc_C_sparseDemoDS_0_0.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_C/rc_C_sparseDemoDS_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_mux_C0_1\design_1_mux_C0_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_C/mux_C0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_mux_C1_1\design_1_mux_C1_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_C/mux_C1"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_bmg_C_sparseDemoDS_0_1\design_1_bmg_C_sparseDemoDS_0_1.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemoDS_sys/bram_C/bmg_C_sparseDemoDS_0"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_auto_pc_0\design_1_auto_pc_0.xci" Type="IP">
         <Instance HierarchyPath="microblaze_0_axi_periph/m09_couplers/auto_pc"/>
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+        <Library Name="xil_defaultlib"/>
+        <UsedIn Val="SYNTHESIS"/>
+        <UsedIn Val="IMPLEMENTATION"/>
+        <UsedIn Val="SIMULATION"/>
+      </File>
+      <File Name="ip\design_1_auto_pc_1\design_1_auto_pc_1.xci" Type="IP">
+        <Instance HierarchyPath="microblaze_0_axi_periph/m10_couplers/auto_pc"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SYNTHESIS"/>
@@ -378,16 +975,8 @@
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip\design_1_sparseDemoDS_0_1\design_1_sparseDemoDS_0_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/sparseDemoDS_0"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_xbar_5\design_1_xbar_5.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/axi_interconnect_0/xbar"/>
+      <File Name="ip\design_1_auto_pc_2\design_1_auto_pc_2.xci" Type="IP">
+        <Instance HierarchyPath="sparseDemo_sys/axi_interconnect_0/m00_couplers/auto_pc"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SYNTHESIS"/>
@@ -395,347 +984,22 @@
         <UsedIn Val="SIMULATION"/>
       </File>
       <File Name="ip\design_1_auto_pc_3\design_1_auto_pc_3.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/axi_interconnect_0/m00_couplers/auto_pc"/>
+        <Instance HierarchyPath="sparseDemoDS_sys/axi_interconnect_0/m00_couplers/auto_pc"/>
         <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SYNTHESIS"/>
         <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip\design_1_axi_interconnect_0_2\design_1_axi_interconnect_0_2.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/axi_interconnect_0"/>
-        <Properties IsEditable="false" IsVisible="false" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+      <File Name="synth\design_1.v" Type="Verilog">
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
         <Library Name="xil_defaultlib"/>
         <UsedIn Val="SYNTHESIS"/>
         <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
       </File>
-      <File Name="ip\design_1_gpio_ctrl_1\design_1_gpio_ctrl_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/gpio_ctrl"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
+      <File Name="sim\design_1.v" Type="Verilog">
+        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="false" IsStatusTracked="false"/>
         <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_xlslice_sel_1\design_1_xlslice_sel_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/xlslice_sel"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_xlslice_start_valid_1\design_1_xlslice_start_valid_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/xlslice_start_valid"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_xlconcat_ctrl_1\design_1_xlconcat_ctrl_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/xlconcat_ctrl"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_xlslice_end_ready_1\design_1_xlslice_end_ready_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/xlslice_end_ready"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_xlslice_start_in_1\design_1_xlslice_start_in_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/xlslice_start_in"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_axi_bram_ctrl_A_id_1\design_1_axi_bram_ctrl_A_id_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_A_id/axi_bram_ctrl_A_id"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_bram_mux_A_id0_1\design_1_bram_mux_A_id0_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_A_id/bram_mux_A_id0"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_bram_mux_A_id1_1\design_1_bram_mux_A_id1_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_A_id/bram_mux_A_id1"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_blk_mem_gen_A_id_1\design_1_blk_mem_gen_A_id_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_A_id/blk_mem_gen_A_id"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_xlconstant_0_8\design_1_xlconstant_0_8.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_A_id/xlconstant_0"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_axi_bram_ctrl_A_ptr_1\design_1_axi_bram_ctrl_A_ptr_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_A_ptr/axi_bram_ctrl_A_ptr"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_bram_mux_A_ptr0_1\design_1_bram_mux_A_ptr0_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_A_ptr/bram_mux_A_ptr0"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_bram_mux_A_ptr1_1\design_1_bram_mux_A_ptr1_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_A_ptr/bram_mux_A_ptr1"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_blk_mem_gen_A_ptr_1\design_1_blk_mem_gen_A_ptr_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_A_ptr/blk_mem_gen_A_ptr"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_xlconstant_0_9\design_1_xlconstant_0_9.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_A_ptr/xlconstant_0"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_axi_bram_ctrl_A_val_1\design_1_axi_bram_ctrl_A_val_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_A_val/axi_bram_ctrl_A_val"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_bram_mux_A_val0_1\design_1_bram_mux_A_val0_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_A_val/bram_mux_A_val0"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_bram_mux_A_val1_1\design_1_bram_mux_A_val1_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_A_val/bram_mux_A_val1"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_blk_mem_gen_A_val_1\design_1_blk_mem_gen_A_val_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_A_val/blk_mem_gen_A_val"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_xlconstant_0_10\design_1_xlconstant_0_10.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_A_val/xlconstant_0"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_axi_bram_ctrl_B_id_1\design_1_axi_bram_ctrl_B_id_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_B_id/axi_bram_ctrl_B_id"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_bram_mux_B_id0_1\design_1_bram_mux_B_id0_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_B_id/bram_mux_B_id0"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_bram_mux_B_id1_1\design_1_bram_mux_B_id1_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_B_id/bram_mux_B_id1"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_blk_mem_gen_B_id_1\design_1_blk_mem_gen_B_id_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_B_id/blk_mem_gen_B_id"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_xlconstant_0_11\design_1_xlconstant_0_11.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_B_id/xlconstant_0"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_axi_bram_ctrl_B_ptr_1\design_1_axi_bram_ctrl_B_ptr_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_B_ptr/axi_bram_ctrl_B_ptr"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_bram_mux_B_ptr0_1\design_1_bram_mux_B_ptr0_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_B_ptr/bram_mux_B_ptr0"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_bram_mux_B_ptr1_1\design_1_bram_mux_B_ptr1_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_B_ptr/bram_mux_B_ptr1"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_blk_mem_gen_B_ptr_1\design_1_blk_mem_gen_B_ptr_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_B_ptr/blk_mem_gen_B_ptr"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_xlconstant_0_12\design_1_xlconstant_0_12.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_B_ptr/xlconstant_0"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_axi_bram_ctrl_B_val_1\design_1_axi_bram_ctrl_B_val_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_B_val/axi_bram_ctrl_B_val"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_bram_mux_B_val0_1\design_1_bram_mux_B_val0_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_B_val/bram_mux_B_val0"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_bram_mux_B_val1_1\design_1_bram_mux_B_val1_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_B_val/bram_mux_B_val1"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_blk_mem_gen_B_val_1\design_1_blk_mem_gen_B_val_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_B_val/blk_mem_gen_B_val"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_xlconstant_0_13\design_1_xlconstant_0_13.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_B_val/xlconstant_0"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_axi_bram_ctrl_C_1\design_1_axi_bram_ctrl_C_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_C/axi_bram_ctrl_C"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_bram_mux_C0_1\design_1_bram_mux_C0_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_C/bram_mux_C0"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_bram_mux_C1_1\design_1_bram_mux_C1_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_C/bram_mux_C1"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_blk_mem_gen_C_1\design_1_blk_mem_gen_C_1.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_C/blk_mem_gen_C"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
-        <UsedIn Val="SIMULATION"/>
-      </File>
-      <File Name="ip\design_1_xlconstant_0_14\design_1_xlconstant_0_14.xci" Type="IP">
-        <Instance HierarchyPath="sparseDemoDS_system/bram_C/xlconstant_0"/>
-        <Properties IsEditable="false" IsVisible="true" Timestamp="0" IsTrackable="true" IsStatusTracked="true"/>
-        <Library Name="xil_defaultlib"/>
-        <UsedIn Val="SYNTHESIS"/>
-        <UsedIn Val="IMPLEMENTATION"/>
         <UsedIn Val="SIMULATION"/>
       </File>
       <File Name="design_1.bmm" Type="BMM">

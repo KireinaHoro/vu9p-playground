@@ -77,7 +77,7 @@ ENTITY design_1_microblaze_0_axi_intc_0 IS
     s_axi_rresp : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
     s_axi_rvalid : OUT STD_LOGIC;
     s_axi_rready : IN STD_LOGIC;
-    intr : IN STD_LOGIC_VECTOR(8 DOWNTO 0);
+    intr : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
     processor_clk : IN STD_LOGIC;
     processor_rst : IN STD_LOGIC;
     irq : OUT STD_LOGIC;
@@ -138,7 +138,7 @@ ARCHITECTURE design_1_microblaze_0_axi_intc_0_arch OF design_1_microblaze_0_axi_
       s_axi_rresp : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
       s_axi_rvalid : OUT STD_LOGIC;
       s_axi_rready : IN STD_LOGIC;
-      intr : IN STD_LOGIC_VECTOR(8 DOWNTO 0);
+      intr : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
       processor_clk : IN STD_LOGIC;
       processor_rst : IN STD_LOGIC;
       irq : OUT STD_LOGIC;
@@ -154,8 +154,8 @@ ARCHITECTURE design_1_microblaze_0_axi_intc_0_arch OF design_1_microblaze_0_axi_
   ATTRIBUTE CHECK_LICENSE_TYPE : STRING;
   ATTRIBUTE CHECK_LICENSE_TYPE OF design_1_microblaze_0_axi_intc_0_arch : ARCHITECTURE IS "design_1_microblaze_0_axi_intc_0,axi_intc,{}";
   ATTRIBUTE CORE_GENERATION_INFO : STRING;
-  ATTRIBUTE CORE_GENERATION_INFO OF design_1_microblaze_0_axi_intc_0_arch: ARCHITECTURE IS "design_1_microblaze_0_axi_intc_0,axi_intc,{x_ipProduct=Vivado 2019.1_AR72944,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=axi_intc,x_ipVersion=4.1,x_ipCoreRevision=72944,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_FAMILY=virtexuplus,C_INSTANCE=design_1_microblaze_0_axi_intc_0,C_S_AXI_ADDR_WIDTH=10,C_S_AXI_DATA_WIDTH=32,C_NUM_INTR_INPUTS=9,C_NUM_SW_INTR=0,C_KIND_OF_INTR=0xfffffe50,C_KIND_OF_EDGE=0xFFFFFFFF,C_KIND_OF_LVL=0xFFFFFFFF,C_ASYNC_INTR=0xFFFFFE52,C_NUM_SYNC_FF=2,C_ADDR_WIDTH=36,C_IVAR_R" & 
-"ESET_VALUE=0x0000000000000010,C_ENABLE_ASYNC=0,C_HAS_IPR=1,C_HAS_SIE=1,C_HAS_CIE=1,C_HAS_IVR=1,C_HAS_ILR=0,C_IRQ_IS_LEVEL=1,C_IRQ_ACTIVE=0x1,C_DISABLE_SYNCHRONIZERS=1,C_MB_CLK_NOT_CONNECTED=1,C_HAS_FAST=1,C_EN_CASCADE_MODE=0,C_CASCADE_MASTER=0}";
+  ATTRIBUTE CORE_GENERATION_INFO OF design_1_microblaze_0_axi_intc_0_arch: ARCHITECTURE IS "design_1_microblaze_0_axi_intc_0,axi_intc,{x_ipProduct=Vivado 2019.1_AR72944,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=axi_intc,x_ipVersion=4.1,x_ipCoreRevision=72944,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_FAMILY=virtexuplus,C_INSTANCE=design_1_microblaze_0_axi_intc_0,C_S_AXI_ADDR_WIDTH=10,C_S_AXI_DATA_WIDTH=32,C_NUM_INTR_INPUTS=10,C_NUM_SW_INTR=0,C_KIND_OF_INTR=0xfffffc50,C_KIND_OF_EDGE=0xFFFFFFFF,C_KIND_OF_LVL=0xFFFFFFFF,C_ASYNC_INTR=0xFFFFFC52,C_NUM_SYNC_FF=2,C_ADDR_WIDTH=36,C_IVAR_" & 
+"RESET_VALUE=0x0000000000000010,C_ENABLE_ASYNC=0,C_HAS_IPR=1,C_HAS_SIE=1,C_HAS_CIE=1,C_HAS_IVR=1,C_HAS_ILR=0,C_IRQ_IS_LEVEL=1,C_IRQ_ACTIVE=0x1,C_DISABLE_SYNCHRONIZERS=1,C_MB_CLK_NOT_CONNECTED=1,C_HAS_FAST=1,C_EN_CASCADE_MODE=0,C_CASCADE_MASTER=0}";
   ATTRIBUTE X_INTERFACE_INFO : STRING;
   ATTRIBUTE X_INTERFACE_PARAMETER : STRING;
   ATTRIBUTE X_INTERFACE_INFO OF interrupt_address: SIGNAL IS "xilinx.com:interface:mbinterrupt:1.0 interrupt ADDRESS";
@@ -166,7 +166,7 @@ ARCHITECTURE design_1_microblaze_0_axi_intc_0_arch OF design_1_microblaze_0_axi_
   ATTRIBUTE X_INTERFACE_INFO OF processor_rst: SIGNAL IS "xilinx.com:signal:reset:1.0 proc_reset RST";
   ATTRIBUTE X_INTERFACE_PARAMETER OF processor_clk: SIGNAL IS "XIL_INTERFACENAME proc_clock, ASSOCIATED_BUSIF interrupt, ASSOCIATED_RESET processor_rst, FREQ_HZ 150000000, PHASE 0.0, CLK_DOMAIN design_1_clk_wiz_0_1_sys_clk, INSERT_VIP 0";
   ATTRIBUTE X_INTERFACE_INFO OF processor_clk: SIGNAL IS "xilinx.com:signal:clock:1.0 proc_clock CLK";
-  ATTRIBUTE X_INTERFACE_PARAMETER OF intr: SIGNAL IS "XIL_INTERFACENAME interrupt_input, SENSITIVITY LEVEL_HIGH:LEVEL_HIGH:EDGE_RISING:LEVEL_HIGH:EDGE_RISING:LEVEL_HIGH:LEVEL_HIGH:LEVEL_HIGH:LEVEL_HIGH, PortWidth 9";
+  ATTRIBUTE X_INTERFACE_PARAMETER OF intr: SIGNAL IS "XIL_INTERFACENAME interrupt_input, SENSITIVITY LEVEL_HIGH:LEVEL_HIGH:LEVEL_HIGH:EDGE_RISING:LEVEL_HIGH:EDGE_RISING:LEVEL_HIGH:LEVEL_HIGH:LEVEL_HIGH:LEVEL_HIGH, PortWidth 10";
   ATTRIBUTE X_INTERFACE_INFO OF intr: SIGNAL IS "xilinx.com:signal:interrupt:1.0 interrupt_input INTERRUPT";
   ATTRIBUTE X_INTERFACE_INFO OF s_axi_rready: SIGNAL IS "xilinx.com:interface:aximm:1.0 s_axi RREADY";
   ATTRIBUTE X_INTERFACE_INFO OF s_axi_rvalid: SIGNAL IS "xilinx.com:interface:aximm:1.0 s_axi RVALID";
@@ -198,12 +198,12 @@ BEGIN
       C_INSTANCE => "design_1_microblaze_0_axi_intc_0",
       C_S_AXI_ADDR_WIDTH => 10,
       C_S_AXI_DATA_WIDTH => 32,
-      C_NUM_INTR_INPUTS => 9,
+      C_NUM_INTR_INPUTS => 10,
       C_NUM_SW_INTR => 0,
-      C_KIND_OF_INTR => X"fffffe50",
+      C_KIND_OF_INTR => X"fffffc50",
       C_KIND_OF_EDGE => X"FFFFFFFF",
       C_KIND_OF_LVL => X"FFFFFFFF",
-      C_ASYNC_INTR => X"FFFFFE52",
+      C_ASYNC_INTR => X"FFFFFC52",
       C_NUM_SYNC_FF => 2,
       C_ADDR_WIDTH => 36,
       C_IVAR_RESET_VALUE => X"0000000000000010",

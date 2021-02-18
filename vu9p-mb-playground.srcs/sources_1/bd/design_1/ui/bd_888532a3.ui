@@ -1,0 +1,31 @@
+{
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 7.0.19  2019-03-26 bk=1.5019 VDI=41 GEI=35 GUI=JA:9.0 non-TLS
+#  -string -flagsOSRD
+preplace port S_AXI -pg 1 -lvl 0 -x -20 -y 130 -defaultsOSRD
+preplace port S_AUX -pg 1 -lvl 0 -x -20 -y 70 -defaultsOSRD
+preplace port S_AUX1 -pg 1 -lvl 0 -x -20 -y 230 -defaultsOSRD
+preplace port clk1 -pg 1 -lvl 0 -x -20 -y 160 -defaultsOSRD
+preplace port s_axi_aresetn -pg 1 -lvl 0 -x -20 -y 190 -defaultsOSRD
+preplace port sel -pg 1 -lvl 0 -x -20 -y 290 -defaultsOSRD
+preplace port rst1 -pg 1 -lvl 0 -x -20 -y 260 -defaultsOSRD
+preplace inst axi_bram_ctrl_A_val -pg 1 -lvl 1 -x 150 -y 170 -defaultsOSRD
+preplace inst bram_mux_A_val0 -pg 1 -lvl 2 -x 420 -y 90 -defaultsOSRD
+preplace inst bram_mux_A_val1 -pg 1 -lvl 2 -x 420 -y 270 -defaultsOSRD
+preplace inst blk_mem_gen_A_val -pg 1 -lvl 3 -x 640 -y 100 -defaultsOSRD
+preplace netloc microblaze_0_Clk 1 0 2 10 280 320
+preplace netloc rst_clk_wiz_0_100M_peripheral_aresetn 1 0 1 NJ 190
+preplace netloc xlslice_sel_Dout 1 0 2 NJ 290 290
+preplace netloc rst_clk_wiz_0_100M_mb_reset 1 0 2 0J 270 300
+preplace netloc axi_bram_ctrl_A_val_BRAM_PORTA 1 1 1 280 50n
+preplace netloc axi_bram_ctrl_A_val_BRAM_PORTB 1 1 1 310 180n
+preplace netloc bram_mux_A_val0_M 1 2 1 N 90
+preplace netloc bram_mux_A_val1_M 1 2 1 520 110n
+preplace netloc axi_interconnect_0_M03_AXI 1 0 1 10J 130n
+preplace netloc sparseDemoDS_0_A_val0 1 0 2 NJ 70 NJ
+preplace netloc sparseDemoDS_0_A_val1 1 0 2 20J 250 NJ
+levelinfo -pg 1 -20 150 420 640 770
+pagesize -pg 1 -db -bbox -sgen -150 -10 770 370
+"
+}
+

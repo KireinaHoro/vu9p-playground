@@ -123,6 +123,576 @@ if { $nRet != 0 } {
 
 
 # Hierarchical cell: bram_C
+proc create_hier_cell_bram_C_1 { parentCell nameHier } {
+
+  variable script_folder
+
+  if { $parentCell eq "" || $nameHier eq "" } {
+     catch {common::send_msg_id "BD_TCL-102" "ERROR" "create_hier_cell_bram_C_1() - Empty argument(s)!"}
+     return
+  }
+
+  # Get object for parentCell
+  set parentObj [get_bd_cells $parentCell]
+  if { $parentObj == "" } {
+     catch {common::send_msg_id "BD_TCL-100" "ERROR" "Unable to find parent cell <$parentCell>!"}
+     return
+  }
+
+  # Make sure parentObj is hier blk
+  set parentType [get_property TYPE $parentObj]
+  if { $parentType ne "hier" } {
+     catch {common::send_msg_id "BD_TCL-101" "ERROR" "Parent <$parentObj> has TYPE = <$parentType>. Expected to be <hier>."}
+     return
+  }
+
+  # Save current instance; Restore later
+  set oldCurInst [current_bd_instance .]
+
+  # Set parent object as current
+  current_bd_instance $parentObj
+
+  # Create cell and set as current instance
+  set hier_obj [create_bd_cell -type hier $nameHier]
+  current_bd_instance $hier_obj
+
+  # Create interface pins
+  create_bd_intf_pin -mode Slave -vlnv xilinx.com:interface:bram_rtl:1.0 S_AUX
+
+  create_bd_intf_pin -mode Slave -vlnv xilinx.com:interface:aximm_rtl:1.0 S_AXI
+
+
+  # Create pins
+  create_bd_pin -dir I -type clk clk1
+  create_bd_pin -dir I -type rst rst1
+  create_bd_pin -dir I -type rst s_axi_aresetn
+  create_bd_pin -dir I sel
+
+  # Create instance: bmg_C_sparseDemo_0, and set properties
+  set bmg_C_sparseDemo_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:blk_mem_gen:8.4 bmg_C_sparseDemo_0 ]
+
+  # Create instance: mux_C, and set properties
+  set mux_C [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 mux_C ]
+
+  # Create instance: rc_C_sparseDemo_0, and set properties
+  set rc_C_sparseDemo_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.1 rc_C_sparseDemo_0 ]
+  set_property -dict [ list \
+   CONFIG.SINGLE_PORT_BRAM {1} \
+ ] $rc_C_sparseDemo_0
+
+  # Create interface connections
+  connect_bd_intf_net -intf_net axi_interconnect_0_M07_AXI [get_bd_intf_pins S_AXI] [get_bd_intf_pins rc_C_sparseDemo_0/S_AXI]
+  connect_bd_intf_net -intf_net mux_C_M [get_bd_intf_pins bmg_C_sparseDemo_0/BRAM_PORTA] [get_bd_intf_pins mux_C/M]
+  connect_bd_intf_net -intf_net rc_C_sparseDemo_0_BRAM_PORTA [get_bd_intf_pins mux_C/S_CTRL] [get_bd_intf_pins rc_C_sparseDemo_0/BRAM_PORTA]
+  connect_bd_intf_net -intf_net sparseDemo_0_C0 [get_bd_intf_pins S_AUX] [get_bd_intf_pins mux_C/S_AUX]
+
+  # Create port connections
+  connect_bd_net -net microblaze_0_Clk [get_bd_pins clk1] [get_bd_pins mux_C/clk1] [get_bd_pins rc_C_sparseDemo_0/s_axi_aclk]
+  connect_bd_net -net rst_clk_wiz_0_100M_mb_reset [get_bd_pins rst1] [get_bd_pins mux_C/rst1]
+  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins s_axi_aresetn] [get_bd_pins rc_C_sparseDemo_0/s_axi_aresetn]
+  connect_bd_net -net xlslice_sel_Dout [get_bd_pins sel] [get_bd_pins mux_C/sel]
+
+  # Restore current instance
+  current_bd_instance $oldCurInst
+}
+
+# Hierarchical cell: bram_B_val
+proc create_hier_cell_bram_B_val_1 { parentCell nameHier } {
+
+  variable script_folder
+
+  if { $parentCell eq "" || $nameHier eq "" } {
+     catch {common::send_msg_id "BD_TCL-102" "ERROR" "create_hier_cell_bram_B_val_1() - Empty argument(s)!"}
+     return
+  }
+
+  # Get object for parentCell
+  set parentObj [get_bd_cells $parentCell]
+  if { $parentObj == "" } {
+     catch {common::send_msg_id "BD_TCL-100" "ERROR" "Unable to find parent cell <$parentCell>!"}
+     return
+  }
+
+  # Make sure parentObj is hier blk
+  set parentType [get_property TYPE $parentObj]
+  if { $parentType ne "hier" } {
+     catch {common::send_msg_id "BD_TCL-101" "ERROR" "Parent <$parentObj> has TYPE = <$parentType>. Expected to be <hier>."}
+     return
+  }
+
+  # Save current instance; Restore later
+  set oldCurInst [current_bd_instance .]
+
+  # Set parent object as current
+  current_bd_instance $parentObj
+
+  # Create cell and set as current instance
+  set hier_obj [create_bd_cell -type hier $nameHier]
+  current_bd_instance $hier_obj
+
+  # Create interface pins
+  create_bd_intf_pin -mode Slave -vlnv xilinx.com:interface:bram_rtl:1.0 S_AUX
+
+  create_bd_intf_pin -mode Slave -vlnv xilinx.com:interface:aximm_rtl:1.0 S_AXI
+
+
+  # Create pins
+  create_bd_pin -dir I -type clk clk1
+  create_bd_pin -dir I -type rst rst1
+  create_bd_pin -dir I -type rst s_axi_aresetn
+  create_bd_pin -dir I sel
+
+  # Create instance: bmg_B_val_sparseDemo_0, and set properties
+  set bmg_B_val_sparseDemo_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:blk_mem_gen:8.4 bmg_B_val_sparseDemo_0 ]
+
+  # Create instance: mux_B_val, and set properties
+  set mux_B_val [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 mux_B_val ]
+
+  # Create instance: rc_B_val_sparseDemo_0, and set properties
+  set rc_B_val_sparseDemo_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.1 rc_B_val_sparseDemo_0 ]
+  set_property -dict [ list \
+   CONFIG.SINGLE_PORT_BRAM {1} \
+ ] $rc_B_val_sparseDemo_0
+
+  # Create instance: xlconstant_zero, and set properties
+  set xlconstant_zero [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_zero ]
+  set_property -dict [ list \
+   CONFIG.CONST_VAL {0} \
+   CONFIG.CONST_WIDTH {32} \
+ ] $xlconstant_zero
+
+  # Create interface connections
+  connect_bd_intf_net -intf_net axi_interconnect_0_M06_AXI [get_bd_intf_pins S_AXI] [get_bd_intf_pins rc_B_val_sparseDemo_0/S_AXI]
+  connect_bd_intf_net -intf_net mux_B_val_M [get_bd_intf_pins bmg_B_val_sparseDemo_0/BRAM_PORTA] [get_bd_intf_pins mux_B_val/M]
+  connect_bd_intf_net -intf_net rc_B_val_sparseDemo_0_BRAM_PORTA [get_bd_intf_pins mux_B_val/S_CTRL] [get_bd_intf_pins rc_B_val_sparseDemo_0/BRAM_PORTA]
+  connect_bd_intf_net -intf_net sparseDemo_0_B_val0 [get_bd_intf_pins S_AUX] [get_bd_intf_pins mux_B_val/S_AUX]
+
+  # Create port connections
+  connect_bd_net -net microblaze_0_Clk [get_bd_pins clk1] [get_bd_pins mux_B_val/clk1] [get_bd_pins rc_B_val_sparseDemo_0/s_axi_aclk]
+  connect_bd_net -net rst_clk_wiz_0_100M_mb_reset [get_bd_pins rst1] [get_bd_pins mux_B_val/rst1]
+  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins s_axi_aresetn] [get_bd_pins rc_B_val_sparseDemo_0/s_axi_aresetn]
+  connect_bd_net -net xlconstant_zero_dout [get_bd_pins mux_B_val/d1] [get_bd_pins mux_B_val/we1] [get_bd_pins xlconstant_zero/dout]
+  connect_bd_net -net xlslice_sel_Dout [get_bd_pins sel] [get_bd_pins mux_B_val/sel]
+
+  # Restore current instance
+  current_bd_instance $oldCurInst
+}
+
+# Hierarchical cell: bram_B_ptr
+proc create_hier_cell_bram_B_ptr_1 { parentCell nameHier } {
+
+  variable script_folder
+
+  if { $parentCell eq "" || $nameHier eq "" } {
+     catch {common::send_msg_id "BD_TCL-102" "ERROR" "create_hier_cell_bram_B_ptr_1() - Empty argument(s)!"}
+     return
+  }
+
+  # Get object for parentCell
+  set parentObj [get_bd_cells $parentCell]
+  if { $parentObj == "" } {
+     catch {common::send_msg_id "BD_TCL-100" "ERROR" "Unable to find parent cell <$parentCell>!"}
+     return
+  }
+
+  # Make sure parentObj is hier blk
+  set parentType [get_property TYPE $parentObj]
+  if { $parentType ne "hier" } {
+     catch {common::send_msg_id "BD_TCL-101" "ERROR" "Parent <$parentObj> has TYPE = <$parentType>. Expected to be <hier>."}
+     return
+  }
+
+  # Save current instance; Restore later
+  set oldCurInst [current_bd_instance .]
+
+  # Set parent object as current
+  current_bd_instance $parentObj
+
+  # Create cell and set as current instance
+  set hier_obj [create_bd_cell -type hier $nameHier]
+  current_bd_instance $hier_obj
+
+  # Create interface pins
+  create_bd_intf_pin -mode Slave -vlnv xilinx.com:interface:bram_rtl:1.0 S_AUX
+
+  create_bd_intf_pin -mode Slave -vlnv xilinx.com:interface:bram_rtl:1.0 S_AUX1
+
+  create_bd_intf_pin -mode Slave -vlnv xilinx.com:interface:aximm_rtl:1.0 S_AXI
+
+
+  # Create pins
+  create_bd_pin -dir I -type clk clk1
+  create_bd_pin -dir I -type rst rst1
+  create_bd_pin -dir I -type rst s_axi_aresetn
+  create_bd_pin -dir I sel
+
+  # Create instance: bmg_B_ptr_sparseDemo_0, and set properties
+  set bmg_B_ptr_sparseDemo_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:blk_mem_gen:8.4 bmg_B_ptr_sparseDemo_0 ]
+  set_property -dict [ list \
+   CONFIG.Assume_Synchronous_Clk {true} \
+   CONFIG.Memory_Type {True_Dual_Port_RAM} \
+ ] $bmg_B_ptr_sparseDemo_0
+
+  # Create instance: mux_B_ptr0, and set properties
+  set mux_B_ptr0 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 mux_B_ptr0 ]
+
+  # Create instance: mux_B_ptr1, and set properties
+  set mux_B_ptr1 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 mux_B_ptr1 ]
+
+  # Create instance: rc_B_ptr_sparseDemo_0, and set properties
+  set rc_B_ptr_sparseDemo_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.1 rc_B_ptr_sparseDemo_0 ]
+
+  # Create interface connections
+  connect_bd_intf_net -intf_net axi_interconnect_0_M04_AXI [get_bd_intf_pins S_AXI] [get_bd_intf_pins rc_B_ptr_sparseDemo_0/S_AXI]
+  connect_bd_intf_net -intf_net mux_B_ptr0_M [get_bd_intf_pins bmg_B_ptr_sparseDemo_0/BRAM_PORTA] [get_bd_intf_pins mux_B_ptr0/M]
+  connect_bd_intf_net -intf_net mux_B_ptr1_M [get_bd_intf_pins bmg_B_ptr_sparseDemo_0/BRAM_PORTB] [get_bd_intf_pins mux_B_ptr1/M]
+  connect_bd_intf_net -intf_net rc_B_ptr_sparseDemo_0_BRAM_PORTA [get_bd_intf_pins mux_B_ptr0/S_CTRL] [get_bd_intf_pins rc_B_ptr_sparseDemo_0/BRAM_PORTA]
+  connect_bd_intf_net -intf_net rc_B_ptr_sparseDemo_0_BRAM_PORTB [get_bd_intf_pins mux_B_ptr1/S_CTRL] [get_bd_intf_pins rc_B_ptr_sparseDemo_0/BRAM_PORTB]
+  connect_bd_intf_net -intf_net sparseDemo_0_B_ptr0 [get_bd_intf_pins S_AUX] [get_bd_intf_pins mux_B_ptr0/S_AUX]
+  connect_bd_intf_net -intf_net sparseDemo_0_B_ptr1 [get_bd_intf_pins S_AUX1] [get_bd_intf_pins mux_B_ptr1/S_AUX]
+
+  # Create port connections
+  connect_bd_net -net microblaze_0_Clk [get_bd_pins clk1] [get_bd_pins mux_B_ptr0/clk1] [get_bd_pins mux_B_ptr1/clk1] [get_bd_pins rc_B_ptr_sparseDemo_0/s_axi_aclk]
+  connect_bd_net -net rst_clk_wiz_0_100M_mb_reset [get_bd_pins rst1] [get_bd_pins mux_B_ptr0/rst1] [get_bd_pins mux_B_ptr1/rst1]
+  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins s_axi_aresetn] [get_bd_pins rc_B_ptr_sparseDemo_0/s_axi_aresetn]
+  connect_bd_net -net xlslice_sel_Dout [get_bd_pins sel] [get_bd_pins mux_B_ptr0/sel] [get_bd_pins mux_B_ptr1/sel]
+
+  # Restore current instance
+  current_bd_instance $oldCurInst
+}
+
+# Hierarchical cell: bram_B_id
+proc create_hier_cell_bram_B_id_1 { parentCell nameHier } {
+
+  variable script_folder
+
+  if { $parentCell eq "" || $nameHier eq "" } {
+     catch {common::send_msg_id "BD_TCL-102" "ERROR" "create_hier_cell_bram_B_id_1() - Empty argument(s)!"}
+     return
+  }
+
+  # Get object for parentCell
+  set parentObj [get_bd_cells $parentCell]
+  if { $parentObj == "" } {
+     catch {common::send_msg_id "BD_TCL-100" "ERROR" "Unable to find parent cell <$parentCell>!"}
+     return
+  }
+
+  # Make sure parentObj is hier blk
+  set parentType [get_property TYPE $parentObj]
+  if { $parentType ne "hier" } {
+     catch {common::send_msg_id "BD_TCL-101" "ERROR" "Parent <$parentObj> has TYPE = <$parentType>. Expected to be <hier>."}
+     return
+  }
+
+  # Save current instance; Restore later
+  set oldCurInst [current_bd_instance .]
+
+  # Set parent object as current
+  current_bd_instance $parentObj
+
+  # Create cell and set as current instance
+  set hier_obj [create_bd_cell -type hier $nameHier]
+  current_bd_instance $hier_obj
+
+  # Create interface pins
+  create_bd_intf_pin -mode Slave -vlnv xilinx.com:interface:bram_rtl:1.0 S_AUX
+
+  create_bd_intf_pin -mode Slave -vlnv xilinx.com:interface:aximm_rtl:1.0 S_AXI
+
+
+  # Create pins
+  create_bd_pin -dir I -type clk clk1
+  create_bd_pin -dir I -type rst rst1
+  create_bd_pin -dir I -type rst s_axi_aresetn
+  create_bd_pin -dir I sel
+
+  # Create instance: bmg_B_id_sparseDemo_0, and set properties
+  set bmg_B_id_sparseDemo_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:blk_mem_gen:8.4 bmg_B_id_sparseDemo_0 ]
+
+  # Create instance: mux_B_id, and set properties
+  set mux_B_id [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 mux_B_id ]
+
+  # Create instance: rc_B_id_sparseDemo_0, and set properties
+  set rc_B_id_sparseDemo_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.1 rc_B_id_sparseDemo_0 ]
+  set_property -dict [ list \
+   CONFIG.SINGLE_PORT_BRAM {1} \
+ ] $rc_B_id_sparseDemo_0
+
+  # Create instance: xlconstant_zero, and set properties
+  set xlconstant_zero [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_zero ]
+  set_property -dict [ list \
+   CONFIG.CONST_VAL {0} \
+   CONFIG.CONST_WIDTH {32} \
+ ] $xlconstant_zero
+
+  # Create interface connections
+  connect_bd_intf_net -intf_net axi_interconnect_0_M05_AXI [get_bd_intf_pins S_AXI] [get_bd_intf_pins rc_B_id_sparseDemo_0/S_AXI]
+  connect_bd_intf_net -intf_net mux_B_id_M [get_bd_intf_pins bmg_B_id_sparseDemo_0/BRAM_PORTA] [get_bd_intf_pins mux_B_id/M]
+  connect_bd_intf_net -intf_net rc_B_id_sparseDemo_0_BRAM_PORTA [get_bd_intf_pins mux_B_id/S_CTRL] [get_bd_intf_pins rc_B_id_sparseDemo_0/BRAM_PORTA]
+  connect_bd_intf_net -intf_net sparseDemo_0_B_id0 [get_bd_intf_pins S_AUX] [get_bd_intf_pins mux_B_id/S_AUX]
+
+  # Create port connections
+  connect_bd_net -net microblaze_0_Clk [get_bd_pins clk1] [get_bd_pins mux_B_id/clk1] [get_bd_pins rc_B_id_sparseDemo_0/s_axi_aclk]
+  connect_bd_net -net rst_clk_wiz_0_100M_mb_reset [get_bd_pins rst1] [get_bd_pins mux_B_id/rst1]
+  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins s_axi_aresetn] [get_bd_pins rc_B_id_sparseDemo_0/s_axi_aresetn]
+  connect_bd_net -net xlconstant_zero_dout [get_bd_pins mux_B_id/d1] [get_bd_pins mux_B_id/we1] [get_bd_pins xlconstant_zero/dout]
+  connect_bd_net -net xlslice_sel_Dout [get_bd_pins sel] [get_bd_pins mux_B_id/sel]
+
+  # Restore current instance
+  current_bd_instance $oldCurInst
+}
+
+# Hierarchical cell: bram_A_val
+proc create_hier_cell_bram_A_val_1 { parentCell nameHier } {
+
+  variable script_folder
+
+  if { $parentCell eq "" || $nameHier eq "" } {
+     catch {common::send_msg_id "BD_TCL-102" "ERROR" "create_hier_cell_bram_A_val_1() - Empty argument(s)!"}
+     return
+  }
+
+  # Get object for parentCell
+  set parentObj [get_bd_cells $parentCell]
+  if { $parentObj == "" } {
+     catch {common::send_msg_id "BD_TCL-100" "ERROR" "Unable to find parent cell <$parentCell>!"}
+     return
+  }
+
+  # Make sure parentObj is hier blk
+  set parentType [get_property TYPE $parentObj]
+  if { $parentType ne "hier" } {
+     catch {common::send_msg_id "BD_TCL-101" "ERROR" "Parent <$parentObj> has TYPE = <$parentType>. Expected to be <hier>."}
+     return
+  }
+
+  # Save current instance; Restore later
+  set oldCurInst [current_bd_instance .]
+
+  # Set parent object as current
+  current_bd_instance $parentObj
+
+  # Create cell and set as current instance
+  set hier_obj [create_bd_cell -type hier $nameHier]
+  current_bd_instance $hier_obj
+
+  # Create interface pins
+  create_bd_intf_pin -mode Slave -vlnv xilinx.com:interface:bram_rtl:1.0 S_AUX
+
+  create_bd_intf_pin -mode Slave -vlnv xilinx.com:interface:bram_rtl:1.0 S_AUX1
+
+  create_bd_intf_pin -mode Slave -vlnv xilinx.com:interface:aximm_rtl:1.0 S_AXI
+
+
+  # Create pins
+  create_bd_pin -dir I -type clk clk1
+  create_bd_pin -dir I -type rst rst1
+  create_bd_pin -dir I -type rst s_axi_aresetn
+  create_bd_pin -dir I sel
+
+  # Create instance: bmg_A_val_sparseDemo_0, and set properties
+  set bmg_A_val_sparseDemo_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:blk_mem_gen:8.4 bmg_A_val_sparseDemo_0 ]
+  set_property -dict [ list \
+   CONFIG.Assume_Synchronous_Clk {true} \
+   CONFIG.Memory_Type {True_Dual_Port_RAM} \
+ ] $bmg_A_val_sparseDemo_0
+
+  # Create instance: mux_A_val0, and set properties
+  set mux_A_val0 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 mux_A_val0 ]
+
+  # Create instance: mux_A_val1, and set properties
+  set mux_A_val1 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 mux_A_val1 ]
+
+  # Create instance: rc_A_val_sparseDemo_0, and set properties
+  set rc_A_val_sparseDemo_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.1 rc_A_val_sparseDemo_0 ]
+
+  # Create interface connections
+  connect_bd_intf_net -intf_net axi_interconnect_0_M03_AXI [get_bd_intf_pins S_AXI] [get_bd_intf_pins rc_A_val_sparseDemo_0/S_AXI]
+  connect_bd_intf_net -intf_net mux_A_val0_M [get_bd_intf_pins bmg_A_val_sparseDemo_0/BRAM_PORTA] [get_bd_intf_pins mux_A_val0/M]
+  connect_bd_intf_net -intf_net mux_A_val1_M [get_bd_intf_pins bmg_A_val_sparseDemo_0/BRAM_PORTB] [get_bd_intf_pins mux_A_val1/M]
+  connect_bd_intf_net -intf_net rc_A_val_sparseDemo_0_BRAM_PORTA [get_bd_intf_pins mux_A_val0/S_CTRL] [get_bd_intf_pins rc_A_val_sparseDemo_0/BRAM_PORTA]
+  connect_bd_intf_net -intf_net rc_A_val_sparseDemo_0_BRAM_PORTB [get_bd_intf_pins mux_A_val1/S_CTRL] [get_bd_intf_pins rc_A_val_sparseDemo_0/BRAM_PORTB]
+  connect_bd_intf_net -intf_net sparseDemo_0_A_val0 [get_bd_intf_pins S_AUX] [get_bd_intf_pins mux_A_val0/S_AUX]
+  connect_bd_intf_net -intf_net sparseDemo_0_A_val1 [get_bd_intf_pins S_AUX1] [get_bd_intf_pins mux_A_val1/S_AUX]
+
+  # Create port connections
+  connect_bd_net -net microblaze_0_Clk [get_bd_pins clk1] [get_bd_pins mux_A_val0/clk1] [get_bd_pins mux_A_val1/clk1] [get_bd_pins rc_A_val_sparseDemo_0/s_axi_aclk]
+  connect_bd_net -net rst_clk_wiz_0_100M_mb_reset [get_bd_pins rst1] [get_bd_pins mux_A_val0/rst1] [get_bd_pins mux_A_val1/rst1]
+  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins s_axi_aresetn] [get_bd_pins rc_A_val_sparseDemo_0/s_axi_aresetn]
+  connect_bd_net -net xlslice_sel_Dout [get_bd_pins sel] [get_bd_pins mux_A_val0/sel] [get_bd_pins mux_A_val1/sel]
+
+  # Restore current instance
+  current_bd_instance $oldCurInst
+}
+
+# Hierarchical cell: bram_A_ptr
+proc create_hier_cell_bram_A_ptr_1 { parentCell nameHier } {
+
+  variable script_folder
+
+  if { $parentCell eq "" || $nameHier eq "" } {
+     catch {common::send_msg_id "BD_TCL-102" "ERROR" "create_hier_cell_bram_A_ptr_1() - Empty argument(s)!"}
+     return
+  }
+
+  # Get object for parentCell
+  set parentObj [get_bd_cells $parentCell]
+  if { $parentObj == "" } {
+     catch {common::send_msg_id "BD_TCL-100" "ERROR" "Unable to find parent cell <$parentCell>!"}
+     return
+  }
+
+  # Make sure parentObj is hier blk
+  set parentType [get_property TYPE $parentObj]
+  if { $parentType ne "hier" } {
+     catch {common::send_msg_id "BD_TCL-101" "ERROR" "Parent <$parentObj> has TYPE = <$parentType>. Expected to be <hier>."}
+     return
+  }
+
+  # Save current instance; Restore later
+  set oldCurInst [current_bd_instance .]
+
+  # Set parent object as current
+  current_bd_instance $parentObj
+
+  # Create cell and set as current instance
+  set hier_obj [create_bd_cell -type hier $nameHier]
+  current_bd_instance $hier_obj
+
+  # Create interface pins
+  create_bd_intf_pin -mode Slave -vlnv xilinx.com:interface:bram_rtl:1.0 S_AUX
+
+  create_bd_intf_pin -mode Slave -vlnv xilinx.com:interface:bram_rtl:1.0 S_AUX1
+
+  create_bd_intf_pin -mode Slave -vlnv xilinx.com:interface:aximm_rtl:1.0 S_AXI
+
+
+  # Create pins
+  create_bd_pin -dir I -type clk clk1
+  create_bd_pin -dir I -type rst rst1
+  create_bd_pin -dir I -type rst s_axi_aresetn
+  create_bd_pin -dir I sel
+
+  # Create instance: bmg_A_ptr_sparseDemo_0, and set properties
+  set bmg_A_ptr_sparseDemo_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:blk_mem_gen:8.4 bmg_A_ptr_sparseDemo_0 ]
+  set_property -dict [ list \
+   CONFIG.Assume_Synchronous_Clk {true} \
+   CONFIG.Memory_Type {True_Dual_Port_RAM} \
+ ] $bmg_A_ptr_sparseDemo_0
+
+  # Create instance: mux_A_ptr0, and set properties
+  set mux_A_ptr0 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 mux_A_ptr0 ]
+
+  # Create instance: mux_A_ptr1, and set properties
+  set mux_A_ptr1 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 mux_A_ptr1 ]
+
+  # Create instance: rc_A_ptr_sparseDemo_0, and set properties
+  set rc_A_ptr_sparseDemo_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.1 rc_A_ptr_sparseDemo_0 ]
+
+  # Create interface connections
+  connect_bd_intf_net -intf_net axi_interconnect_0_M02_AXI [get_bd_intf_pins S_AXI] [get_bd_intf_pins rc_A_ptr_sparseDemo_0/S_AXI]
+  connect_bd_intf_net -intf_net mux_A_ptr0_M [get_bd_intf_pins bmg_A_ptr_sparseDemo_0/BRAM_PORTA] [get_bd_intf_pins mux_A_ptr0/M]
+  connect_bd_intf_net -intf_net mux_A_ptr1_M [get_bd_intf_pins bmg_A_ptr_sparseDemo_0/BRAM_PORTB] [get_bd_intf_pins mux_A_ptr1/M]
+  connect_bd_intf_net -intf_net rc_A_ptr_sparseDemo_0_BRAM_PORTA [get_bd_intf_pins mux_A_ptr0/S_CTRL] [get_bd_intf_pins rc_A_ptr_sparseDemo_0/BRAM_PORTA]
+  connect_bd_intf_net -intf_net rc_A_ptr_sparseDemo_0_BRAM_PORTB [get_bd_intf_pins mux_A_ptr1/S_CTRL] [get_bd_intf_pins rc_A_ptr_sparseDemo_0/BRAM_PORTB]
+  connect_bd_intf_net -intf_net sparseDemo_0_A_ptr0 [get_bd_intf_pins S_AUX] [get_bd_intf_pins mux_A_ptr0/S_AUX]
+  connect_bd_intf_net -intf_net sparseDemo_0_A_ptr1 [get_bd_intf_pins S_AUX1] [get_bd_intf_pins mux_A_ptr1/S_AUX]
+
+  # Create port connections
+  connect_bd_net -net microblaze_0_Clk [get_bd_pins clk1] [get_bd_pins mux_A_ptr0/clk1] [get_bd_pins mux_A_ptr1/clk1] [get_bd_pins rc_A_ptr_sparseDemo_0/s_axi_aclk]
+  connect_bd_net -net rst_clk_wiz_0_100M_mb_reset [get_bd_pins rst1] [get_bd_pins mux_A_ptr0/rst1] [get_bd_pins mux_A_ptr1/rst1]
+  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins s_axi_aresetn] [get_bd_pins rc_A_ptr_sparseDemo_0/s_axi_aresetn]
+  connect_bd_net -net xlslice_sel_Dout [get_bd_pins sel] [get_bd_pins mux_A_ptr0/sel] [get_bd_pins mux_A_ptr1/sel]
+
+  # Restore current instance
+  current_bd_instance $oldCurInst
+}
+
+# Hierarchical cell: bram_A_id
+proc create_hier_cell_bram_A_id_1 { parentCell nameHier } {
+
+  variable script_folder
+
+  if { $parentCell eq "" || $nameHier eq "" } {
+     catch {common::send_msg_id "BD_TCL-102" "ERROR" "create_hier_cell_bram_A_id_1() - Empty argument(s)!"}
+     return
+  }
+
+  # Get object for parentCell
+  set parentObj [get_bd_cells $parentCell]
+  if { $parentObj == "" } {
+     catch {common::send_msg_id "BD_TCL-100" "ERROR" "Unable to find parent cell <$parentCell>!"}
+     return
+  }
+
+  # Make sure parentObj is hier blk
+  set parentType [get_property TYPE $parentObj]
+  if { $parentType ne "hier" } {
+     catch {common::send_msg_id "BD_TCL-101" "ERROR" "Parent <$parentObj> has TYPE = <$parentType>. Expected to be <hier>."}
+     return
+  }
+
+  # Save current instance; Restore later
+  set oldCurInst [current_bd_instance .]
+
+  # Set parent object as current
+  current_bd_instance $parentObj
+
+  # Create cell and set as current instance
+  set hier_obj [create_bd_cell -type hier $nameHier]
+  current_bd_instance $hier_obj
+
+  # Create interface pins
+  create_bd_intf_pin -mode Slave -vlnv xilinx.com:interface:bram_rtl:1.0 S_AUX
+
+  create_bd_intf_pin -mode Slave -vlnv xilinx.com:interface:bram_rtl:1.0 S_AUX1
+
+  create_bd_intf_pin -mode Slave -vlnv xilinx.com:interface:aximm_rtl:1.0 S_AXI
+
+
+  # Create pins
+  create_bd_pin -dir I -type clk clk1
+  create_bd_pin -dir I -type rst rst1
+  create_bd_pin -dir I -type rst s_axi_aresetn
+  create_bd_pin -dir I sel
+
+  # Create instance: bmg_A_id_sparseDemo_0, and set properties
+  set bmg_A_id_sparseDemo_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:blk_mem_gen:8.4 bmg_A_id_sparseDemo_0 ]
+  set_property -dict [ list \
+   CONFIG.Assume_Synchronous_Clk {true} \
+   CONFIG.Memory_Type {True_Dual_Port_RAM} \
+ ] $bmg_A_id_sparseDemo_0
+
+  # Create instance: mux_A_id0, and set properties
+  set mux_A_id0 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 mux_A_id0 ]
+
+  # Create instance: mux_A_id1, and set properties
+  set mux_A_id1 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 mux_A_id1 ]
+
+  # Create instance: rc_A_id_sparseDemo_0, and set properties
+  set rc_A_id_sparseDemo_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.1 rc_A_id_sparseDemo_0 ]
+
+  # Create interface connections
+  connect_bd_intf_net -intf_net axi_interconnect_0_M01_AXI [get_bd_intf_pins S_AXI] [get_bd_intf_pins rc_A_id_sparseDemo_0/S_AXI]
+  connect_bd_intf_net -intf_net mux_A_id0_M [get_bd_intf_pins bmg_A_id_sparseDemo_0/BRAM_PORTA] [get_bd_intf_pins mux_A_id0/M]
+  connect_bd_intf_net -intf_net mux_A_id1_M [get_bd_intf_pins bmg_A_id_sparseDemo_0/BRAM_PORTB] [get_bd_intf_pins mux_A_id1/M]
+  connect_bd_intf_net -intf_net rc_A_id_sparseDemo_0_BRAM_PORTA [get_bd_intf_pins mux_A_id0/S_CTRL] [get_bd_intf_pins rc_A_id_sparseDemo_0/BRAM_PORTA]
+  connect_bd_intf_net -intf_net rc_A_id_sparseDemo_0_BRAM_PORTB [get_bd_intf_pins mux_A_id1/S_CTRL] [get_bd_intf_pins rc_A_id_sparseDemo_0/BRAM_PORTB]
+  connect_bd_intf_net -intf_net sparseDemo_0_A_id0 [get_bd_intf_pins S_AUX] [get_bd_intf_pins mux_A_id0/S_AUX]
+  connect_bd_intf_net -intf_net sparseDemo_0_A_id1 [get_bd_intf_pins S_AUX1] [get_bd_intf_pins mux_A_id1/S_AUX]
+
+  # Create port connections
+  connect_bd_net -net microblaze_0_Clk [get_bd_pins clk1] [get_bd_pins mux_A_id0/clk1] [get_bd_pins mux_A_id1/clk1] [get_bd_pins rc_A_id_sparseDemo_0/s_axi_aclk]
+  connect_bd_net -net rst_clk_wiz_0_100M_mb_reset [get_bd_pins rst1] [get_bd_pins mux_A_id0/rst1] [get_bd_pins mux_A_id1/rst1]
+  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins s_axi_aresetn] [get_bd_pins rc_A_id_sparseDemo_0/s_axi_aresetn]
+  connect_bd_net -net xlslice_sel_Dout [get_bd_pins sel] [get_bd_pins mux_A_id0/sel] [get_bd_pins mux_A_id1/sel]
+
+  # Restore current instance
+  current_bd_instance $oldCurInst
+}
+
+# Hierarchical cell: bram_C
 proc create_hier_cell_bram_C { parentCell nameHier } {
 
   variable script_folder
@@ -165,46 +735,41 @@ proc create_hier_cell_bram_C { parentCell nameHier } {
 
 
   # Create pins
-  create_bd_pin -dir I -type clk s_axi_aclk
+  create_bd_pin -dir I -type clk clk1
+  create_bd_pin -dir I -type rst rst1
   create_bd_pin -dir I -type rst s_axi_aresetn
   create_bd_pin -dir I sel
 
-  # Create instance: axi_bram_ctrl_C, and set properties
-  set axi_bram_ctrl_C [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.1 axi_bram_ctrl_C ]
-
-  # Create instance: blk_mem_gen_C, and set properties
-  set blk_mem_gen_C [ create_bd_cell -type ip -vlnv xilinx.com:ip:blk_mem_gen:8.4 blk_mem_gen_C ]
+  # Create instance: bmg_C_sparseDemoDS_0, and set properties
+  set bmg_C_sparseDemoDS_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:blk_mem_gen:8.4 bmg_C_sparseDemoDS_0 ]
   set_property -dict [ list \
    CONFIG.Assume_Synchronous_Clk {true} \
    CONFIG.Memory_Type {True_Dual_Port_RAM} \
- ] $blk_mem_gen_C
+ ] $bmg_C_sparseDemoDS_0
 
-  # Create instance: bram_mux_C0, and set properties
-  set bram_mux_C0 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 bram_mux_C0 ]
+  # Create instance: mux_C0, and set properties
+  set mux_C0 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 mux_C0 ]
 
-  # Create instance: bram_mux_C1, and set properties
-  set bram_mux_C1 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 bram_mux_C1 ]
+  # Create instance: mux_C1, and set properties
+  set mux_C1 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 mux_C1 ]
 
-  # Create instance: xlconstant_0, and set properties
-  set xlconstant_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_0 ]
-  set_property -dict [ list \
-   CONFIG.CONST_VAL {0} \
- ] $xlconstant_0
+  # Create instance: rc_C_sparseDemoDS_0, and set properties
+  set rc_C_sparseDemoDS_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.1 rc_C_sparseDemoDS_0 ]
 
   # Create interface connections
-  connect_bd_intf_net -intf_net axi_bram_ctrl_C_BRAM_PORTA [get_bd_intf_pins axi_bram_ctrl_C/BRAM_PORTA] [get_bd_intf_pins bram_mux_C0/S_CTRL]
-  connect_bd_intf_net -intf_net axi_bram_ctrl_C_BRAM_PORTB [get_bd_intf_pins axi_bram_ctrl_C/BRAM_PORTB] [get_bd_intf_pins bram_mux_C1/S_CTRL]
-  connect_bd_intf_net -intf_net axi_interconnect_0_M07_AXI [get_bd_intf_pins S_AXI] [get_bd_intf_pins axi_bram_ctrl_C/S_AXI]
-  connect_bd_intf_net -intf_net bram_mux_C0_M [get_bd_intf_pins blk_mem_gen_C/BRAM_PORTA] [get_bd_intf_pins bram_mux_C0/M]
-  connect_bd_intf_net -intf_net bram_mux_C1_M [get_bd_intf_pins blk_mem_gen_C/BRAM_PORTB] [get_bd_intf_pins bram_mux_C1/M]
-  connect_bd_intf_net -intf_net sparseDemoDS_0_C0 [get_bd_intf_pins S_AUX] [get_bd_intf_pins bram_mux_C0/S_AUX]
-  connect_bd_intf_net -intf_net sparseDemoDS_0_C1 [get_bd_intf_pins S_AUX1] [get_bd_intf_pins bram_mux_C1/S_AUX]
+  connect_bd_intf_net -intf_net axi_interconnect_0_M07_AXI [get_bd_intf_pins S_AXI] [get_bd_intf_pins rc_C_sparseDemoDS_0/S_AXI]
+  connect_bd_intf_net -intf_net mux_C0_M [get_bd_intf_pins bmg_C_sparseDemoDS_0/BRAM_PORTA] [get_bd_intf_pins mux_C0/M]
+  connect_bd_intf_net -intf_net mux_C1_M [get_bd_intf_pins bmg_C_sparseDemoDS_0/BRAM_PORTB] [get_bd_intf_pins mux_C1/M]
+  connect_bd_intf_net -intf_net rc_C_sparseDemoDS_0_BRAM_PORTA [get_bd_intf_pins mux_C0/S_CTRL] [get_bd_intf_pins rc_C_sparseDemoDS_0/BRAM_PORTA]
+  connect_bd_intf_net -intf_net rc_C_sparseDemoDS_0_BRAM_PORTB [get_bd_intf_pins mux_C1/S_CTRL] [get_bd_intf_pins rc_C_sparseDemoDS_0/BRAM_PORTB]
+  connect_bd_intf_net -intf_net sparseDemoDS_0_C0 [get_bd_intf_pins S_AUX] [get_bd_intf_pins mux_C0/S_AUX]
+  connect_bd_intf_net -intf_net sparseDemoDS_0_C1 [get_bd_intf_pins S_AUX1] [get_bd_intf_pins mux_C1/S_AUX]
 
   # Create port connections
-  connect_bd_net -net microblaze_0_Clk [get_bd_pins s_axi_aclk] [get_bd_pins axi_bram_ctrl_C/s_axi_aclk]
-  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins s_axi_aresetn] [get_bd_pins axi_bram_ctrl_C/s_axi_aresetn]
-  connect_bd_net -net xlconstant_0_dout [get_bd_pins bram_mux_C0/clk1] [get_bd_pins bram_mux_C0/rst1] [get_bd_pins bram_mux_C1/clk1] [get_bd_pins bram_mux_C1/rst1] [get_bd_pins xlconstant_0/dout]
-  connect_bd_net -net xlslice_sel_Dout [get_bd_pins sel] [get_bd_pins bram_mux_C0/sel] [get_bd_pins bram_mux_C1/sel]
+  connect_bd_net -net microblaze_0_Clk [get_bd_pins clk1] [get_bd_pins mux_C0/clk1] [get_bd_pins mux_C1/clk1] [get_bd_pins rc_C_sparseDemoDS_0/s_axi_aclk]
+  connect_bd_net -net rst_clk_wiz_0_100M_mb_reset [get_bd_pins rst1] [get_bd_pins mux_C0/rst1] [get_bd_pins mux_C1/rst1]
+  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins s_axi_aresetn] [get_bd_pins rc_C_sparseDemoDS_0/s_axi_aresetn]
+  connect_bd_net -net xlslice_sel_Dout [get_bd_pins sel] [get_bd_pins mux_C0/sel] [get_bd_pins mux_C1/sel]
 
   # Restore current instance
   current_bd_instance $oldCurInst
@@ -253,46 +818,41 @@ proc create_hier_cell_bram_B_val { parentCell nameHier } {
 
 
   # Create pins
-  create_bd_pin -dir I -type clk s_axi_aclk
+  create_bd_pin -dir I -type clk clk1
+  create_bd_pin -dir I -type rst rst1
   create_bd_pin -dir I -type rst s_axi_aresetn
   create_bd_pin -dir I sel
 
-  # Create instance: axi_bram_ctrl_B_val, and set properties
-  set axi_bram_ctrl_B_val [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.1 axi_bram_ctrl_B_val ]
-
-  # Create instance: blk_mem_gen_B_val, and set properties
-  set blk_mem_gen_B_val [ create_bd_cell -type ip -vlnv xilinx.com:ip:blk_mem_gen:8.4 blk_mem_gen_B_val ]
+  # Create instance: bmg_B_val_sparseDemoDS_0, and set properties
+  set bmg_B_val_sparseDemoDS_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:blk_mem_gen:8.4 bmg_B_val_sparseDemoDS_0 ]
   set_property -dict [ list \
    CONFIG.Assume_Synchronous_Clk {true} \
    CONFIG.Memory_Type {True_Dual_Port_RAM} \
- ] $blk_mem_gen_B_val
+ ] $bmg_B_val_sparseDemoDS_0
 
-  # Create instance: bram_mux_B_val0, and set properties
-  set bram_mux_B_val0 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 bram_mux_B_val0 ]
+  # Create instance: mux_B_val0, and set properties
+  set mux_B_val0 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 mux_B_val0 ]
 
-  # Create instance: bram_mux_B_val1, and set properties
-  set bram_mux_B_val1 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 bram_mux_B_val1 ]
+  # Create instance: mux_B_val1, and set properties
+  set mux_B_val1 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 mux_B_val1 ]
 
-  # Create instance: xlconstant_0, and set properties
-  set xlconstant_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_0 ]
-  set_property -dict [ list \
-   CONFIG.CONST_VAL {0} \
- ] $xlconstant_0
+  # Create instance: rc_B_val_sparseDemoDS_0, and set properties
+  set rc_B_val_sparseDemoDS_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.1 rc_B_val_sparseDemoDS_0 ]
 
   # Create interface connections
-  connect_bd_intf_net -intf_net axi_bram_ctrl_B_val_BRAM_PORTA [get_bd_intf_pins axi_bram_ctrl_B_val/BRAM_PORTA] [get_bd_intf_pins bram_mux_B_val0/S_CTRL]
-  connect_bd_intf_net -intf_net axi_bram_ctrl_B_val_BRAM_PORTB [get_bd_intf_pins axi_bram_ctrl_B_val/BRAM_PORTB] [get_bd_intf_pins bram_mux_B_val1/S_CTRL]
-  connect_bd_intf_net -intf_net axi_interconnect_0_M06_AXI [get_bd_intf_pins S_AXI] [get_bd_intf_pins axi_bram_ctrl_B_val/S_AXI]
-  connect_bd_intf_net -intf_net bram_mux_B_val0_M [get_bd_intf_pins blk_mem_gen_B_val/BRAM_PORTA] [get_bd_intf_pins bram_mux_B_val0/M]
-  connect_bd_intf_net -intf_net bram_mux_B_val1_M [get_bd_intf_pins blk_mem_gen_B_val/BRAM_PORTB] [get_bd_intf_pins bram_mux_B_val1/M]
-  connect_bd_intf_net -intf_net sparseDemoDS_0_B_val0 [get_bd_intf_pins S_AUX] [get_bd_intf_pins bram_mux_B_val0/S_AUX]
-  connect_bd_intf_net -intf_net sparseDemoDS_0_B_val1 [get_bd_intf_pins S_AUX1] [get_bd_intf_pins bram_mux_B_val1/S_AUX]
+  connect_bd_intf_net -intf_net axi_interconnect_0_M06_AXI [get_bd_intf_pins S_AXI] [get_bd_intf_pins rc_B_val_sparseDemoDS_0/S_AXI]
+  connect_bd_intf_net -intf_net mux_B_val0_M [get_bd_intf_pins bmg_B_val_sparseDemoDS_0/BRAM_PORTA] [get_bd_intf_pins mux_B_val0/M]
+  connect_bd_intf_net -intf_net mux_B_val1_M [get_bd_intf_pins bmg_B_val_sparseDemoDS_0/BRAM_PORTB] [get_bd_intf_pins mux_B_val1/M]
+  connect_bd_intf_net -intf_net rc_B_val_sparseDemoDS_0_BRAM_PORTA [get_bd_intf_pins mux_B_val0/S_CTRL] [get_bd_intf_pins rc_B_val_sparseDemoDS_0/BRAM_PORTA]
+  connect_bd_intf_net -intf_net rc_B_val_sparseDemoDS_0_BRAM_PORTB [get_bd_intf_pins mux_B_val1/S_CTRL] [get_bd_intf_pins rc_B_val_sparseDemoDS_0/BRAM_PORTB]
+  connect_bd_intf_net -intf_net sparseDemoDS_0_B_val0 [get_bd_intf_pins S_AUX] [get_bd_intf_pins mux_B_val0/S_AUX]
+  connect_bd_intf_net -intf_net sparseDemoDS_0_B_val1 [get_bd_intf_pins S_AUX1] [get_bd_intf_pins mux_B_val1/S_AUX]
 
   # Create port connections
-  connect_bd_net -net microblaze_0_Clk [get_bd_pins s_axi_aclk] [get_bd_pins axi_bram_ctrl_B_val/s_axi_aclk]
-  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins s_axi_aresetn] [get_bd_pins axi_bram_ctrl_B_val/s_axi_aresetn]
-  connect_bd_net -net xlconstant_0_dout [get_bd_pins bram_mux_B_val0/clk1] [get_bd_pins bram_mux_B_val0/rst1] [get_bd_pins bram_mux_B_val1/clk1] [get_bd_pins bram_mux_B_val1/rst1] [get_bd_pins xlconstant_0/dout]
-  connect_bd_net -net xlslice_sel_Dout [get_bd_pins sel] [get_bd_pins bram_mux_B_val0/sel] [get_bd_pins bram_mux_B_val1/sel]
+  connect_bd_net -net microblaze_0_Clk [get_bd_pins clk1] [get_bd_pins mux_B_val0/clk1] [get_bd_pins mux_B_val1/clk1] [get_bd_pins rc_B_val_sparseDemoDS_0/s_axi_aclk]
+  connect_bd_net -net rst_clk_wiz_0_100M_mb_reset [get_bd_pins rst1] [get_bd_pins mux_B_val0/rst1] [get_bd_pins mux_B_val1/rst1]
+  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins s_axi_aresetn] [get_bd_pins rc_B_val_sparseDemoDS_0/s_axi_aresetn]
+  connect_bd_net -net xlslice_sel_Dout [get_bd_pins sel] [get_bd_pins mux_B_val0/sel] [get_bd_pins mux_B_val1/sel]
 
   # Restore current instance
   current_bd_instance $oldCurInst
@@ -341,46 +901,41 @@ proc create_hier_cell_bram_B_ptr { parentCell nameHier } {
 
 
   # Create pins
-  create_bd_pin -dir I -type clk s_axi_aclk
+  create_bd_pin -dir I -type clk clk1
+  create_bd_pin -dir I -type rst rst1
   create_bd_pin -dir I -type rst s_axi_aresetn
   create_bd_pin -dir I sel
 
-  # Create instance: axi_bram_ctrl_B_ptr, and set properties
-  set axi_bram_ctrl_B_ptr [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.1 axi_bram_ctrl_B_ptr ]
-
-  # Create instance: blk_mem_gen_B_ptr, and set properties
-  set blk_mem_gen_B_ptr [ create_bd_cell -type ip -vlnv xilinx.com:ip:blk_mem_gen:8.4 blk_mem_gen_B_ptr ]
+  # Create instance: bmg_B_ptr_sparseDemoDS_0, and set properties
+  set bmg_B_ptr_sparseDemoDS_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:blk_mem_gen:8.4 bmg_B_ptr_sparseDemoDS_0 ]
   set_property -dict [ list \
    CONFIG.Assume_Synchronous_Clk {true} \
    CONFIG.Memory_Type {True_Dual_Port_RAM} \
- ] $blk_mem_gen_B_ptr
+ ] $bmg_B_ptr_sparseDemoDS_0
 
-  # Create instance: bram_mux_B_ptr0, and set properties
-  set bram_mux_B_ptr0 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 bram_mux_B_ptr0 ]
+  # Create instance: mux_B_ptr0, and set properties
+  set mux_B_ptr0 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 mux_B_ptr0 ]
 
-  # Create instance: bram_mux_B_ptr1, and set properties
-  set bram_mux_B_ptr1 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 bram_mux_B_ptr1 ]
+  # Create instance: mux_B_ptr1, and set properties
+  set mux_B_ptr1 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 mux_B_ptr1 ]
 
-  # Create instance: xlconstant_0, and set properties
-  set xlconstant_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_0 ]
-  set_property -dict [ list \
-   CONFIG.CONST_VAL {0} \
- ] $xlconstant_0
+  # Create instance: rc_B_ptr_sparseDemoDS_0, and set properties
+  set rc_B_ptr_sparseDemoDS_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.1 rc_B_ptr_sparseDemoDS_0 ]
 
   # Create interface connections
-  connect_bd_intf_net -intf_net axi_bram_ctrl_B_ptr_BRAM_PORTA [get_bd_intf_pins axi_bram_ctrl_B_ptr/BRAM_PORTA] [get_bd_intf_pins bram_mux_B_ptr0/S_CTRL]
-  connect_bd_intf_net -intf_net axi_bram_ctrl_B_ptr_BRAM_PORTB [get_bd_intf_pins axi_bram_ctrl_B_ptr/BRAM_PORTB] [get_bd_intf_pins bram_mux_B_ptr1/S_CTRL]
-  connect_bd_intf_net -intf_net axi_interconnect_0_M05_AXI [get_bd_intf_pins S_AXI] [get_bd_intf_pins axi_bram_ctrl_B_ptr/S_AXI]
-  connect_bd_intf_net -intf_net bram_mux_B_ptr0_M [get_bd_intf_pins blk_mem_gen_B_ptr/BRAM_PORTA] [get_bd_intf_pins bram_mux_B_ptr0/M]
-  connect_bd_intf_net -intf_net bram_mux_B_ptr1_M [get_bd_intf_pins blk_mem_gen_B_ptr/BRAM_PORTB] [get_bd_intf_pins bram_mux_B_ptr1/M]
-  connect_bd_intf_net -intf_net sparseDemoDS_0_B_ptr0 [get_bd_intf_pins S_AUX] [get_bd_intf_pins bram_mux_B_ptr0/S_AUX]
-  connect_bd_intf_net -intf_net sparseDemoDS_0_B_ptr1 [get_bd_intf_pins S_AUX1] [get_bd_intf_pins bram_mux_B_ptr1/S_AUX]
+  connect_bd_intf_net -intf_net axi_interconnect_0_M05_AXI [get_bd_intf_pins S_AXI] [get_bd_intf_pins rc_B_ptr_sparseDemoDS_0/S_AXI]
+  connect_bd_intf_net -intf_net mux_B_ptr0_M [get_bd_intf_pins bmg_B_ptr_sparseDemoDS_0/BRAM_PORTA] [get_bd_intf_pins mux_B_ptr0/M]
+  connect_bd_intf_net -intf_net mux_B_ptr1_M [get_bd_intf_pins bmg_B_ptr_sparseDemoDS_0/BRAM_PORTB] [get_bd_intf_pins mux_B_ptr1/M]
+  connect_bd_intf_net -intf_net rc_B_ptr_sparseDemoDS_0_BRAM_PORTA [get_bd_intf_pins mux_B_ptr0/S_CTRL] [get_bd_intf_pins rc_B_ptr_sparseDemoDS_0/BRAM_PORTA]
+  connect_bd_intf_net -intf_net rc_B_ptr_sparseDemoDS_0_BRAM_PORTB [get_bd_intf_pins mux_B_ptr1/S_CTRL] [get_bd_intf_pins rc_B_ptr_sparseDemoDS_0/BRAM_PORTB]
+  connect_bd_intf_net -intf_net sparseDemoDS_0_B_ptr0 [get_bd_intf_pins S_AUX] [get_bd_intf_pins mux_B_ptr0/S_AUX]
+  connect_bd_intf_net -intf_net sparseDemoDS_0_B_ptr1 [get_bd_intf_pins S_AUX1] [get_bd_intf_pins mux_B_ptr1/S_AUX]
 
   # Create port connections
-  connect_bd_net -net microblaze_0_Clk [get_bd_pins s_axi_aclk] [get_bd_pins axi_bram_ctrl_B_ptr/s_axi_aclk]
-  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins s_axi_aresetn] [get_bd_pins axi_bram_ctrl_B_ptr/s_axi_aresetn]
-  connect_bd_net -net xlconstant_0_dout [get_bd_pins bram_mux_B_ptr0/clk1] [get_bd_pins bram_mux_B_ptr0/rst1] [get_bd_pins bram_mux_B_ptr1/clk1] [get_bd_pins bram_mux_B_ptr1/rst1] [get_bd_pins xlconstant_0/dout]
-  connect_bd_net -net xlslice_sel_Dout [get_bd_pins sel] [get_bd_pins bram_mux_B_ptr0/sel] [get_bd_pins bram_mux_B_ptr1/sel]
+  connect_bd_net -net microblaze_0_Clk [get_bd_pins clk1] [get_bd_pins mux_B_ptr0/clk1] [get_bd_pins mux_B_ptr1/clk1] [get_bd_pins rc_B_ptr_sparseDemoDS_0/s_axi_aclk]
+  connect_bd_net -net rst_clk_wiz_0_100M_mb_reset [get_bd_pins rst1] [get_bd_pins mux_B_ptr0/rst1] [get_bd_pins mux_B_ptr1/rst1]
+  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins s_axi_aresetn] [get_bd_pins rc_B_ptr_sparseDemoDS_0/s_axi_aresetn]
+  connect_bd_net -net xlslice_sel_Dout [get_bd_pins sel] [get_bd_pins mux_B_ptr0/sel] [get_bd_pins mux_B_ptr1/sel]
 
   # Restore current instance
   current_bd_instance $oldCurInst
@@ -429,46 +984,41 @@ proc create_hier_cell_bram_B_id { parentCell nameHier } {
 
 
   # Create pins
-  create_bd_pin -dir I -type clk s_axi_aclk
+  create_bd_pin -dir I -type clk clk1
+  create_bd_pin -dir I -type rst rst1
   create_bd_pin -dir I -type rst s_axi_aresetn
   create_bd_pin -dir I sel
 
-  # Create instance: axi_bram_ctrl_B_id, and set properties
-  set axi_bram_ctrl_B_id [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.1 axi_bram_ctrl_B_id ]
-
-  # Create instance: blk_mem_gen_B_id, and set properties
-  set blk_mem_gen_B_id [ create_bd_cell -type ip -vlnv xilinx.com:ip:blk_mem_gen:8.4 blk_mem_gen_B_id ]
+  # Create instance: bmg_B_id_sparseDemoDS_0, and set properties
+  set bmg_B_id_sparseDemoDS_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:blk_mem_gen:8.4 bmg_B_id_sparseDemoDS_0 ]
   set_property -dict [ list \
    CONFIG.Assume_Synchronous_Clk {true} \
    CONFIG.Memory_Type {True_Dual_Port_RAM} \
- ] $blk_mem_gen_B_id
+ ] $bmg_B_id_sparseDemoDS_0
 
-  # Create instance: bram_mux_B_id0, and set properties
-  set bram_mux_B_id0 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 bram_mux_B_id0 ]
+  # Create instance: mux_B_id0, and set properties
+  set mux_B_id0 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 mux_B_id0 ]
 
-  # Create instance: bram_mux_B_id1, and set properties
-  set bram_mux_B_id1 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 bram_mux_B_id1 ]
+  # Create instance: mux_B_id1, and set properties
+  set mux_B_id1 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 mux_B_id1 ]
 
-  # Create instance: xlconstant_0, and set properties
-  set xlconstant_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_0 ]
-  set_property -dict [ list \
-   CONFIG.CONST_VAL {0} \
- ] $xlconstant_0
+  # Create instance: rc_B_id_sparseDemoDS_0, and set properties
+  set rc_B_id_sparseDemoDS_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.1 rc_B_id_sparseDemoDS_0 ]
 
   # Create interface connections
-  connect_bd_intf_net -intf_net axi_bram_ctrl_B_id_BRAM_PORTA [get_bd_intf_pins axi_bram_ctrl_B_id/BRAM_PORTA] [get_bd_intf_pins bram_mux_B_id0/S_CTRL]
-  connect_bd_intf_net -intf_net axi_bram_ctrl_B_id_BRAM_PORTB [get_bd_intf_pins axi_bram_ctrl_B_id/BRAM_PORTB] [get_bd_intf_pins bram_mux_B_id1/S_CTRL]
-  connect_bd_intf_net -intf_net axi_interconnect_0_M04_AXI [get_bd_intf_pins S_AXI] [get_bd_intf_pins axi_bram_ctrl_B_id/S_AXI]
-  connect_bd_intf_net -intf_net bram_mux_B_id0_M [get_bd_intf_pins blk_mem_gen_B_id/BRAM_PORTA] [get_bd_intf_pins bram_mux_B_id0/M]
-  connect_bd_intf_net -intf_net bram_mux_B_id1_M [get_bd_intf_pins blk_mem_gen_B_id/BRAM_PORTB] [get_bd_intf_pins bram_mux_B_id1/M]
-  connect_bd_intf_net -intf_net sparseDemoDS_0_B_id0 [get_bd_intf_pins S_AUX] [get_bd_intf_pins bram_mux_B_id0/S_AUX]
-  connect_bd_intf_net -intf_net sparseDemoDS_0_B_id1 [get_bd_intf_pins S_AUX1] [get_bd_intf_pins bram_mux_B_id1/S_AUX]
+  connect_bd_intf_net -intf_net axi_interconnect_0_M04_AXI [get_bd_intf_pins S_AXI] [get_bd_intf_pins rc_B_id_sparseDemoDS_0/S_AXI]
+  connect_bd_intf_net -intf_net mux_B_id0_M [get_bd_intf_pins bmg_B_id_sparseDemoDS_0/BRAM_PORTA] [get_bd_intf_pins mux_B_id0/M]
+  connect_bd_intf_net -intf_net mux_B_id1_M [get_bd_intf_pins bmg_B_id_sparseDemoDS_0/BRAM_PORTB] [get_bd_intf_pins mux_B_id1/M]
+  connect_bd_intf_net -intf_net rc_B_id_sparseDemoDS_0_BRAM_PORTA [get_bd_intf_pins mux_B_id0/S_CTRL] [get_bd_intf_pins rc_B_id_sparseDemoDS_0/BRAM_PORTA]
+  connect_bd_intf_net -intf_net rc_B_id_sparseDemoDS_0_BRAM_PORTB [get_bd_intf_pins mux_B_id1/S_CTRL] [get_bd_intf_pins rc_B_id_sparseDemoDS_0/BRAM_PORTB]
+  connect_bd_intf_net -intf_net sparseDemoDS_0_B_id0 [get_bd_intf_pins S_AUX] [get_bd_intf_pins mux_B_id0/S_AUX]
+  connect_bd_intf_net -intf_net sparseDemoDS_0_B_id1 [get_bd_intf_pins S_AUX1] [get_bd_intf_pins mux_B_id1/S_AUX]
 
   # Create port connections
-  connect_bd_net -net microblaze_0_Clk [get_bd_pins s_axi_aclk] [get_bd_pins axi_bram_ctrl_B_id/s_axi_aclk]
-  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins s_axi_aresetn] [get_bd_pins axi_bram_ctrl_B_id/s_axi_aresetn]
-  connect_bd_net -net xlconstant_0_dout [get_bd_pins bram_mux_B_id0/clk1] [get_bd_pins bram_mux_B_id0/rst1] [get_bd_pins bram_mux_B_id1/clk1] [get_bd_pins bram_mux_B_id1/rst1] [get_bd_pins xlconstant_0/dout]
-  connect_bd_net -net xlslice_sel_Dout [get_bd_pins sel] [get_bd_pins bram_mux_B_id0/sel] [get_bd_pins bram_mux_B_id1/sel]
+  connect_bd_net -net microblaze_0_Clk [get_bd_pins clk1] [get_bd_pins mux_B_id0/clk1] [get_bd_pins mux_B_id1/clk1] [get_bd_pins rc_B_id_sparseDemoDS_0/s_axi_aclk]
+  connect_bd_net -net rst_clk_wiz_0_100M_mb_reset [get_bd_pins rst1] [get_bd_pins mux_B_id0/rst1] [get_bd_pins mux_B_id1/rst1]
+  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins s_axi_aresetn] [get_bd_pins rc_B_id_sparseDemoDS_0/s_axi_aresetn]
+  connect_bd_net -net xlslice_sel_Dout [get_bd_pins sel] [get_bd_pins mux_B_id0/sel] [get_bd_pins mux_B_id1/sel]
 
   # Restore current instance
   current_bd_instance $oldCurInst
@@ -517,46 +1067,41 @@ proc create_hier_cell_bram_A_val { parentCell nameHier } {
 
 
   # Create pins
-  create_bd_pin -dir I -type clk s_axi_aclk
+  create_bd_pin -dir I -type clk clk1
+  create_bd_pin -dir I -type rst rst1
   create_bd_pin -dir I -type rst s_axi_aresetn
   create_bd_pin -dir I sel
 
-  # Create instance: axi_bram_ctrl_A_val, and set properties
-  set axi_bram_ctrl_A_val [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.1 axi_bram_ctrl_A_val ]
-
-  # Create instance: blk_mem_gen_A_val, and set properties
-  set blk_mem_gen_A_val [ create_bd_cell -type ip -vlnv xilinx.com:ip:blk_mem_gen:8.4 blk_mem_gen_A_val ]
+  # Create instance: bmg_A_val_sparseDemoDS_0, and set properties
+  set bmg_A_val_sparseDemoDS_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:blk_mem_gen:8.4 bmg_A_val_sparseDemoDS_0 ]
   set_property -dict [ list \
    CONFIG.Assume_Synchronous_Clk {true} \
    CONFIG.Memory_Type {True_Dual_Port_RAM} \
- ] $blk_mem_gen_A_val
+ ] $bmg_A_val_sparseDemoDS_0
 
-  # Create instance: bram_mux_A_val0, and set properties
-  set bram_mux_A_val0 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 bram_mux_A_val0 ]
+  # Create instance: mux_A_val0, and set properties
+  set mux_A_val0 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 mux_A_val0 ]
 
-  # Create instance: bram_mux_A_val1, and set properties
-  set bram_mux_A_val1 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 bram_mux_A_val1 ]
+  # Create instance: mux_A_val1, and set properties
+  set mux_A_val1 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 mux_A_val1 ]
 
-  # Create instance: xlconstant_0, and set properties
-  set xlconstant_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_0 ]
-  set_property -dict [ list \
-   CONFIG.CONST_VAL {0} \
- ] $xlconstant_0
+  # Create instance: rc_A_val_sparseDemoDS_0, and set properties
+  set rc_A_val_sparseDemoDS_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.1 rc_A_val_sparseDemoDS_0 ]
 
   # Create interface connections
-  connect_bd_intf_net -intf_net axi_bram_ctrl_A_val_BRAM_PORTA [get_bd_intf_pins axi_bram_ctrl_A_val/BRAM_PORTA] [get_bd_intf_pins bram_mux_A_val0/S_CTRL]
-  connect_bd_intf_net -intf_net axi_bram_ctrl_A_val_BRAM_PORTB [get_bd_intf_pins axi_bram_ctrl_A_val/BRAM_PORTB] [get_bd_intf_pins bram_mux_A_val1/S_CTRL]
-  connect_bd_intf_net -intf_net axi_interconnect_0_M03_AXI [get_bd_intf_pins S_AXI] [get_bd_intf_pins axi_bram_ctrl_A_val/S_AXI]
-  connect_bd_intf_net -intf_net bram_mux_A_val0_M [get_bd_intf_pins blk_mem_gen_A_val/BRAM_PORTA] [get_bd_intf_pins bram_mux_A_val0/M]
-  connect_bd_intf_net -intf_net bram_mux_A_val1_M [get_bd_intf_pins blk_mem_gen_A_val/BRAM_PORTB] [get_bd_intf_pins bram_mux_A_val1/M]
-  connect_bd_intf_net -intf_net sparseDemoDS_0_A_val0 [get_bd_intf_pins S_AUX] [get_bd_intf_pins bram_mux_A_val0/S_AUX]
-  connect_bd_intf_net -intf_net sparseDemoDS_0_A_val1 [get_bd_intf_pins S_AUX1] [get_bd_intf_pins bram_mux_A_val1/S_AUX]
+  connect_bd_intf_net -intf_net axi_interconnect_0_M03_AXI [get_bd_intf_pins S_AXI] [get_bd_intf_pins rc_A_val_sparseDemoDS_0/S_AXI]
+  connect_bd_intf_net -intf_net mux_A_val0_M [get_bd_intf_pins bmg_A_val_sparseDemoDS_0/BRAM_PORTA] [get_bd_intf_pins mux_A_val0/M]
+  connect_bd_intf_net -intf_net mux_A_val1_M [get_bd_intf_pins bmg_A_val_sparseDemoDS_0/BRAM_PORTB] [get_bd_intf_pins mux_A_val1/M]
+  connect_bd_intf_net -intf_net rc_A_val_sparseDemoDS_0_BRAM_PORTA [get_bd_intf_pins mux_A_val0/S_CTRL] [get_bd_intf_pins rc_A_val_sparseDemoDS_0/BRAM_PORTA]
+  connect_bd_intf_net -intf_net rc_A_val_sparseDemoDS_0_BRAM_PORTB [get_bd_intf_pins mux_A_val1/S_CTRL] [get_bd_intf_pins rc_A_val_sparseDemoDS_0/BRAM_PORTB]
+  connect_bd_intf_net -intf_net sparseDemoDS_0_A_val0 [get_bd_intf_pins S_AUX] [get_bd_intf_pins mux_A_val0/S_AUX]
+  connect_bd_intf_net -intf_net sparseDemoDS_0_A_val1 [get_bd_intf_pins S_AUX1] [get_bd_intf_pins mux_A_val1/S_AUX]
 
   # Create port connections
-  connect_bd_net -net microblaze_0_Clk [get_bd_pins s_axi_aclk] [get_bd_pins axi_bram_ctrl_A_val/s_axi_aclk]
-  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins s_axi_aresetn] [get_bd_pins axi_bram_ctrl_A_val/s_axi_aresetn]
-  connect_bd_net -net xlconstant_0_dout [get_bd_pins bram_mux_A_val0/clk1] [get_bd_pins bram_mux_A_val0/rst1] [get_bd_pins bram_mux_A_val1/clk1] [get_bd_pins bram_mux_A_val1/rst1] [get_bd_pins xlconstant_0/dout]
-  connect_bd_net -net xlslice_sel_Dout [get_bd_pins sel] [get_bd_pins bram_mux_A_val0/sel] [get_bd_pins bram_mux_A_val1/sel]
+  connect_bd_net -net microblaze_0_Clk [get_bd_pins clk1] [get_bd_pins mux_A_val0/clk1] [get_bd_pins mux_A_val1/clk1] [get_bd_pins rc_A_val_sparseDemoDS_0/s_axi_aclk]
+  connect_bd_net -net rst_clk_wiz_0_100M_mb_reset [get_bd_pins rst1] [get_bd_pins mux_A_val0/rst1] [get_bd_pins mux_A_val1/rst1]
+  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins s_axi_aresetn] [get_bd_pins rc_A_val_sparseDemoDS_0/s_axi_aresetn]
+  connect_bd_net -net xlslice_sel_Dout [get_bd_pins sel] [get_bd_pins mux_A_val0/sel] [get_bd_pins mux_A_val1/sel]
 
   # Restore current instance
   current_bd_instance $oldCurInst
@@ -605,46 +1150,41 @@ proc create_hier_cell_bram_A_ptr { parentCell nameHier } {
 
 
   # Create pins
-  create_bd_pin -dir I -type clk s_axi_aclk
+  create_bd_pin -dir I -type clk clk1
+  create_bd_pin -dir I -type rst rst1
   create_bd_pin -dir I -type rst s_axi_aresetn
   create_bd_pin -dir I sel
 
-  # Create instance: axi_bram_ctrl_A_ptr, and set properties
-  set axi_bram_ctrl_A_ptr [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.1 axi_bram_ctrl_A_ptr ]
-
-  # Create instance: blk_mem_gen_A_ptr, and set properties
-  set blk_mem_gen_A_ptr [ create_bd_cell -type ip -vlnv xilinx.com:ip:blk_mem_gen:8.4 blk_mem_gen_A_ptr ]
+  # Create instance: bmg_A_ptr_sparseDemoDS_0, and set properties
+  set bmg_A_ptr_sparseDemoDS_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:blk_mem_gen:8.4 bmg_A_ptr_sparseDemoDS_0 ]
   set_property -dict [ list \
    CONFIG.Assume_Synchronous_Clk {true} \
    CONFIG.Memory_Type {True_Dual_Port_RAM} \
- ] $blk_mem_gen_A_ptr
+ ] $bmg_A_ptr_sparseDemoDS_0
 
-  # Create instance: bram_mux_A_ptr0, and set properties
-  set bram_mux_A_ptr0 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 bram_mux_A_ptr0 ]
+  # Create instance: mux_A_ptr0, and set properties
+  set mux_A_ptr0 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 mux_A_ptr0 ]
 
-  # Create instance: bram_mux_A_ptr1, and set properties
-  set bram_mux_A_ptr1 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 bram_mux_A_ptr1 ]
+  # Create instance: mux_A_ptr1, and set properties
+  set mux_A_ptr1 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 mux_A_ptr1 ]
 
-  # Create instance: xlconstant_0, and set properties
-  set xlconstant_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_0 ]
-  set_property -dict [ list \
-   CONFIG.CONST_VAL {0} \
- ] $xlconstant_0
+  # Create instance: rc_A_ptr_sparseDemoDS_0, and set properties
+  set rc_A_ptr_sparseDemoDS_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.1 rc_A_ptr_sparseDemoDS_0 ]
 
   # Create interface connections
-  connect_bd_intf_net -intf_net axi_bram_ctrl_A_ptr_BRAM_PORTA [get_bd_intf_pins axi_bram_ctrl_A_ptr/BRAM_PORTA] [get_bd_intf_pins bram_mux_A_ptr0/S_CTRL]
-  connect_bd_intf_net -intf_net axi_bram_ctrl_A_ptr_BRAM_PORTB [get_bd_intf_pins axi_bram_ctrl_A_ptr/BRAM_PORTB] [get_bd_intf_pins bram_mux_A_ptr1/S_CTRL]
-  connect_bd_intf_net -intf_net axi_interconnect_0_M02_AXI [get_bd_intf_pins S_AXI] [get_bd_intf_pins axi_bram_ctrl_A_ptr/S_AXI]
-  connect_bd_intf_net -intf_net bram_mux_A_ptr0_M [get_bd_intf_pins blk_mem_gen_A_ptr/BRAM_PORTA] [get_bd_intf_pins bram_mux_A_ptr0/M]
-  connect_bd_intf_net -intf_net bram_mux_A_ptr1_M [get_bd_intf_pins blk_mem_gen_A_ptr/BRAM_PORTB] [get_bd_intf_pins bram_mux_A_ptr1/M]
-  connect_bd_intf_net -intf_net sparseDemoDS_0_A_ptr0 [get_bd_intf_pins S_AUX] [get_bd_intf_pins bram_mux_A_ptr0/S_AUX]
-  connect_bd_intf_net -intf_net sparseDemoDS_0_A_ptr1 [get_bd_intf_pins S_AUX1] [get_bd_intf_pins bram_mux_A_ptr1/S_AUX]
+  connect_bd_intf_net -intf_net axi_interconnect_0_M02_AXI [get_bd_intf_pins S_AXI] [get_bd_intf_pins rc_A_ptr_sparseDemoDS_0/S_AXI]
+  connect_bd_intf_net -intf_net mux_A_ptr0_M [get_bd_intf_pins bmg_A_ptr_sparseDemoDS_0/BRAM_PORTA] [get_bd_intf_pins mux_A_ptr0/M]
+  connect_bd_intf_net -intf_net mux_A_ptr1_M [get_bd_intf_pins bmg_A_ptr_sparseDemoDS_0/BRAM_PORTB] [get_bd_intf_pins mux_A_ptr1/M]
+  connect_bd_intf_net -intf_net rc_A_ptr_sparseDemoDS_0_BRAM_PORTA [get_bd_intf_pins mux_A_ptr0/S_CTRL] [get_bd_intf_pins rc_A_ptr_sparseDemoDS_0/BRAM_PORTA]
+  connect_bd_intf_net -intf_net rc_A_ptr_sparseDemoDS_0_BRAM_PORTB [get_bd_intf_pins mux_A_ptr1/S_CTRL] [get_bd_intf_pins rc_A_ptr_sparseDemoDS_0/BRAM_PORTB]
+  connect_bd_intf_net -intf_net sparseDemoDS_0_A_ptr0 [get_bd_intf_pins S_AUX] [get_bd_intf_pins mux_A_ptr0/S_AUX]
+  connect_bd_intf_net -intf_net sparseDemoDS_0_A_ptr1 [get_bd_intf_pins S_AUX1] [get_bd_intf_pins mux_A_ptr1/S_AUX]
 
   # Create port connections
-  connect_bd_net -net microblaze_0_Clk [get_bd_pins s_axi_aclk] [get_bd_pins axi_bram_ctrl_A_ptr/s_axi_aclk]
-  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins s_axi_aresetn] [get_bd_pins axi_bram_ctrl_A_ptr/s_axi_aresetn]
-  connect_bd_net -net xlconstant_0_dout [get_bd_pins bram_mux_A_ptr0/clk1] [get_bd_pins bram_mux_A_ptr0/rst1] [get_bd_pins bram_mux_A_ptr1/clk1] [get_bd_pins bram_mux_A_ptr1/rst1] [get_bd_pins xlconstant_0/dout]
-  connect_bd_net -net xlslice_sel_Dout [get_bd_pins sel] [get_bd_pins bram_mux_A_ptr0/sel] [get_bd_pins bram_mux_A_ptr1/sel]
+  connect_bd_net -net microblaze_0_Clk [get_bd_pins clk1] [get_bd_pins mux_A_ptr0/clk1] [get_bd_pins mux_A_ptr1/clk1] [get_bd_pins rc_A_ptr_sparseDemoDS_0/s_axi_aclk]
+  connect_bd_net -net rst_clk_wiz_0_100M_mb_reset [get_bd_pins rst1] [get_bd_pins mux_A_ptr0/rst1] [get_bd_pins mux_A_ptr1/rst1]
+  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins s_axi_aresetn] [get_bd_pins rc_A_ptr_sparseDemoDS_0/s_axi_aresetn]
+  connect_bd_net -net xlslice_sel_Dout [get_bd_pins sel] [get_bd_pins mux_A_ptr0/sel] [get_bd_pins mux_A_ptr1/sel]
 
   # Restore current instance
   current_bd_instance $oldCurInst
@@ -693,58 +1233,53 @@ proc create_hier_cell_bram_A_id { parentCell nameHier } {
 
 
   # Create pins
-  create_bd_pin -dir I -type clk s_axi_aclk
+  create_bd_pin -dir I -type clk clk1
+  create_bd_pin -dir I -type rst rst1
   create_bd_pin -dir I -type rst s_axi_aresetn
   create_bd_pin -dir I sel
 
-  # Create instance: axi_bram_ctrl_A_id, and set properties
-  set axi_bram_ctrl_A_id [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.1 axi_bram_ctrl_A_id ]
-
-  # Create instance: blk_mem_gen_A_id, and set properties
-  set blk_mem_gen_A_id [ create_bd_cell -type ip -vlnv xilinx.com:ip:blk_mem_gen:8.4 blk_mem_gen_A_id ]
+  # Create instance: bmg_A_id_sparseDemoDS_0, and set properties
+  set bmg_A_id_sparseDemoDS_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:blk_mem_gen:8.4 bmg_A_id_sparseDemoDS_0 ]
   set_property -dict [ list \
    CONFIG.Assume_Synchronous_Clk {true} \
    CONFIG.Memory_Type {True_Dual_Port_RAM} \
- ] $blk_mem_gen_A_id
+ ] $bmg_A_id_sparseDemoDS_0
 
-  # Create instance: bram_mux_A_id0, and set properties
-  set bram_mux_A_id0 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 bram_mux_A_id0 ]
+  # Create instance: mux_A_id0, and set properties
+  set mux_A_id0 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 mux_A_id0 ]
 
-  # Create instance: bram_mux_A_id1, and set properties
-  set bram_mux_A_id1 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 bram_mux_A_id1 ]
+  # Create instance: mux_A_id1, and set properties
+  set mux_A_id1 [ create_bd_cell -type ip -vlnv pkusc.org:user:bram_mux:1.0 mux_A_id1 ]
 
-  # Create instance: xlconstant_0, and set properties
-  set xlconstant_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_0 ]
-  set_property -dict [ list \
-   CONFIG.CONST_VAL {0} \
- ] $xlconstant_0
+  # Create instance: rc_A_id_sparseDemoDS_0, and set properties
+  set rc_A_id_sparseDemoDS_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.1 rc_A_id_sparseDemoDS_0 ]
 
   # Create interface connections
-  connect_bd_intf_net -intf_net axi_bram_ctrl_A_id_BRAM_PORTA [get_bd_intf_pins axi_bram_ctrl_A_id/BRAM_PORTA] [get_bd_intf_pins bram_mux_A_id0/S_CTRL]
-  connect_bd_intf_net -intf_net axi_bram_ctrl_A_id_BRAM_PORTB [get_bd_intf_pins axi_bram_ctrl_A_id/BRAM_PORTB] [get_bd_intf_pins bram_mux_A_id1/S_CTRL]
-  connect_bd_intf_net -intf_net axi_interconnect_0_M01_AXI [get_bd_intf_pins S_AXI] [get_bd_intf_pins axi_bram_ctrl_A_id/S_AXI]
-  connect_bd_intf_net -intf_net bram_mux_A_id0_M [get_bd_intf_pins blk_mem_gen_A_id/BRAM_PORTA] [get_bd_intf_pins bram_mux_A_id0/M]
-  connect_bd_intf_net -intf_net bram_mux_A_id1_M [get_bd_intf_pins blk_mem_gen_A_id/BRAM_PORTB] [get_bd_intf_pins bram_mux_A_id1/M]
-  connect_bd_intf_net -intf_net sparseDemoDS_0_A_id0 [get_bd_intf_pins S_AUX] [get_bd_intf_pins bram_mux_A_id0/S_AUX]
-  connect_bd_intf_net -intf_net sparseDemoDS_0_A_id1 [get_bd_intf_pins S_AUX1] [get_bd_intf_pins bram_mux_A_id1/S_AUX]
+  connect_bd_intf_net -intf_net axi_interconnect_0_M01_AXI [get_bd_intf_pins S_AXI] [get_bd_intf_pins rc_A_id_sparseDemoDS_0/S_AXI]
+  connect_bd_intf_net -intf_net mux_A_id0_M [get_bd_intf_pins bmg_A_id_sparseDemoDS_0/BRAM_PORTA] [get_bd_intf_pins mux_A_id0/M]
+  connect_bd_intf_net -intf_net mux_A_id1_M [get_bd_intf_pins bmg_A_id_sparseDemoDS_0/BRAM_PORTB] [get_bd_intf_pins mux_A_id1/M]
+  connect_bd_intf_net -intf_net rc_A_id_sparseDemoDS_0_BRAM_PORTA [get_bd_intf_pins mux_A_id0/S_CTRL] [get_bd_intf_pins rc_A_id_sparseDemoDS_0/BRAM_PORTA]
+  connect_bd_intf_net -intf_net rc_A_id_sparseDemoDS_0_BRAM_PORTB [get_bd_intf_pins mux_A_id1/S_CTRL] [get_bd_intf_pins rc_A_id_sparseDemoDS_0/BRAM_PORTB]
+  connect_bd_intf_net -intf_net sparseDemoDS_0_A_id0 [get_bd_intf_pins S_AUX] [get_bd_intf_pins mux_A_id0/S_AUX]
+  connect_bd_intf_net -intf_net sparseDemoDS_0_A_id1 [get_bd_intf_pins S_AUX1] [get_bd_intf_pins mux_A_id1/S_AUX]
 
   # Create port connections
-  connect_bd_net -net microblaze_0_Clk [get_bd_pins s_axi_aclk] [get_bd_pins axi_bram_ctrl_A_id/s_axi_aclk]
-  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins s_axi_aresetn] [get_bd_pins axi_bram_ctrl_A_id/s_axi_aresetn]
-  connect_bd_net -net xlconstant_0_dout [get_bd_pins bram_mux_A_id0/clk1] [get_bd_pins bram_mux_A_id0/rst1] [get_bd_pins bram_mux_A_id1/clk1] [get_bd_pins bram_mux_A_id1/rst1] [get_bd_pins xlconstant_0/dout]
-  connect_bd_net -net xlslice_sel_Dout [get_bd_pins sel] [get_bd_pins bram_mux_A_id0/sel] [get_bd_pins bram_mux_A_id1/sel]
+  connect_bd_net -net microblaze_0_Clk [get_bd_pins clk1] [get_bd_pins mux_A_id0/clk1] [get_bd_pins mux_A_id1/clk1] [get_bd_pins rc_A_id_sparseDemoDS_0/s_axi_aclk]
+  connect_bd_net -net rst_clk_wiz_0_100M_mb_reset [get_bd_pins rst1] [get_bd_pins mux_A_id0/rst1] [get_bd_pins mux_A_id1/rst1]
+  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins s_axi_aresetn] [get_bd_pins rc_A_id_sparseDemoDS_0/s_axi_aresetn]
+  connect_bd_net -net xlslice_sel_Dout [get_bd_pins sel] [get_bd_pins mux_A_id0/sel] [get_bd_pins mux_A_id1/sel]
 
   # Restore current instance
   current_bd_instance $oldCurInst
 }
 
-# Hierarchical cell: sparseDemoDS_system
-proc create_hier_cell_sparseDemoDS_system { parentCell nameHier } {
+# Hierarchical cell: sparseDemo_sys
+proc create_hier_cell_sparseDemo_sys { parentCell nameHier } {
 
   variable script_folder
 
   if { $parentCell eq "" || $nameHier eq "" } {
-     catch {common::send_msg_id "BD_TCL-102" "ERROR" "create_hier_cell_sparseDemoDS_system() - Empty argument(s)!"}
+     catch {common::send_msg_id "BD_TCL-102" "ERROR" "create_hier_cell_sparseDemo_sys() - Empty argument(s)!"}
      return
   }
 
@@ -778,7 +1313,7 @@ proc create_hier_cell_sparseDemoDS_system { parentCell nameHier } {
 
   # Create pins
   create_bd_pin -dir O -type intr ip2intc_irpt
-  create_bd_pin -dir I -type rst rst
+  create_bd_pin -dir I -type rst rst1
   create_bd_pin -dir I -type clk s_axi_aclk
   create_bd_pin -dir I -type rst s_axi_aresetn
 
@@ -789,41 +1324,47 @@ proc create_hier_cell_sparseDemoDS_system { parentCell nameHier } {
  ] $axi_interconnect_0
 
   # Create instance: bram_A_id
-  create_hier_cell_bram_A_id $hier_obj bram_A_id
+  create_hier_cell_bram_A_id_1 $hier_obj bram_A_id
 
   # Create instance: bram_A_ptr
-  create_hier_cell_bram_A_ptr $hier_obj bram_A_ptr
+  create_hier_cell_bram_A_ptr_1 $hier_obj bram_A_ptr
 
   # Create instance: bram_A_val
-  create_hier_cell_bram_A_val $hier_obj bram_A_val
+  create_hier_cell_bram_A_val_1 $hier_obj bram_A_val
 
   # Create instance: bram_B_id
-  create_hier_cell_bram_B_id $hier_obj bram_B_id
+  create_hier_cell_bram_B_id_1 $hier_obj bram_B_id
 
   # Create instance: bram_B_ptr
-  create_hier_cell_bram_B_ptr $hier_obj bram_B_ptr
+  create_hier_cell_bram_B_ptr_1 $hier_obj bram_B_ptr
 
   # Create instance: bram_B_val
-  create_hier_cell_bram_B_val $hier_obj bram_B_val
+  create_hier_cell_bram_B_val_1 $hier_obj bram_B_val
 
   # Create instance: bram_C
-  create_hier_cell_bram_C $hier_obj bram_C
+  create_hier_cell_bram_C_1 $hier_obj bram_C
 
-  # Create instance: gpio_ctrl, and set properties
-  set gpio_ctrl [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 gpio_ctrl ]
+  # Create instance: ctrl_sparseDemo, and set properties
+  set ctrl_sparseDemo [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 ctrl_sparseDemo ]
   set_property -dict [ list \
    CONFIG.C_GPIO_WIDTH {4} \
    CONFIG.C_INTERRUPT_PRESENT {1} \
- ] $gpio_ctrl
+ ] $ctrl_sparseDemo
 
-  # Create instance: sparseDemoDS_0, and set properties
-  set sparseDemoDS_0 [ create_bd_cell -type ip -vlnv pkusc.org:user:sparseDemoDS:1.0 sparseDemoDS_0 ]
+  # Create instance: sparseDemo_0, and set properties
+  set sparseDemo_0 [ create_bd_cell -type ip -vlnv pkusc.org:user:sparseDemo:1.0 sparseDemo_0 ]
 
   # Create instance: xlconcat_ctrl, and set properties
   set xlconcat_ctrl [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconcat:2.1 xlconcat_ctrl ]
   set_property -dict [ list \
-   CONFIG.NUM_PORTS {3} \
+   CONFIG.NUM_PORTS {4} \
  ] $xlconcat_ctrl
+
+  # Create instance: xlconstant_0, and set properties
+  set xlconstant_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_0 ]
+  set_property -dict [ list \
+   CONFIG.CONST_VAL {0} \
+ ] $xlconstant_0
 
   # Create instance: xlslice_end_ready, and set properties
   set xlslice_end_ready [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 xlslice_end_ready ]
@@ -858,7 +1399,174 @@ proc create_hier_cell_sparseDemoDS_system { parentCell nameHier } {
  ] $xlslice_start_valid
 
   # Create interface connections
-  connect_bd_intf_net -intf_net axi_interconnect_0_M00_AXI [get_bd_intf_pins axi_interconnect_0/M00_AXI] [get_bd_intf_pins gpio_ctrl/S_AXI]
+  connect_bd_intf_net -intf_net axi_interconnect_0_M00_AXI [get_bd_intf_pins axi_interconnect_0/M00_AXI] [get_bd_intf_pins ctrl_sparseDemo/S_AXI]
+  connect_bd_intf_net -intf_net axi_interconnect_0_M01_AXI [get_bd_intf_pins axi_interconnect_0/M01_AXI] [get_bd_intf_pins bram_A_id/S_AXI]
+  connect_bd_intf_net -intf_net axi_interconnect_0_M02_AXI [get_bd_intf_pins axi_interconnect_0/M02_AXI] [get_bd_intf_pins bram_A_ptr/S_AXI]
+  connect_bd_intf_net -intf_net axi_interconnect_0_M03_AXI [get_bd_intf_pins axi_interconnect_0/M03_AXI] [get_bd_intf_pins bram_A_val/S_AXI]
+  connect_bd_intf_net -intf_net axi_interconnect_0_M04_AXI [get_bd_intf_pins axi_interconnect_0/M04_AXI] [get_bd_intf_pins bram_B_ptr/S_AXI]
+  connect_bd_intf_net -intf_net axi_interconnect_0_M05_AXI [get_bd_intf_pins axi_interconnect_0/M05_AXI] [get_bd_intf_pins bram_B_id/S_AXI]
+  connect_bd_intf_net -intf_net axi_interconnect_0_M06_AXI [get_bd_intf_pins axi_interconnect_0/M06_AXI] [get_bd_intf_pins bram_B_val/S_AXI]
+  connect_bd_intf_net -intf_net axi_interconnect_0_M07_AXI [get_bd_intf_pins axi_interconnect_0/M07_AXI] [get_bd_intf_pins bram_C/S_AXI]
+  connect_bd_intf_net -intf_net microblaze_0_axi_periph_M10_AXI [get_bd_intf_pins S00_AXI] [get_bd_intf_pins axi_interconnect_0/S00_AXI]
+  connect_bd_intf_net -intf_net sparseDemo_0_A_id0 [get_bd_intf_pins bram_A_id/S_AUX] [get_bd_intf_pins sparseDemo_0/A_id0]
+  connect_bd_intf_net -intf_net sparseDemo_0_A_id1 [get_bd_intf_pins bram_A_id/S_AUX1] [get_bd_intf_pins sparseDemo_0/A_id1]
+  connect_bd_intf_net -intf_net sparseDemo_0_A_ptr0 [get_bd_intf_pins bram_A_ptr/S_AUX] [get_bd_intf_pins sparseDemo_0/A_ptr0]
+  connect_bd_intf_net -intf_net sparseDemo_0_A_ptr1 [get_bd_intf_pins bram_A_ptr/S_AUX1] [get_bd_intf_pins sparseDemo_0/A_ptr1]
+  connect_bd_intf_net -intf_net sparseDemo_0_A_val0 [get_bd_intf_pins bram_A_val/S_AUX] [get_bd_intf_pins sparseDemo_0/A_val0]
+  connect_bd_intf_net -intf_net sparseDemo_0_A_val1 [get_bd_intf_pins bram_A_val/S_AUX1] [get_bd_intf_pins sparseDemo_0/A_val1]
+  connect_bd_intf_net -intf_net sparseDemo_0_B_id0 [get_bd_intf_pins bram_B_id/S_AUX] [get_bd_intf_pins sparseDemo_0/B_id0]
+  connect_bd_intf_net -intf_net sparseDemo_0_B_ptr0 [get_bd_intf_pins bram_B_ptr/S_AUX] [get_bd_intf_pins sparseDemo_0/B_ptr0]
+  connect_bd_intf_net -intf_net sparseDemo_0_B_ptr1 [get_bd_intf_pins bram_B_ptr/S_AUX1] [get_bd_intf_pins sparseDemo_0/B_ptr1]
+  connect_bd_intf_net -intf_net sparseDemo_0_B_val0 [get_bd_intf_pins bram_B_val/S_AUX] [get_bd_intf_pins sparseDemo_0/B_val0]
+  connect_bd_intf_net -intf_net sparseDemo_0_C0 [get_bd_intf_pins bram_C/S_AUX] [get_bd_intf_pins sparseDemo_0/C0]
+
+  # Create port connections
+  connect_bd_net -net ctrl_sparseDemo_gpio_io_o [get_bd_pins ctrl_sparseDemo/gpio_io_o] [get_bd_pins xlslice_end_ready/Din] [get_bd_pins xlslice_sel/Din] [get_bd_pins xlslice_start_in/Din] [get_bd_pins xlslice_start_valid/Din]
+  connect_bd_net -net ctrl_sparseDemo_ip2intc_irpt [get_bd_pins ip2intc_irpt] [get_bd_pins ctrl_sparseDemo/ip2intc_irpt]
+  connect_bd_net -net microblaze_0_Clk [get_bd_pins s_axi_aclk] [get_bd_pins axi_interconnect_0/ACLK] [get_bd_pins axi_interconnect_0/M00_ACLK] [get_bd_pins axi_interconnect_0/M01_ACLK] [get_bd_pins axi_interconnect_0/M02_ACLK] [get_bd_pins axi_interconnect_0/M03_ACLK] [get_bd_pins axi_interconnect_0/M04_ACLK] [get_bd_pins axi_interconnect_0/M05_ACLK] [get_bd_pins axi_interconnect_0/M06_ACLK] [get_bd_pins axi_interconnect_0/M07_ACLK] [get_bd_pins axi_interconnect_0/S00_ACLK] [get_bd_pins bram_A_id/clk1] [get_bd_pins bram_A_ptr/clk1] [get_bd_pins bram_A_val/clk1] [get_bd_pins bram_B_id/clk1] [get_bd_pins bram_B_ptr/clk1] [get_bd_pins bram_B_val/clk1] [get_bd_pins bram_C/clk1] [get_bd_pins ctrl_sparseDemo/s_axi_aclk] [get_bd_pins sparseDemo_0/clk]
+  connect_bd_net -net rst_clk_wiz_0_100M_mb_reset [get_bd_pins rst1] [get_bd_pins bram_A_id/rst1] [get_bd_pins bram_A_ptr/rst1] [get_bd_pins bram_A_val/rst1] [get_bd_pins bram_B_id/rst1] [get_bd_pins bram_B_ptr/rst1] [get_bd_pins bram_B_val/rst1] [get_bd_pins bram_C/rst1] [get_bd_pins sparseDemo_0/rst]
+  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins s_axi_aresetn] [get_bd_pins axi_interconnect_0/ARESETN] [get_bd_pins axi_interconnect_0/M00_ARESETN] [get_bd_pins axi_interconnect_0/M01_ARESETN] [get_bd_pins axi_interconnect_0/M02_ARESETN] [get_bd_pins axi_interconnect_0/M03_ARESETN] [get_bd_pins axi_interconnect_0/M04_ARESETN] [get_bd_pins axi_interconnect_0/M05_ARESETN] [get_bd_pins axi_interconnect_0/M06_ARESETN] [get_bd_pins axi_interconnect_0/M07_ARESETN] [get_bd_pins axi_interconnect_0/S00_ARESETN] [get_bd_pins bram_A_id/s_axi_aresetn] [get_bd_pins bram_A_ptr/s_axi_aresetn] [get_bd_pins bram_A_val/s_axi_aresetn] [get_bd_pins bram_B_id/s_axi_aresetn] [get_bd_pins bram_B_ptr/s_axi_aresetn] [get_bd_pins bram_B_val/s_axi_aresetn] [get_bd_pins bram_C/s_axi_aresetn] [get_bd_pins ctrl_sparseDemo/s_axi_aresetn]
+  connect_bd_net -net sparseDemo_0_end_out [get_bd_pins sparseDemo_0/end_out] [get_bd_pins xlconcat_ctrl/In1]
+  connect_bd_net -net sparseDemo_0_end_valid [get_bd_pins sparseDemo_0/end_valid] [get_bd_pins xlconcat_ctrl/In2]
+  connect_bd_net -net sparseDemo_0_start_ready [get_bd_pins sparseDemo_0/start_ready] [get_bd_pins xlconcat_ctrl/In0]
+  connect_bd_net -net xlconcat_ctrl_dout [get_bd_pins ctrl_sparseDemo/gpio_io_i] [get_bd_pins xlconcat_ctrl/dout]
+  connect_bd_net -net xlconstant_0_dout [get_bd_pins xlconcat_ctrl/In3] [get_bd_pins xlconstant_0/dout]
+  connect_bd_net -net xlslice_end_ready_Dout [get_bd_pins sparseDemo_0/end_ready] [get_bd_pins xlslice_end_ready/Dout]
+  connect_bd_net -net xlslice_sel_Dout [get_bd_pins bram_A_id/sel] [get_bd_pins bram_A_ptr/sel] [get_bd_pins bram_A_val/sel] [get_bd_pins bram_B_id/sel] [get_bd_pins bram_B_ptr/sel] [get_bd_pins bram_B_val/sel] [get_bd_pins bram_C/sel] [get_bd_pins xlslice_sel/Dout]
+  connect_bd_net -net xlslice_start_in_Dout [get_bd_pins sparseDemo_0/start_in] [get_bd_pins xlslice_start_in/Dout]
+  connect_bd_net -net xlslice_start_valid_Dout [get_bd_pins sparseDemo_0/start_valid] [get_bd_pins xlslice_start_valid/Dout]
+
+  # Restore current instance
+  current_bd_instance $oldCurInst
+}
+
+# Hierarchical cell: sparseDemoDS_sys
+proc create_hier_cell_sparseDemoDS_sys { parentCell nameHier } {
+
+  variable script_folder
+
+  if { $parentCell eq "" || $nameHier eq "" } {
+     catch {common::send_msg_id "BD_TCL-102" "ERROR" "create_hier_cell_sparseDemoDS_sys() - Empty argument(s)!"}
+     return
+  }
+
+  # Get object for parentCell
+  set parentObj [get_bd_cells $parentCell]
+  if { $parentObj == "" } {
+     catch {common::send_msg_id "BD_TCL-100" "ERROR" "Unable to find parent cell <$parentCell>!"}
+     return
+  }
+
+  # Make sure parentObj is hier blk
+  set parentType [get_property TYPE $parentObj]
+  if { $parentType ne "hier" } {
+     catch {common::send_msg_id "BD_TCL-101" "ERROR" "Parent <$parentObj> has TYPE = <$parentType>. Expected to be <hier>."}
+     return
+  }
+
+  # Save current instance; Restore later
+  set oldCurInst [current_bd_instance .]
+
+  # Set parent object as current
+  current_bd_instance $parentObj
+
+  # Create cell and set as current instance
+  set hier_obj [create_bd_cell -type hier $nameHier]
+  current_bd_instance $hier_obj
+
+  # Create interface pins
+  create_bd_intf_pin -mode Slave -vlnv xilinx.com:interface:aximm_rtl:1.0 S00_AXI
+
+
+  # Create pins
+  create_bd_pin -dir O -type intr ip2intc_irpt
+  create_bd_pin -dir I -type rst rst1
+  create_bd_pin -dir I -type clk s_axi_aclk
+  create_bd_pin -dir I -type rst s_axi_aresetn
+
+  # Create instance: axi_interconnect_0, and set properties
+  set axi_interconnect_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_interconnect:2.1 axi_interconnect_0 ]
+  set_property -dict [ list \
+   CONFIG.NUM_MI {8} \
+ ] $axi_interconnect_0
+
+  # Create instance: bram_A_id
+  create_hier_cell_bram_A_id $hier_obj bram_A_id
+
+  # Create instance: bram_A_ptr
+  create_hier_cell_bram_A_ptr $hier_obj bram_A_ptr
+
+  # Create instance: bram_A_val
+  create_hier_cell_bram_A_val $hier_obj bram_A_val
+
+  # Create instance: bram_B_id
+  create_hier_cell_bram_B_id $hier_obj bram_B_id
+
+  # Create instance: bram_B_ptr
+  create_hier_cell_bram_B_ptr $hier_obj bram_B_ptr
+
+  # Create instance: bram_B_val
+  create_hier_cell_bram_B_val $hier_obj bram_B_val
+
+  # Create instance: bram_C
+  create_hier_cell_bram_C $hier_obj bram_C
+
+  # Create instance: ctrl_sparseDemoDS, and set properties
+  set ctrl_sparseDemoDS [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 ctrl_sparseDemoDS ]
+  set_property -dict [ list \
+   CONFIG.C_GPIO_WIDTH {4} \
+   CONFIG.C_INTERRUPT_PRESENT {1} \
+ ] $ctrl_sparseDemoDS
+
+  # Create instance: sparseDemoDS_0, and set properties
+  set sparseDemoDS_0 [ create_bd_cell -type ip -vlnv pkusc.org:user:sparseDemoDS:1.0 sparseDemoDS_0 ]
+
+  # Create instance: xlconcat_ctrl, and set properties
+  set xlconcat_ctrl [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconcat:2.1 xlconcat_ctrl ]
+  set_property -dict [ list \
+   CONFIG.NUM_PORTS {4} \
+ ] $xlconcat_ctrl
+
+  # Create instance: xlconstant_0, and set properties
+  set xlconstant_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_0 ]
+  set_property -dict [ list \
+   CONFIG.CONST_VAL {0} \
+ ] $xlconstant_0
+
+  # Create instance: xlslice_end_ready, and set properties
+  set xlslice_end_ready [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 xlslice_end_ready ]
+  set_property -dict [ list \
+   CONFIG.DIN_FROM {2} \
+   CONFIG.DIN_TO {2} \
+   CONFIG.DIN_WIDTH {4} \
+ ] $xlslice_end_ready
+
+  # Create instance: xlslice_sel, and set properties
+  set xlslice_sel [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 xlslice_sel ]
+  set_property -dict [ list \
+   CONFIG.DIN_FROM {3} \
+   CONFIG.DIN_TO {3} \
+   CONFIG.DIN_WIDTH {4} \
+ ] $xlslice_sel
+
+  # Create instance: xlslice_start_in, and set properties
+  set xlslice_start_in [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 xlslice_start_in ]
+  set_property -dict [ list \
+   CONFIG.DIN_FROM {0} \
+   CONFIG.DIN_TO {0} \
+   CONFIG.DIN_WIDTH {4} \
+ ] $xlslice_start_in
+
+  # Create instance: xlslice_start_valid, and set properties
+  set xlslice_start_valid [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 xlslice_start_valid ]
+  set_property -dict [ list \
+   CONFIG.DIN_FROM {1} \
+   CONFIG.DIN_TO {1} \
+   CONFIG.DIN_WIDTH {4} \
+ ] $xlslice_start_valid
+
+  # Create interface connections
+  connect_bd_intf_net -intf_net axi_interconnect_0_M00_AXI [get_bd_intf_pins axi_interconnect_0/M00_AXI] [get_bd_intf_pins ctrl_sparseDemoDS/S_AXI]
   connect_bd_intf_net -intf_net axi_interconnect_0_M01_AXI [get_bd_intf_pins axi_interconnect_0/M01_AXI] [get_bd_intf_pins bram_A_id/S_AXI]
   connect_bd_intf_net -intf_net axi_interconnect_0_M02_AXI [get_bd_intf_pins axi_interconnect_0/M02_AXI] [get_bd_intf_pins bram_A_ptr/S_AXI]
   connect_bd_intf_net -intf_net axi_interconnect_0_M03_AXI [get_bd_intf_pins axi_interconnect_0/M03_AXI] [get_bd_intf_pins bram_A_val/S_AXI]
@@ -883,15 +1591,16 @@ proc create_hier_cell_sparseDemoDS_system { parentCell nameHier } {
   connect_bd_intf_net -intf_net sparseDemoDS_0_C1 [get_bd_intf_pins bram_C/S_AUX1] [get_bd_intf_pins sparseDemoDS_0/C1]
 
   # Create port connections
-  connect_bd_net -net gpio_ctrl_gpio_io_o [get_bd_pins gpio_ctrl/gpio_io_o] [get_bd_pins xlslice_end_ready/Din] [get_bd_pins xlslice_sel/Din] [get_bd_pins xlslice_start_in/Din] [get_bd_pins xlslice_start_valid/Din]
-  connect_bd_net -net gpio_ctrl_ip2intc_irpt [get_bd_pins ip2intc_irpt] [get_bd_pins gpio_ctrl/ip2intc_irpt]
-  connect_bd_net -net microblaze_0_Clk [get_bd_pins s_axi_aclk] [get_bd_pins axi_interconnect_0/ACLK] [get_bd_pins axi_interconnect_0/M00_ACLK] [get_bd_pins axi_interconnect_0/M01_ACLK] [get_bd_pins axi_interconnect_0/M02_ACLK] [get_bd_pins axi_interconnect_0/M03_ACLK] [get_bd_pins axi_interconnect_0/M04_ACLK] [get_bd_pins axi_interconnect_0/M05_ACLK] [get_bd_pins axi_interconnect_0/M06_ACLK] [get_bd_pins axi_interconnect_0/M07_ACLK] [get_bd_pins axi_interconnect_0/S00_ACLK] [get_bd_pins bram_A_id/s_axi_aclk] [get_bd_pins bram_A_ptr/s_axi_aclk] [get_bd_pins bram_A_val/s_axi_aclk] [get_bd_pins bram_B_id/s_axi_aclk] [get_bd_pins bram_B_ptr/s_axi_aclk] [get_bd_pins bram_B_val/s_axi_aclk] [get_bd_pins bram_C/s_axi_aclk] [get_bd_pins gpio_ctrl/s_axi_aclk] [get_bd_pins sparseDemoDS_0/clk]
-  connect_bd_net -net rst_clk_wiz_0_100M_mb_reset [get_bd_pins rst] [get_bd_pins sparseDemoDS_0/rst]
-  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins s_axi_aresetn] [get_bd_pins axi_interconnect_0/ARESETN] [get_bd_pins axi_interconnect_0/M00_ARESETN] [get_bd_pins axi_interconnect_0/M01_ARESETN] [get_bd_pins axi_interconnect_0/M02_ARESETN] [get_bd_pins axi_interconnect_0/M03_ARESETN] [get_bd_pins axi_interconnect_0/M04_ARESETN] [get_bd_pins axi_interconnect_0/M05_ARESETN] [get_bd_pins axi_interconnect_0/M06_ARESETN] [get_bd_pins axi_interconnect_0/M07_ARESETN] [get_bd_pins axi_interconnect_0/S00_ARESETN] [get_bd_pins bram_A_id/s_axi_aresetn] [get_bd_pins bram_A_ptr/s_axi_aresetn] [get_bd_pins bram_A_val/s_axi_aresetn] [get_bd_pins bram_B_id/s_axi_aresetn] [get_bd_pins bram_B_ptr/s_axi_aresetn] [get_bd_pins bram_B_val/s_axi_aresetn] [get_bd_pins bram_C/s_axi_aresetn] [get_bd_pins gpio_ctrl/s_axi_aresetn]
+  connect_bd_net -net ctrl_sparseDemoDS_gpio_io_o [get_bd_pins ctrl_sparseDemoDS/gpio_io_o] [get_bd_pins xlslice_end_ready/Din] [get_bd_pins xlslice_sel/Din] [get_bd_pins xlslice_start_in/Din] [get_bd_pins xlslice_start_valid/Din]
+  connect_bd_net -net ctrl_sparseDemoDS_ip2intc_irpt [get_bd_pins ip2intc_irpt] [get_bd_pins ctrl_sparseDemoDS/ip2intc_irpt]
+  connect_bd_net -net microblaze_0_Clk [get_bd_pins s_axi_aclk] [get_bd_pins axi_interconnect_0/ACLK] [get_bd_pins axi_interconnect_0/M00_ACLK] [get_bd_pins axi_interconnect_0/M01_ACLK] [get_bd_pins axi_interconnect_0/M02_ACLK] [get_bd_pins axi_interconnect_0/M03_ACLK] [get_bd_pins axi_interconnect_0/M04_ACLK] [get_bd_pins axi_interconnect_0/M05_ACLK] [get_bd_pins axi_interconnect_0/M06_ACLK] [get_bd_pins axi_interconnect_0/M07_ACLK] [get_bd_pins axi_interconnect_0/S00_ACLK] [get_bd_pins bram_A_id/clk1] [get_bd_pins bram_A_ptr/clk1] [get_bd_pins bram_A_val/clk1] [get_bd_pins bram_B_id/clk1] [get_bd_pins bram_B_ptr/clk1] [get_bd_pins bram_B_val/clk1] [get_bd_pins bram_C/clk1] [get_bd_pins ctrl_sparseDemoDS/s_axi_aclk] [get_bd_pins sparseDemoDS_0/clk]
+  connect_bd_net -net rst_clk_wiz_0_100M_mb_reset [get_bd_pins rst1] [get_bd_pins bram_A_id/rst1] [get_bd_pins bram_A_ptr/rst1] [get_bd_pins bram_A_val/rst1] [get_bd_pins bram_B_id/rst1] [get_bd_pins bram_B_ptr/rst1] [get_bd_pins bram_B_val/rst1] [get_bd_pins bram_C/rst1] [get_bd_pins sparseDemoDS_0/rst]
+  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins s_axi_aresetn] [get_bd_pins axi_interconnect_0/ARESETN] [get_bd_pins axi_interconnect_0/M00_ARESETN] [get_bd_pins axi_interconnect_0/M01_ARESETN] [get_bd_pins axi_interconnect_0/M02_ARESETN] [get_bd_pins axi_interconnect_0/M03_ARESETN] [get_bd_pins axi_interconnect_0/M04_ARESETN] [get_bd_pins axi_interconnect_0/M05_ARESETN] [get_bd_pins axi_interconnect_0/M06_ARESETN] [get_bd_pins axi_interconnect_0/M07_ARESETN] [get_bd_pins axi_interconnect_0/S00_ARESETN] [get_bd_pins bram_A_id/s_axi_aresetn] [get_bd_pins bram_A_ptr/s_axi_aresetn] [get_bd_pins bram_A_val/s_axi_aresetn] [get_bd_pins bram_B_id/s_axi_aresetn] [get_bd_pins bram_B_ptr/s_axi_aresetn] [get_bd_pins bram_B_val/s_axi_aresetn] [get_bd_pins bram_C/s_axi_aresetn] [get_bd_pins ctrl_sparseDemoDS/s_axi_aresetn]
   connect_bd_net -net sparseDemoDS_0_end_out [get_bd_pins sparseDemoDS_0/end_out] [get_bd_pins xlconcat_ctrl/In1]
   connect_bd_net -net sparseDemoDS_0_end_valid [get_bd_pins sparseDemoDS_0/end_valid] [get_bd_pins xlconcat_ctrl/In2]
   connect_bd_net -net sparseDemoDS_0_start_ready [get_bd_pins sparseDemoDS_0/start_ready] [get_bd_pins xlconcat_ctrl/In0]
-  connect_bd_net -net xlconcat_ctrl_dout [get_bd_pins gpio_ctrl/gpio_io_i] [get_bd_pins xlconcat_ctrl/dout]
+  connect_bd_net -net xlconcat_ctrl_dout [get_bd_pins ctrl_sparseDemoDS/gpio_io_i] [get_bd_pins xlconcat_ctrl/dout]
+  connect_bd_net -net xlconstant_0_dout [get_bd_pins xlconcat_ctrl/In3] [get_bd_pins xlconstant_0/dout]
   connect_bd_net -net xlslice_end_ready_Dout [get_bd_pins sparseDemoDS_0/end_ready] [get_bd_pins xlslice_end_ready/Dout]
   connect_bd_net -net xlslice_sel_Dout [get_bd_pins bram_A_id/sel] [get_bd_pins bram_A_ptr/sel] [get_bd_pins bram_A_val/sel] [get_bd_pins bram_B_id/sel] [get_bd_pins bram_B_ptr/sel] [get_bd_pins bram_B_val/sel] [get_bd_pins bram_C/sel] [get_bd_pins xlslice_sel/Dout]
   connect_bd_net -net xlslice_start_in_Dout [get_bd_pins sparseDemoDS_0/start_in] [get_bd_pins xlslice_start_in/Dout]
@@ -1533,7 +2242,7 @@ proc create_root_design { parentCell } {
   # Create instance: microblaze_0_axi_periph, and set properties
   set microblaze_0_axi_periph [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_interconnect:2.1 microblaze_0_axi_periph ]
   set_property -dict [ list \
-   CONFIG.NUM_MI {10} \
+   CONFIG.NUM_MI {11} \
  ] $microblaze_0_axi_periph
 
   # Create instance: microblaze_0_local_memory
@@ -1542,7 +2251,7 @@ proc create_root_design { parentCell } {
   # Create instance: microblaze_0_xlconcat, and set properties
   set microblaze_0_xlconcat [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconcat:2.1 microblaze_0_xlconcat ]
   set_property -dict [ list \
-   CONFIG.NUM_PORTS {9} \
+   CONFIG.NUM_PORTS {10} \
  ] $microblaze_0_xlconcat
 
   # Create instance: rst_clk_wiz_0_100M, and set properties
@@ -1552,8 +2261,11 @@ proc create_root_design { parentCell } {
    CONFIG.USE_BOARD_FLOW {true} \
  ] $rst_clk_wiz_0_100M
 
-  # Create instance: sparseDemoDS_system
-  create_hier_cell_sparseDemoDS_system [current_bd_instance .] sparseDemoDS_system
+  # Create instance: sparseDemoDS_sys
+  create_hier_cell_sparseDemoDS_sys [current_bd_instance .] sparseDemoDS_sys
+
+  # Create instance: sparseDemo_sys
+  create_hier_cell_sparseDemo_sys [current_bd_instance .] sparseDemo_sys
 
   # Create instance: system_ila_0, and set properties
   set system_ila_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:system_ila:1.1 system_ila_0 ]
@@ -1605,7 +2317,8 @@ connect_bd_intf_net -intf_net [get_bd_intf_nets microblaze_0_M_AXI_IC] [get_bd_i
   connect_bd_intf_net -intf_net microblaze_0_axi_periph_M06_AXI [get_bd_intf_pins ethernet/S_AXI_LITE] [get_bd_intf_pins microblaze_0_axi_periph/M06_AXI]
   connect_bd_intf_net -intf_net microblaze_0_axi_periph_M07_AXI [get_bd_intf_pins microblaze_0_axi_periph/M07_AXI] [get_bd_intf_pins microblaze_0_local_memory/S_AXI_CTRL]
   connect_bd_intf_net -intf_net microblaze_0_axi_periph_M08_AXI [get_bd_intf_pins microblaze_0_axi_periph/M08_AXI] [get_bd_intf_pins microblaze_0_local_memory/S_AXI_CTRL1]
-  connect_bd_intf_net -intf_net microblaze_0_axi_periph_M09_AXI [get_bd_intf_pins microblaze_0_axi_periph/M09_AXI] [get_bd_intf_pins sparseDemoDS_system/S00_AXI]
+  connect_bd_intf_net -intf_net microblaze_0_axi_periph_M09_AXI [get_bd_intf_pins microblaze_0_axi_periph/M09_AXI] [get_bd_intf_pins sparseDemoDS_sys/S00_AXI]
+  connect_bd_intf_net -intf_net microblaze_0_axi_periph_M10_AXI [get_bd_intf_pins microblaze_0_axi_periph/M10_AXI] [get_bd_intf_pins sparseDemo_sys/S00_AXI]
   connect_bd_intf_net -intf_net microblaze_0_debug [get_bd_intf_pins mdm_1/MBDEBUG_0] [get_bd_intf_pins microblaze_0/DEBUG]
   connect_bd_intf_net -intf_net microblaze_0_interrupt [get_bd_intf_pins microblaze_0/INTERRUPT] [get_bd_intf_pins microblaze_0_axi_intc/interrupt]
   connect_bd_intf_net -intf_net periph_mdio_mdc [get_bd_intf_ports mdio_mdc] [get_bd_intf_pins ethernet/mdio_mdc]
@@ -1615,11 +2328,12 @@ connect_bd_intf_net -intf_net [get_bd_intf_nets microblaze_0_M_AXI_IC] [get_bd_i
   # Create port connections
   connect_bd_net -net axi_gpio_0_ip2intc_irpt [get_bd_pins axi_gpio_0/ip2intc_irpt] [get_bd_pins microblaze_0_xlconcat/In7]
   connect_bd_net -net axi_timer_0_interrupt [get_bd_pins axi_timer_0/interrupt] [get_bd_pins microblaze_0_xlconcat/In5]
-  connect_bd_net -net gpio_ctrl_ip2intc_irpt [get_bd_pins microblaze_0_xlconcat/In8] [get_bd_pins sparseDemoDS_system/ip2intc_irpt]
+  connect_bd_net -net ctrl_sparseDemoDS_ip2intc_irpt [get_bd_pins microblaze_0_xlconcat/In8] [get_bd_pins sparseDemoDS_sys/ip2intc_irpt]
+  connect_bd_net -net ctrl_sparseDemo_ip2intc_irpt [get_bd_pins microblaze_0_xlconcat/In9] [get_bd_pins sparseDemo_sys/ip2intc_irpt]
   connect_bd_net -net mb_reset_mode_0_reset_mode [get_bd_pins microblaze_0/Reset_Mode] [get_bd_pins xlconstant_2/dout]
   connect_bd_net -net mdm_1_Interrupt [get_bd_pins mdm_1/Interrupt] [get_bd_pins microblaze_0_xlconcat/In6]
   connect_bd_net -net mdm_1_debug_sys_rst [get_bd_pins mdm_1/Debug_SYS_Rst] [get_bd_pins rst_clk_wiz_0_100M/mb_debug_sys_rst]
-  connect_bd_net -net microblaze_0_Clk [get_bd_pins axi_gpio_0/s_axi_aclk] [get_bd_pins axi_timer_0/s_axi_aclk] [get_bd_pins axi_uart16550_0/s_axi_aclk] [get_bd_pins clk_wiz_0/sys_clk] [get_bd_pins ddr/S00_ACLK] [get_bd_pins ethernet/m_axi_sg_aclk] [get_bd_pins mdm_1/S_AXI_ACLK] [get_bd_pins microblaze_0/Clk] [get_bd_pins microblaze_0_axi_intc/processor_clk] [get_bd_pins microblaze_0_axi_intc/s_axi_aclk] [get_bd_pins microblaze_0_axi_periph/ACLK] [get_bd_pins microblaze_0_axi_periph/M00_ACLK] [get_bd_pins microblaze_0_axi_periph/M01_ACLK] [get_bd_pins microblaze_0_axi_periph/M02_ACLK] [get_bd_pins microblaze_0_axi_periph/M03_ACLK] [get_bd_pins microblaze_0_axi_periph/M04_ACLK] [get_bd_pins microblaze_0_axi_periph/M05_ACLK] [get_bd_pins microblaze_0_axi_periph/M06_ACLK] [get_bd_pins microblaze_0_axi_periph/M07_ACLK] [get_bd_pins microblaze_0_axi_periph/M08_ACLK] [get_bd_pins microblaze_0_axi_periph/M09_ACLK] [get_bd_pins microblaze_0_axi_periph/S00_ACLK] [get_bd_pins microblaze_0_local_memory/LMB_Clk] [get_bd_pins rst_clk_wiz_0_100M/slowest_sync_clk] [get_bd_pins sparseDemoDS_system/s_axi_aclk] [get_bd_pins system_ila_0/clk]
+  connect_bd_net -net microblaze_0_Clk [get_bd_pins axi_gpio_0/s_axi_aclk] [get_bd_pins axi_timer_0/s_axi_aclk] [get_bd_pins axi_uart16550_0/s_axi_aclk] [get_bd_pins clk_wiz_0/sys_clk] [get_bd_pins ddr/S00_ACLK] [get_bd_pins ethernet/m_axi_sg_aclk] [get_bd_pins mdm_1/S_AXI_ACLK] [get_bd_pins microblaze_0/Clk] [get_bd_pins microblaze_0_axi_intc/processor_clk] [get_bd_pins microblaze_0_axi_intc/s_axi_aclk] [get_bd_pins microblaze_0_axi_periph/ACLK] [get_bd_pins microblaze_0_axi_periph/M00_ACLK] [get_bd_pins microblaze_0_axi_periph/M01_ACLK] [get_bd_pins microblaze_0_axi_periph/M02_ACLK] [get_bd_pins microblaze_0_axi_periph/M03_ACLK] [get_bd_pins microblaze_0_axi_periph/M04_ACLK] [get_bd_pins microblaze_0_axi_periph/M05_ACLK] [get_bd_pins microblaze_0_axi_periph/M06_ACLK] [get_bd_pins microblaze_0_axi_periph/M07_ACLK] [get_bd_pins microblaze_0_axi_periph/M08_ACLK] [get_bd_pins microblaze_0_axi_periph/M09_ACLK] [get_bd_pins microblaze_0_axi_periph/M10_ACLK] [get_bd_pins microblaze_0_axi_periph/S00_ACLK] [get_bd_pins microblaze_0_local_memory/LMB_Clk] [get_bd_pins rst_clk_wiz_0_100M/slowest_sync_clk] [get_bd_pins sparseDemoDS_sys/s_axi_aclk] [get_bd_pins sparseDemo_sys/s_axi_aclk] [get_bd_pins system_ila_0/clk]
   connect_bd_net -net microblaze_0_dlmb_int [get_bd_pins axi_uart16550_0/ip2intc_irpt] [get_bd_pins microblaze_0_xlconcat/In0]
   connect_bd_net -net microblaze_0_intr [get_bd_pins microblaze_0_axi_intc/intr] [get_bd_pins microblaze_0_xlconcat/dout]
   connect_bd_net -net periph_interrupt1 [get_bd_pins ethernet/interrupt] [get_bd_pins microblaze_0_xlconcat/In1]
@@ -1629,33 +2343,41 @@ connect_bd_intf_net -intf_net [get_bd_intf_nets microblaze_0_M_AXI_IC] [get_bd_i
   connect_bd_net -net periph_s2mm_introut [get_bd_pins ethernet/s2mm_introut] [get_bd_pins microblaze_0_xlconcat/In3]
   connect_bd_net -net reset_1 [get_bd_ports reset] [get_bd_pins clk_wiz_0/reset] [get_bd_pins ddr/reset] [get_bd_pins rst_clk_wiz_0_100M/ext_reset_in]
   connect_bd_net -net rst_clk_wiz_0_100M_bus_struct_reset [get_bd_pins microblaze_0_local_memory/SYS_Rst] [get_bd_pins rst_clk_wiz_0_100M/bus_struct_reset]
-  connect_bd_net -net rst_clk_wiz_0_100M_mb_reset [get_bd_pins microblaze_0/Reset] [get_bd_pins microblaze_0_axi_intc/processor_rst] [get_bd_pins rst_clk_wiz_0_100M/mb_reset] [get_bd_pins sparseDemoDS_system/rst]
-  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins axi_gpio_0/s_axi_aresetn] [get_bd_pins axi_timer_0/s_axi_aresetn] [get_bd_pins axi_uart16550_0/s_axi_aresetn] [get_bd_pins ddr/S00_ARESETN] [get_bd_pins ethernet/axi_resetn] [get_bd_pins mdm_1/S_AXI_ARESETN] [get_bd_pins microblaze_0_axi_intc/s_axi_aresetn] [get_bd_pins microblaze_0_axi_periph/ARESETN] [get_bd_pins microblaze_0_axi_periph/M00_ARESETN] [get_bd_pins microblaze_0_axi_periph/M01_ARESETN] [get_bd_pins microblaze_0_axi_periph/M02_ARESETN] [get_bd_pins microblaze_0_axi_periph/M03_ARESETN] [get_bd_pins microblaze_0_axi_periph/M04_ARESETN] [get_bd_pins microblaze_0_axi_periph/M05_ARESETN] [get_bd_pins microblaze_0_axi_periph/M06_ARESETN] [get_bd_pins microblaze_0_axi_periph/M07_ARESETN] [get_bd_pins microblaze_0_axi_periph/M08_ARESETN] [get_bd_pins microblaze_0_axi_periph/M09_ARESETN] [get_bd_pins microblaze_0_axi_periph/S00_ARESETN] [get_bd_pins microblaze_0_local_memory/S_AXI_CTRL_ARESETN] [get_bd_pins rst_clk_wiz_0_100M/peripheral_aresetn] [get_bd_pins sparseDemoDS_system/s_axi_aresetn] [get_bd_pins system_ila_0/resetn]
+  connect_bd_net -net rst_clk_wiz_0_100M_mb_reset [get_bd_pins microblaze_0/Reset] [get_bd_pins microblaze_0_axi_intc/processor_rst] [get_bd_pins rst_clk_wiz_0_100M/mb_reset] [get_bd_pins sparseDemoDS_sys/rst1] [get_bd_pins sparseDemo_sys/rst1]
+  connect_bd_net -net rst_clk_wiz_0_100M_peripheral_aresetn [get_bd_pins axi_gpio_0/s_axi_aresetn] [get_bd_pins axi_timer_0/s_axi_aresetn] [get_bd_pins axi_uart16550_0/s_axi_aresetn] [get_bd_pins ddr/S00_ARESETN] [get_bd_pins ethernet/axi_resetn] [get_bd_pins mdm_1/S_AXI_ARESETN] [get_bd_pins microblaze_0_axi_intc/s_axi_aresetn] [get_bd_pins microblaze_0_axi_periph/ARESETN] [get_bd_pins microblaze_0_axi_periph/M00_ARESETN] [get_bd_pins microblaze_0_axi_periph/M01_ARESETN] [get_bd_pins microblaze_0_axi_periph/M02_ARESETN] [get_bd_pins microblaze_0_axi_periph/M03_ARESETN] [get_bd_pins microblaze_0_axi_periph/M04_ARESETN] [get_bd_pins microblaze_0_axi_periph/M05_ARESETN] [get_bd_pins microblaze_0_axi_periph/M06_ARESETN] [get_bd_pins microblaze_0_axi_periph/M07_ARESETN] [get_bd_pins microblaze_0_axi_periph/M08_ARESETN] [get_bd_pins microblaze_0_axi_periph/M09_ARESETN] [get_bd_pins microblaze_0_axi_periph/M10_ARESETN] [get_bd_pins microblaze_0_axi_periph/S00_ARESETN] [get_bd_pins microblaze_0_local_memory/S_AXI_CTRL_ARESETN] [get_bd_pins rst_clk_wiz_0_100M/peripheral_aresetn] [get_bd_pins sparseDemoDS_sys/s_axi_aresetn] [get_bd_pins sparseDemo_sys/s_axi_aresetn] [get_bd_pins system_ila_0/resetn]
 
   # Create address segments
-  create_bd_addr_seg -range 0x00004000 -offset 0xC0000000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs sparseDemoDS_system/bram_A_id/axi_bram_ctrl_A_id/S_AXI/Mem0] SEG_axi_bram_ctrl_A_id_Mem0
-  create_bd_addr_seg -range 0x00004000 -offset 0xC2000000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs sparseDemoDS_system/bram_A_ptr/axi_bram_ctrl_A_ptr/S_AXI/Mem0] SEG_axi_bram_ctrl_A_ptr_Mem0
-  create_bd_addr_seg -range 0x00004000 -offset 0xC4000000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs sparseDemoDS_system/bram_A_val/axi_bram_ctrl_A_val/S_AXI/Mem0] SEG_axi_bram_ctrl_A_val_Mem0
-  create_bd_addr_seg -range 0x00004000 -offset 0xC6000000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs sparseDemoDS_system/bram_B_id/axi_bram_ctrl_B_id/S_AXI/Mem0] SEG_axi_bram_ctrl_B_id_Mem0
-  create_bd_addr_seg -range 0x00004000 -offset 0xC8000000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs sparseDemoDS_system/bram_B_ptr/axi_bram_ctrl_B_ptr/S_AXI/Mem0] SEG_axi_bram_ctrl_B_ptr_Mem0
-  create_bd_addr_seg -range 0x00004000 -offset 0xCA000000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs sparseDemoDS_system/bram_B_val/axi_bram_ctrl_B_val/S_AXI/Mem0] SEG_axi_bram_ctrl_B_val_Mem0
-  create_bd_addr_seg -range 0x00010000 -offset 0xCC000000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs sparseDemoDS_system/bram_C/axi_bram_ctrl_C/S_AXI/Mem0] SEG_axi_bram_ctrl_C_Mem0
   create_bd_addr_seg -range 0x00040000 -offset 0x40C00000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs ethernet/axi_ethernet_0/s_axi/Reg0] SEG_axi_ethernet_0_Reg0
   create_bd_addr_seg -range 0x00010000 -offset 0x41E00000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs ethernet/axi_ethernet_0_dma/S_AXI_LITE/Reg] SEG_axi_ethernet_0_dma_Reg
   create_bd_addr_seg -range 0x00010000 -offset 0x40000000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs axi_gpio_0/S_AXI/Reg] SEG_axi_gpio_0_Reg
   create_bd_addr_seg -range 0x00010000 -offset 0x41C00000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs axi_timer_0/S_AXI/Reg] SEG_axi_timer_0_Reg
   create_bd_addr_seg -range 0x00010000 -offset 0x44A00000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs axi_uart16550_0/S_AXI/Reg] SEG_axi_uart16550_0_Reg
+  create_bd_addr_seg -range 0x00010000 -offset 0x4D000000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs sparseDemoDS_sys/ctrl_sparseDemoDS/S_AXI/Reg] SEG_ctrl_sparseDemoDS_Reg
+  create_bd_addr_seg -range 0x00010000 -offset 0x4D010000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs sparseDemo_sys/ctrl_sparseDemo/S_AXI/Reg] SEG_ctrl_sparseDemo_Reg
   create_bd_addr_seg -range 0x80000000 -offset 0x000100000000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs ddr/ddr4_0/C0_DDR4_MEMORY_MAP/C0_DDR4_ADDRESS_BLOCK] SEG_ddr4_0_C0_DDR4_ADDRESS_BLOCK
   create_bd_addr_seg -range 0x80000000 -offset 0x000100000000 [get_bd_addr_spaces microblaze_0/Instruction] [get_bd_addr_segs ddr/ddr4_0/C0_DDR4_MEMORY_MAP/C0_DDR4_ADDRESS_BLOCK] SEG_ddr4_0_C0_DDR4_ADDRESS_BLOCK
   create_bd_addr_seg -range 0x80000000 -offset 0x000180000000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs ddr/ddr4_1/C0_DDR4_MEMORY_MAP/C0_DDR4_ADDRESS_BLOCK] SEG_ddr4_1_C0_DDR4_ADDRESS_BLOCK
   create_bd_addr_seg -range 0x80000000 -offset 0x000180000000 [get_bd_addr_spaces microblaze_0/Instruction] [get_bd_addr_segs ddr/ddr4_1/C0_DDR4_MEMORY_MAP/C0_DDR4_ADDRESS_BLOCK] SEG_ddr4_1_C0_DDR4_ADDRESS_BLOCK
   create_bd_addr_seg -range 0x00010000 -offset 0x00000000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs microblaze_0_local_memory/dlmb_bram_if_cntlr/SLMB/Mem] SEG_dlmb_bram_if_cntlr_Mem
   create_bd_addr_seg -range 0x00010000 -offset 0x76000000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs microblaze_0_local_memory/dlmb_bram_if_cntlr/S_AXI_CTRL/Reg] SEG_dlmb_bram_if_cntlr_Reg
-  create_bd_addr_seg -range 0x00010000 -offset 0x4D550000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs sparseDemoDS_system/gpio_ctrl/S_AXI/Reg] SEG_gpio_ctrl_Reg
   create_bd_addr_seg -range 0x00010000 -offset 0x00000000 [get_bd_addr_spaces microblaze_0/Instruction] [get_bd_addr_segs microblaze_0_local_memory/ilmb_bram_if_cntlr/SLMB/Mem] SEG_ilmb_bram_if_cntlr_Mem
   create_bd_addr_seg -range 0x00010000 -offset 0x76010000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs microblaze_0_local_memory/ilmb_bram_if_cntlr/S_AXI_CTRL/Reg] SEG_ilmb_bram_if_cntlr_Reg
   create_bd_addr_seg -range 0x00001000 -offset 0x41400000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs mdm_1/S_AXI/Reg] SEG_mdm_1_Reg
   create_bd_addr_seg -range 0x00010000 -offset 0x41200000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs microblaze_0_axi_intc/S_AXI/Reg] SEG_microblaze_0_axi_intc_Reg
+  create_bd_addr_seg -range 0x00004000 -offset 0xC0000000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs sparseDemoDS_sys/bram_A_id/rc_A_id_sparseDemoDS_0/S_AXI/Mem0] SEG_rc_A_id_sparseDemoDS_0_Mem0
+  create_bd_addr_seg -range 0x00004000 -offset 0xCE000000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs sparseDemo_sys/bram_A_id/rc_A_id_sparseDemo_0/S_AXI/Mem0] SEG_rc_A_id_sparseDemo_0_Mem0
+  create_bd_addr_seg -range 0x00004000 -offset 0xC2000000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs sparseDemoDS_sys/bram_A_ptr/rc_A_ptr_sparseDemoDS_0/S_AXI/Mem0] SEG_rc_A_ptr_sparseDemoDS_0_Mem0
+  create_bd_addr_seg -range 0x00004000 -offset 0xD0000000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs sparseDemo_sys/bram_A_ptr/rc_A_ptr_sparseDemo_0/S_AXI/Mem0] SEG_rc_A_ptr_sparseDemo_0_Mem0
+  create_bd_addr_seg -range 0x00004000 -offset 0xC4000000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs sparseDemoDS_sys/bram_A_val/rc_A_val_sparseDemoDS_0/S_AXI/Mem0] SEG_rc_A_val_sparseDemoDS_0_Mem0
+  create_bd_addr_seg -range 0x00004000 -offset 0xD2000000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs sparseDemo_sys/bram_A_val/rc_A_val_sparseDemo_0/S_AXI/Mem0] SEG_rc_A_val_sparseDemo_0_Mem0
+  create_bd_addr_seg -range 0x00004000 -offset 0xC6000000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs sparseDemoDS_sys/bram_B_id/rc_B_id_sparseDemoDS_0/S_AXI/Mem0] SEG_rc_B_id_sparseDemoDS_0_Mem0
+  create_bd_addr_seg -range 0x00004000 -offset 0xD6000000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs sparseDemo_sys/bram_B_id/rc_B_id_sparseDemo_0/S_AXI/Mem0] SEG_rc_B_id_sparseDemo_0_Mem0
+  create_bd_addr_seg -range 0x00004000 -offset 0xC8000000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs sparseDemoDS_sys/bram_B_ptr/rc_B_ptr_sparseDemoDS_0/S_AXI/Mem0] SEG_rc_B_ptr_sparseDemoDS_0_Mem0
+  create_bd_addr_seg -range 0x00004000 -offset 0xD4000000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs sparseDemo_sys/bram_B_ptr/rc_B_ptr_sparseDemo_0/S_AXI/Mem0] SEG_rc_B_ptr_sparseDemo_0_Mem0
+  create_bd_addr_seg -range 0x00004000 -offset 0xCA000000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs sparseDemoDS_sys/bram_B_val/rc_B_val_sparseDemoDS_0/S_AXI/Mem0] SEG_rc_B_val_sparseDemoDS_0_Mem0
+  create_bd_addr_seg -range 0x00004000 -offset 0xD8000000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs sparseDemo_sys/bram_B_val/rc_B_val_sparseDemo_0/S_AXI/Mem0] SEG_rc_B_val_sparseDemo_0_Mem0
+  create_bd_addr_seg -range 0x00010000 -offset 0xCC000000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs sparseDemoDS_sys/bram_C/rc_C_sparseDemoDS_0/S_AXI/Mem0] SEG_rc_C_sparseDemoDS_0_Mem0
+  create_bd_addr_seg -range 0x00010000 -offset 0xDA000000 [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs sparseDemo_sys/bram_C/rc_C_sparseDemo_0/S_AXI/Mem0] SEG_rc_C_sparseDemo_0_Mem0
   create_bd_addr_seg -range 0x80000000 -offset 0x000100000000 [get_bd_addr_spaces ethernet/axi_ethernet_0_dma/Data_SG] [get_bd_addr_segs ddr/ddr4_0/C0_DDR4_MEMORY_MAP/C0_DDR4_ADDRESS_BLOCK] SEG_ddr4_0_C0_DDR4_ADDRESS_BLOCK
   create_bd_addr_seg -range 0x80000000 -offset 0x000100000000 [get_bd_addr_spaces ethernet/axi_ethernet_0_dma/Data_MM2S] [get_bd_addr_segs ddr/ddr4_0/C0_DDR4_MEMORY_MAP/C0_DDR4_ADDRESS_BLOCK] SEG_ddr4_0_C0_DDR4_ADDRESS_BLOCK
   create_bd_addr_seg -range 0x80000000 -offset 0x000100000000 [get_bd_addr_spaces ethernet/axi_ethernet_0_dma/Data_S2MM] [get_bd_addr_segs ddr/ddr4_0/C0_DDR4_MEMORY_MAP/C0_DDR4_ADDRESS_BLOCK] SEG_ddr4_0_C0_DDR4_ADDRESS_BLOCK
