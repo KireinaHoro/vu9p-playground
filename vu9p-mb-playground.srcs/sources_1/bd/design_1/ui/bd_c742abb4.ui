@@ -1,0 +1,74 @@
+{
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 7.0.19  2019-03-26 bk=1.5019 VDI=41 GEI=35 GUI=JA:9.0 non-TLS
+#  -string -flagsOSRD
+preplace port dip_switches_4bits -pg 1 -lvl 4 -x 1020 -y 80 -defaultsOSRD
+preplace port led_8bits -pg 1 -lvl 4 -x 1020 -y 110 -defaultsOSRD
+preplace port push_buttons_5bits -pg 1 -lvl 4 -x 1020 -y 460 -defaultsOSRD
+preplace port rs232_uart -pg 1 -lvl 4 -x 1020 -y 720 -defaultsOSRD
+preplace port S00_AXI -pg 1 -lvl 0 -x 0 -y 30 -defaultsOSRD
+preplace port M01_AXI -pg 1 -lvl 4 -x 1020 -y 180 -defaultsOSRD
+preplace port M09_AXI -pg 1 -lvl 4 -x 1020 -y 540 -defaultsOSRD
+preplace port sgmii_phyclk -pg 1 -lvl 0 -x 0 -y 940 -defaultsOSRD
+preplace port mdio_mdc -pg 1 -lvl 4 -x 1020 -y 780 -defaultsOSRD
+preplace port sgmii_lvds -pg 1 -lvl 4 -x 1020 -y 810 -defaultsOSRD
+preplace port M_AXI_MM2S -pg 1 -lvl 4 -x 1020 -y 870 -defaultsOSRD
+preplace port M_AXI_S2MM -pg 1 -lvl 4 -x 1020 -y 900 -defaultsOSRD
+preplace port M_AXI_SG -pg 1 -lvl 4 -x 1020 -y 840 -defaultsOSRD
+preplace port ILMB -pg 1 -lvl 0 -x 0 -y 600 -defaultsOSRD
+preplace port DLMB -pg 1 -lvl 0 -x 0 -y 570 -defaultsOSRD
+preplace port interrupt -pg 1 -lvl 4 -x 1020 -y 320 -defaultsOSRD
+preplace port s_axi_aclk -pg 1 -lvl 0 -x 0 -y 60 -defaultsOSRD
+preplace port s_axi_aresetn -pg 1 -lvl 0 -x 0 -y 90 -defaultsOSRD
+preplace port ip2intc_irpt -pg 1 -lvl 4 -x 1020 -y 750 -defaultsOSRD
+preplace port mac_irq -pg 1 -lvl 4 -x 1020 -y 930 -defaultsOSRD
+preplace port mm2s_introut -pg 1 -lvl 4 -x 1020 -y 1020 -defaultsOSRD
+preplace port s2mm_introut -pg 1 -lvl 4 -x 1020 -y 1050 -defaultsOSRD
+preplace port interrupt1 -pg 1 -lvl 4 -x 1020 -y 960 -defaultsOSRD
+preplace port SYS_Rst -pg 1 -lvl 0 -x 0 -y 630 -defaultsOSRD
+preplace portBus phy_reset_out -pg 1 -lvl 4 -x 1020 -y 990 -defaultsOSRD
+preplace inst axi_timer_0 -pg 1 -lvl 3 -x 790 -y 290 -defaultsOSRD
+preplace inst axi_gpio_0 -pg 1 -lvl 3 -x 790 -y 100 -defaultsOSRD
+preplace inst axi_gpio_1 -pg 1 -lvl 3 -x 790 -y 460 -defaultsOSRD
+preplace inst axi_uart16550_0 -pg 1 -lvl 3 -x 790 -y 740 -defaultsOSRD
+preplace inst microblaze_0_axi_periph -pg 1 -lvl 1 -x 180 -y 290 -defaultsOSRD
+preplace inst eth -pg 1 -lvl 3 -x 790 -y 960 -defaultsOSRD
+preplace inst microblaze_0_local_memory -pg 1 -lvl 2 -x 500 -y 590 -defaultsOSRD
+preplace netloc axi_timer_0_interrupt 1 3 1 NJ 320
+preplace netloc microblaze_0_Clk 1 0 3 30 610 390 700 620
+preplace netloc rst_clk_wiz_0_100M_peripheral_aresetn 1 0 3 40 640 320 970 640
+preplace netloc microblaze_0_dlmb_int 1 3 1 NJ 750
+preplace netloc eth_mac_irq 1 3 1 980J 930n
+preplace netloc eth_mm2s_introut 1 3 1 960J 1020n
+preplace netloc eth_s2mm_introut 1 3 1 NJ 1050
+preplace netloc eth_interrupt 1 3 1 990J 960n
+preplace netloc eth_phy_reset_out 1 3 1 1000J 990n
+preplace netloc SYS_Rst_1 1 0 2 NJ 630 NJ
+preplace netloc microblaze_0_axi_periph_M03_AXI 1 1 2 NJ 240 N
+preplace netloc microblaze_0_axi_periph_M04_AXI 1 1 2 NJ 260 610
+preplace netloc microblaze_0_axi_periph_M05_AXI 1 1 2 NJ 280 630
+preplace netloc microblaze_0_axi_periph_M00_AXI 1 1 2 380 710 NJ
+preplace netloc axi_gpio_0_GPIO 1 3 1 930J 80n
+preplace netloc axi_gpio_0_GPIO2 1 3 1 NJ 110
+preplace netloc axi_gpio_1_GPIO 1 3 1 NJ 460
+preplace netloc axi_uart16550_0_UART 1 3 1 930J 720n
+preplace netloc S00_AXI_1 1 0 1 30J 30n
+preplace netloc microblaze_0_axi_periph_M01_AXI 1 1 3 330J 180 NJ 180 NJ
+preplace netloc microblaze_0_axi_periph_M09_AXI 1 1 3 360J 470 610J 540 NJ
+preplace netloc Conn1 1 0 3 NJ 940 NJ 940 NJ
+preplace netloc Conn2 1 3 1 930J 780n
+preplace netloc Conn3 1 3 1 940J 810n
+preplace netloc Conn4 1 3 1 960J 870n
+preplace netloc Conn5 1 3 1 970J 900n
+preplace netloc microblaze_0_axi_periph_M05_AXI1 1 1 2 350 920 NJ
+preplace netloc microblaze_0_axi_periph_M06_AXI 1 1 2 330 960 NJ
+preplace netloc Conn6 1 3 1 950J 840n
+preplace netloc microblaze_0_axi_periph_M08_AXI 1 1 1 340 360n
+preplace netloc microblaze_0_axi_periph_M07_AXI 1 1 1 370 340n
+preplace netloc Conn7 1 0 2 NJ 600 390J
+preplace netloc Conn8 1 0 2 20J 590 320J
+levelinfo -pg 1 0 180 500 790 1020
+pagesize -pg 1 -db -bbox -sgen -130 -10 1200 1100
+"
+}
+
