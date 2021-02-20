@@ -1,7 +1,7 @@
 --=================================================
 --Dynamic & Static Scheduling
 --Component Name: call_0(Static) - (-1, -1)
---02/19/21 00:14:05
+--02/19/21 14:57:55
 --=================================================
 library IEEE;
 use IEEE.std_logic_1164.all;
@@ -13,6 +13,9 @@ port(
 	dataInArray : in data_array (INPUTS-1 downto 0)(DATA_SIZE_IN-1 downto 0);
 	pValidArray : IN std_logic_vector(INPUTS-1 downto 0);
 	readyArray : OUT std_logic_vector(INPUTS-1 downto 0);
+	dataOutArray : out data_array (OUTPUTS-1 downto 0)(DATA_SIZE_OUT-1 downto 0);
+	nReadyArray: in std_logic_vector(OUTPUTS-1 downto 0);
+	validArray: out std_logic_vector(OUTPUTS-1 downto 0);
     B_id_address0 : OUT STD_LOGIC_VECTOR (10 downto 0);
     B_id_ce0 : OUT STD_LOGIC;
     B_id_q0 : IN STD_LOGIC_VECTOR (31 downto 0);
@@ -53,6 +56,7 @@ port (
     C_d0 : OUT STD_LOGIC_VECTOR (31 downto 0);
     C_q0 : IN STD_LOGIC_VECTOR (31 downto 0);
     a : IN STD_LOGIC_VECTOR (31 downto 0);
+    ap_return : OUT STD_LOGIC_VECTOR (31 downto 0);
     ap_ce : IN STD_LOGIC );
 end component;
 
@@ -66,6 +70,7 @@ signal offset : STD_LOGIC_VECTOR (31 downto 0);
 signal bL : STD_LOGIC_VECTOR (31 downto 0);
 signal bR : STD_LOGIC_VECTOR (31 downto 0);
 signal a : STD_LOGIC_VECTOR (31 downto 0);
+signal ap_return : STD_LOGIC_VECTOR (31 downto 0);
 signal ap_ce : STD_LOGIC;
 signal nextReady : STD_LOGIC;
 signal oehb_ready: std_logic_vector(OUTPUTS-1 downto 0);
@@ -80,19 +85,33 @@ valid <= ap_done;
 ap_start <= (and pValidArray) and (not ap_done);
 	ap_clk <= clk;
 	ap_rst <= rst;
-	ap_ce <= '1';
+	dataOutArray(0) <= oehb_dataOut(0);
+	oehb_datain(0) <= ap_return;
+	ap_ce <= not (validArray(0) and not nextReady);
+	nextReady <= oehb_ready(0);
+ob: entity work.OEHB(arch) generic map (1, 1, DATA_SIZE_OUT, DATA_SIZE_OUT)
+port map (
+	clk => clk, 
+	rst => rst, 
+	pValidArray(0)  => valid, 
+	nReadyArray(0) => nReadyArray(0),
+	validArray(0) => validArray(0), 
+	readyArray(0) => oehb_ready(0),   
+	dataInArray(0) => oehb_datain(0),
+	dataOutArray(0) => oehb_dataOut(0)
+);
 process(clk, rst)
 begin
 	if rst = '1' then
-		buf_in(1) <= (others => '0');
+		buf_in(3) <= (others => '0');
 	elsif rising_edge(clk) then
-		if pValidArray(1) = '1' then
-			buf_in(1) <= dataInArray(1);
+		if pValidArray(3) = '1' then
+			buf_in(3) <= dataInArray(3);
 		end if;
 	end if;
 end process;
-bR <= dataInArray(1) when pValidArray(1) = '1' else buf_in(1);
-readyArray(1) <= (not pValidArray(1)) or ap_ready;
+offset <= dataInArray(3) when pValidArray(3) = '1' else buf_in(3);
+readyArray(3) <= (not pValidArray(3)) or ap_ready;
 process(clk, rst)
 begin
 	if rst = '1' then
@@ -108,15 +127,15 @@ readyArray(0) <= (not pValidArray(0)) or ap_ready;
 process(clk, rst)
 begin
 	if rst = '1' then
-		buf_in(3) <= (others => '0');
+		buf_in(1) <= (others => '0');
 	elsif rising_edge(clk) then
-		if pValidArray(3) = '1' then
-			buf_in(3) <= dataInArray(3);
+		if pValidArray(1) = '1' then
+			buf_in(1) <= dataInArray(1);
 		end if;
 	end if;
 end process;
-offset <= dataInArray(3) when pValidArray(3) = '1' else buf_in(3);
-readyArray(3) <= (not pValidArray(3)) or ap_ready;
+bR <= dataInArray(1) when pValidArray(1) = '1' else buf_in(1);
+readyArray(1) <= (not pValidArray(1)) or ap_ready;
 process(clk, rst)
 begin
 	if rst = '1' then
@@ -153,6 +172,7 @@ port map (
 	C_d0 => C_d0,
 	C_q0 => C_q0,
 	a => a,
+	ap_return => ap_return,
 	ap_ce => ap_ce
 );
 

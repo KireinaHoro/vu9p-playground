@@ -32,6 +32,7 @@ port (
     C_d0 : OUT STD_LOGIC_VECTOR (31 downto 0);
     C_q0 : IN STD_LOGIC_VECTOR (31 downto 0);
     a : IN STD_LOGIC_VECTOR (31 downto 0);
+    ap_return : OUT STD_LOGIC_VECTOR (31 downto 0);
     ap_ce : IN STD_LOGIC );
 end;
 
@@ -264,6 +265,7 @@ begin
         end if; 
     end process;
 
+    ap_return <= ap_const_lv32_0;
     icmp_ln5_fu_103_p2 <= "1" when (signed(k_0_reg_94) < signed(bR)) else "0";
     k_fu_114_p2 <= std_logic_vector(signed(k_0_reg_94) + signed(ap_const_lv32_1));
     mul_ln9_fu_130_p1 <= a;
