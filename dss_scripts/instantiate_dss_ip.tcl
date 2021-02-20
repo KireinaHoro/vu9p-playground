@@ -134,7 +134,7 @@ proc create_dut {dutName dsMemdef ssMemdef upstream clk rst rstn intrOut gpioCtr
     # constant zero
     set zero_cell xlconstant_0
     create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 $zero_cell
-    set_property -dict [list CONFIG.CONST_VAL {0}] [get_bd_cells $zero_cell]
+    set_property -dict [list CONFIG.CONST_VAL {0} CONFIG.CONST_WIDTH {2}] [get_bd_cells $zero_cell]
     set zero [get_bd_pins $zero_cell/dout]
 
     create_bd_cell -type ip -vlnv xilinx.com:ip:xlconcat:2.1 $c_ctrl
@@ -144,9 +144,9 @@ proc create_dut {dutName dsMemdef ssMemdef upstream clk rst rstn intrOut gpioCtr
     set dut ${dutName}_0
     create_bd_cell -type ip -vlnv pkusc.org:user:${dutName}:1.0 $dut
     connect_bd_net [get_bd_pins $dut/start_ready] [get_bd_pins $c_ctrl/In0]
-    connect_bd_net [get_bd_pins $dut/end_out] [get_bd_pins $c_ctrl/In1]
-    connect_bd_net [get_bd_pins $dut/end_valid] [get_bd_pins $c_ctrl/In2]
-    connect_bd_net $zero [get_bd_pins $c_ctrl/In3]
+    connect_bd_net [get_bd_pins $dut/end_valid] [get_bd_pins $c_ctrl/In1]
+    # $dut/end_out is left unconnected on purpose
+    connect_bd_net $zero [get_bd_pins $c_ctrl/In2]
 
     connect_bd_net [get_bd_pins $s_si/Dout] [get_bd_pins $dut/start_in]
     connect_bd_net [get_bd_pins $s_sv/Dout] [get_bd_pins $dut/start_valid]
