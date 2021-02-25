@@ -1,0 +1,31 @@
+{
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 7.0.19  2019-03-26 bk=1.5019 VDI=41 GEI=35 GUI=JA:9.0 non-TLS-threadsafe
+#  -string -flagsOSRD
+preplace port S_AXI -pg 1 -lvl 0 -x -20 -y 130 -defaultsOSRD
+preplace port S_AUX -pg 1 -lvl 0 -x -20 -y 70 -defaultsOSRD
+preplace port S_AUX1 -pg 1 -lvl 0 -x -20 -y 230 -defaultsOSRD
+preplace port clk1 -pg 1 -lvl 0 -x -20 -y 160 -defaultsOSRD
+preplace port s_axi_aresetn -pg 1 -lvl 0 -x -20 -y 190 -defaultsOSRD
+preplace port sel -pg 1 -lvl 0 -x -20 -y 290 -defaultsOSRD
+preplace port rst1 -pg 1 -lvl 0 -x -20 -y 260 -defaultsOSRD
+preplace inst rc_A_ptr_sparseDemo_0 -pg 1 -lvl 1 -x 150 -y 170 -defaultsOSRD
+preplace inst bmg_A_ptr_sparseDemo_0 -pg 1 -lvl 3 -x 640 -y 100 -defaultsOSRD
+preplace inst mux_A_ptr0 -pg 1 -lvl 2 -x 420 -y 90 -defaultsOSRD
+preplace inst mux_A_ptr1 -pg 1 -lvl 2 -x 420 -y 270 -defaultsOSRD
+preplace netloc microblaze_0_Clk 1 0 2 10 90 300
+preplace netloc rst_clk_wiz_0_100M_peripheral_aresetn 1 0 1 NJ 190
+preplace netloc xlslice_sel_Dout 1 0 2 NJ 290 290
+preplace netloc rst_clk_wiz_0_100M_mb_reset 1 0 2 NJ 260 320
+preplace netloc sparseDemo_0_A_ptr0 1 0 2 NJ 70 NJ
+preplace netloc sparseDemo_0_A_ptr1 1 0 2 0J 250 NJ
+preplace netloc rc_A_ptr_sparseDemo_0_BRAM_PORTA 1 1 1 280 50n
+preplace netloc mux_A_ptr1_M 1 2 1 520 110n
+preplace netloc mux_A_ptr0_M 1 2 1 N 90
+preplace netloc rc_A_ptr_sparseDemo_0_BRAM_PORTB 1 1 1 310 180n
+preplace netloc axi_interconnect_0_M02_AXI 1 0 1 0J 130n
+levelinfo -pg 1 -20 150 420 640 770
+pagesize -pg 1 -db -bbox -sgen -150 -10 770 370
+"
+}
+

@@ -57,10 +57,10 @@ module design_1_xlconstant_0_2 (
   dout
 );
 
-output wire [0 : 0] dout;
+output wire [1 : 0] dout;
 
   xlconstant_v1_1_6_xlconstant #(
-    .CONST_WIDTH(1),
+    .CONST_WIDTH(2),
     .CONST_VAL('H0)
   ) inst (
     .dout(dout)

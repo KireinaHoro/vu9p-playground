@@ -1,7 +1,7 @@
 // Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2019.1_AR72944 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
-// Date        : Fri Feb 19 00:27:04 2021
+// Date        : Sat Feb 20 13:13:25 2021
 // Host        : TATE running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode synth_stub
 //               c:/Users/jsteward/work/vu9p-mb-playground/vu9p-mb-playground.srcs/sources_1/bd/design_1/ip/design_1_sparseDemo_0_0/design_1_sparseDemo_0_0_stub.v
@@ -23,7 +23,7 @@ module design_1_sparseDemo_0_0(B_id_address0, B_id_ce0, B_id_q0,
   A_val_address1, A_val_ce1, A_val_we1, A_val_dout1, A_val_din1, B_ptr_address0, B_ptr_ce0, 
   B_ptr_we0, B_ptr_dout0, B_ptr_din0, B_ptr_address1, B_ptr_ce1, B_ptr_we1, B_ptr_dout1, 
   B_ptr_din1)
-/* synthesis syn_black_box black_box_pad_pin="B_id_address0[10:0],B_id_ce0,B_id_q0[31:0],B_val_address0[10:0],B_val_ce0,B_val_q0[31:0],C_address0[13:0],C_ce0,C_we0,C_d0[31:0],C_q0[31:0],clk,rst,start_in[0:0],start_valid,start_ready,end_out[0:0],end_valid,end_ready,A_ptr_address0[31:0],A_ptr_ce0,A_ptr_we0,A_ptr_dout0[31:0],A_ptr_din0[31:0],A_ptr_address1[31:0],A_ptr_ce1,A_ptr_we1,A_ptr_dout1[31:0],A_ptr_din1[31:0],A_id_address0[31:0],A_id_ce0,A_id_we0,A_id_dout0[31:0],A_id_din0[31:0],A_id_address1[31:0],A_id_ce1,A_id_we1,A_id_dout1[31:0],A_id_din1[31:0],A_val_address0[31:0],A_val_ce0,A_val_we0,A_val_dout0[31:0],A_val_din0[31:0],A_val_address1[31:0],A_val_ce1,A_val_we1,A_val_dout1[31:0],A_val_din1[31:0],B_ptr_address0[31:0],B_ptr_ce0,B_ptr_we0,B_ptr_dout0[31:0],B_ptr_din0[31:0],B_ptr_address1[31:0],B_ptr_ce1,B_ptr_we1,B_ptr_dout1[31:0],B_ptr_din1[31:0]" */;
+/* synthesis syn_black_box black_box_pad_pin="B_id_address0[10:0],B_id_ce0,B_id_q0[31:0],B_val_address0[10:0],B_val_ce0,B_val_q0[31:0],C_address0[13:0],C_ce0,C_we0,C_d0[31:0],C_q0[31:0],clk,rst,start_in[0:0],start_valid,start_ready,end_out[31:0],end_valid,end_ready,A_ptr_address0[31:0],A_ptr_ce0,A_ptr_we0,A_ptr_dout0[31:0],A_ptr_din0[31:0],A_ptr_address1[31:0],A_ptr_ce1,A_ptr_we1,A_ptr_dout1[31:0],A_ptr_din1[31:0],A_id_address0[31:0],A_id_ce0,A_id_we0,A_id_dout0[31:0],A_id_din0[31:0],A_id_address1[31:0],A_id_ce1,A_id_we1,A_id_dout1[31:0],A_id_din1[31:0],A_val_address0[31:0],A_val_ce0,A_val_we0,A_val_dout0[31:0],A_val_din0[31:0],A_val_address1[31:0],A_val_ce1,A_val_we1,A_val_dout1[31:0],A_val_din1[31:0],B_ptr_address0[31:0],B_ptr_ce0,B_ptr_we0,B_ptr_dout0[31:0],B_ptr_din0[31:0],B_ptr_address1[31:0],B_ptr_ce1,B_ptr_we1,B_ptr_dout1[31:0],B_ptr_din1[31:0]" */;
   output [10:0]B_id_address0;
   output B_id_ce0;
   input [31:0]B_id_q0;
@@ -40,7 +40,7 @@ module design_1_sparseDemo_0_0(B_id_address0, B_id_ce0, B_id_q0,
   input [0:0]start_in;
   input start_valid;
   output start_ready;
-  output [0:0]end_out;
+  output [31:0]end_out;
   output end_valid;
   input end_ready;
   output [31:0]A_ptr_address0;

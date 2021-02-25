@@ -1130,6 +1130,12 @@
       }
     },
     "interface_nets": {
+      "s_axis_txc_1": {
+        "interface_ports": [
+          "s_axis_txc",
+          "eth_buf/AXI_STR_TXC"
+        ]
+      },
       "s_axi_1": {
         "interface_ports": [
           "s_axi",
@@ -1140,18 +1146,6 @@
         "interface_ports": [
           "m_axis_rxd",
           "eth_buf/AXI_STR_RXD"
-        ]
-      },
-      "s_axis_txc_1": {
-        "interface_ports": [
-          "s_axis_txc",
-          "eth_buf/AXI_STR_TXC"
-        ]
-      },
-      "lvds_clk_1": {
-        "interface_ports": [
-          "lvds_clk",
-          "pcs_pma/refclk625_in"
         ]
       },
       "eth_buf_AXI_STR_RXS": {
@@ -1166,6 +1160,12 @@
           "pcs_pma/gmii_pcs_pma_0"
         ]
       },
+      "pcs_pma_sgmii_0": {
+        "interface_ports": [
+          "sgmii",
+          "pcs_pma/sgmii_0"
+        ]
+      },
       "eth_buf_TX_AXIS_MAC": {
         "interface_ports": [
           "eth_buf/TX_AXIS_MAC",
@@ -1178,28 +1178,28 @@
           "mac/m_axis_rx"
         ]
       },
+      "s_axis_txd_1": {
+        "interface_ports": [
+          "s_axis_txd",
+          "eth_buf/AXI_STR_TXD"
+        ]
+      },
+      "lvds_clk_1": {
+        "interface_ports": [
+          "lvds_clk",
+          "pcs_pma/refclk625_in"
+        ]
+      },
       "pcs_pma_ext_mdio_pcs_pma_0": {
         "interface_ports": [
           "mdio",
           "pcs_pma/ext_mdio_pcs_pma_0"
         ]
       },
-      "pcs_pma_sgmii_0": {
-        "interface_ports": [
-          "sgmii",
-          "pcs_pma/sgmii_0"
-        ]
-      },
       "eth_buf_S_AXI_2TEMAC": {
         "interface_ports": [
           "eth_buf/S_AXI_2TEMAC",
           "mac/s_axi"
-        ]
-      },
-      "s_axis_txd_1": {
-        "interface_ports": [
-          "s_axis_txd",
-          "eth_buf/AXI_STR_TXD"
         ]
       }
     },

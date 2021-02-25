@@ -48,7 +48,7 @@
 
 
 // IP VLNV: pkusc.org:user:sparseDemo:1.0
-// IP Revision: 4
+// IP Revision: 5
 
 (* X_CORE_INFO = "sparseDemo,Vivado 2019.1_AR72944" *)
 (* CHECK_LICENSE_TYPE = "design_1_sparseDemo_0_0,sparseDemo,{}" *)
@@ -150,7 +150,7 @@ input wire rst;
 input wire [0 : 0] start_in;
 input wire start_valid;
 output wire start_ready;
-output wire [0 : 0] end_out;
+output wire [31 : 0] end_out;
 output wire end_valid;
 input wire end_ready;
 (* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 A_ptr0 ADDR" *)

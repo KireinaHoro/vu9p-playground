@@ -1,64 +1,63 @@
 {
    "ExpandedHierarchyInLayout":"",
-   "guistr":"# # String gsaved with Nlview 7.0.19  2019-03-26 bk=1.5019 VDI=41 GEI=35 GUI=JA:9.0 non-TLS
+   "guistr":"# # String gsaved with Nlview 7.0.19  2019-03-26 bk=1.5019 VDI=41 GEI=35 GUI=JA:9.0 non-TLS-threadsafe
 #  -string -flagsOSRD
 preplace port S00_AXI -pg 1 -lvl 0 -x -10 -y 310 -defaultsOSRD
 preplace port s_axi_aclk -pg 1 -lvl 0 -x -10 -y 340 -defaultsOSRD
 preplace port rst1 -pg 1 -lvl 0 -x -10 -y 840 -defaultsOSRD
 preplace port s_axi_aresetn -pg 1 -lvl 0 -x -10 -y 370 -defaultsOSRD
-preplace port ip2intc_irpt -pg 1 -lvl 4 -x 1040 -y 700 -defaultsOSRD
-preplace inst axi_interconnect_0 -pg 1 -lvl 2 -x 390 -y 530 -defaultsOSRD
-preplace inst xlconstant_0 -pg 1 -lvl 2 -x 390 -y 1490 -defaultsOSRD
-preplace inst ctrl_sparseDemo -pg 1 -lvl 3 -x 870 -y 670 -defaultsOSRD
-preplace inst xlslice_sel -pg 1 -lvl 2 -x 390 -y 200 -defaultsOSRD
+preplace port ip2intc_irpt -pg 1 -lvl 4 -x 1090 -y 700 -defaultsOSRD
+preplace inst axi_interconnect_0 -pg 1 -lvl 2 -x 400 -y 530 -defaultsOSRD
+preplace inst xlconstant_0 -pg 1 -lvl 2 -x 400 -y 1490 -defaultsOSRD
+preplace inst ctrl_sparseDemo -pg 1 -lvl 3 -x 890 -y 670 -defaultsOSRD
+preplace inst xlslice_sel -pg 1 -lvl 2 -x 400 -y 200 -defaultsOSRD
 preplace inst xlslice_start_valid -pg 1 -lvl 1 -x 120 -y 1000 -defaultsOSRD
-preplace inst xlconcat_ctrl -pg 1 -lvl 3 -x 870 -y 1460 -defaultsOSRD
+preplace inst xlconcat_ctrl -pg 1 -lvl 3 -x 890 -y 1460 -defaultsOSRD
 preplace inst xlslice_end_ready -pg 1 -lvl 1 -x 120 -y 1100 -defaultsOSRD
 preplace inst xlslice_start_in -pg 1 -lvl 1 -x 120 -y 900 -defaultsOSRD
-preplace inst bram_A_id -pg 1 -lvl 3 -x 870 -y 490 -defaultsOSRD
-preplace inst bram_A_ptr -pg 1 -lvl 3 -x 870 -y 880 -defaultsOSRD
-preplace inst bram_A_val -pg 1 -lvl 3 -x 870 -y 1650 -defaultsOSRD
-preplace inst bram_B_ptr -pg 1 -lvl 3 -x 870 -y 1280 -defaultsOSRD
-preplace inst bram_B_id -pg 1 -lvl 3 -x 870 -y 100 -defaultsOSRD
-preplace inst bram_B_val -pg 1 -lvl 3 -x 870 -y 290 -defaultsOSRD
-preplace inst bram_C -pg 1 -lvl 3 -x 870 -y 1080 -defaultsOSRD
-preplace inst sparseDemo_0 -pg 1 -lvl 2 -x 390 -y 980 -defaultsOSRD
+preplace inst bram_A_id -pg 1 -lvl 3 -x 890 -y 490 -defaultsOSRD
+preplace inst bram_A_ptr -pg 1 -lvl 3 -x 890 -y 880 -defaultsOSRD
+preplace inst bram_A_val -pg 1 -lvl 3 -x 890 -y 1650 -defaultsOSRD
+preplace inst bram_B_ptr -pg 1 -lvl 3 -x 890 -y 1280 -defaultsOSRD
+preplace inst bram_B_id -pg 1 -lvl 3 -x 890 -y 100 -defaultsOSRD
+preplace inst bram_B_val -pg 1 -lvl 3 -x 890 -y 290 -defaultsOSRD
+preplace inst bram_C -pg 1 -lvl 3 -x 890 -y 1080 -defaultsOSRD
+preplace inst sparseDemo_0 -pg 1 -lvl 2 -x 400 -y 980 -defaultsOSRD
 preplace netloc xlslice_start_in_Dout 1 1 1 220J 900n
 preplace netloc xlslice_start_valid_Dout 1 1 1 NJ 1000
 preplace netloc sparseDemo_0_start_ready 1 2 1 560 1070n
-preplace netloc sparseDemo_0_end_out 1 2 1 540 1090n
-preplace netloc sparseDemo_0_end_valid 1 2 1 530 1110n
 preplace netloc xlslice_end_ready_Dout 1 1 1 230J 1020n
-preplace netloc xlconstant_0_dout 1 2 1 NJ 1490
-preplace netloc xlconcat_ctrl_dout 1 3 1 1010 660n
-preplace netloc ctrl_sparseDemo_gpio_io_o 1 0 4 10 200 240 140 730J 760 1000
-preplace netloc xlslice_sel_Dout 1 2 1 650 130n
-preplace netloc microblaze_0_Clk 1 0 3 NJ 340 230 260 630
-preplace netloc rst_clk_wiz_0_100M_mb_reset 1 0 3 NJ 840 240 790 660
-preplace netloc rst_clk_wiz_0_100M_peripheral_aresetn 1 0 3 NJ 370 240 270 640
+preplace netloc xlconcat_ctrl_dout 1 3 1 1030 660n
+preplace netloc ctrl_sparseDemo_gpio_io_o 1 0 4 10 200 240 140 730J 760 1020
+preplace netloc xlslice_sel_Dout 1 2 1 660 130n
+preplace netloc microblaze_0_Clk 1 0 3 NJ 340 230 260 640
+preplace netloc rst_clk_wiz_0_100M_mb_reset 1 0 3 NJ 840 240 790 670
+preplace netloc rst_clk_wiz_0_100M_peripheral_aresetn 1 0 3 NJ 370 240 270 650
 preplace netloc ctrl_sparseDemo_ip2intc_irpt 1 3 1 N 700
-preplace netloc sparseDemo_0_A_id0 1 2 1 620 450n
-preplace netloc sparseDemo_0_A_id1 1 2 1 670 470n
+preplace netloc sparseDemo_0_end_valid 1 2 1 540 1110n
+preplace netloc xlconstant_0_dout 1 2 1 730 1480n
 preplace netloc sparseDemo_0_A_ptr0 1 2 1 720 840n
+preplace netloc axi_interconnect_0_M02_AXI 1 2 1 710 500n
 preplace netloc sparseDemo_0_A_ptr1 1 2 1 730 860n
-preplace netloc sparseDemo_0_A_val0 1 2 1 570 930n
+preplace netloc sparseDemo_0_B_val0 1 2 1 680 260n
+preplace netloc axi_interconnect_0_M06_AXI 1 2 1 590 240n
+preplace netloc axi_interconnect_0_M01_AXI 1 2 1 610 430n
+preplace netloc sparseDemo_0_A_id0 1 2 1 620 450n
+preplace netloc sparseDemo_0_A_id1 1 2 1 630 470n
+preplace netloc axi_interconnect_0_M05_AXI 1 2 1 550 50n
 preplace netloc sparseDemo_0_A_val1 1 2 1 550 950n
+preplace netloc axi_interconnect_0_M03_AXI 1 2 1 610 520n
+preplace netloc sparseDemo_0_A_val0 1 2 1 570 930n
+preplace netloc axi_interconnect_0_M04_AXI 1 2 1 700 540n
 preplace netloc sparseDemo_0_B_ptr0 1 2 1 600 970n
 preplace netloc sparseDemo_0_B_ptr1 1 2 1 590 990n
-preplace netloc sparseDemo_0_B_id0 1 2 1 580 70n
-preplace netloc sparseDemo_0_B_val0 1 2 1 680 260n
-preplace netloc sparseDemo_0_C0 1 2 1 N 1050
 preplace netloc axi_interconnect_0_M00_AXI 1 2 1 720 460n
-preplace netloc axi_interconnect_0_M01_AXI 1 2 1 610 430n
-preplace netloc axi_interconnect_0_M02_AXI 1 2 1 710 500n
-preplace netloc axi_interconnect_0_M03_AXI 1 2 1 610 520n
-preplace netloc axi_interconnect_0_M04_AXI 1 2 1 700 540n
-preplace netloc axi_interconnect_0_M05_AXI 1 2 1 550 50n
-preplace netloc axi_interconnect_0_M06_AXI 1 2 1 590 240n
+preplace netloc sparseDemo_0_B_id0 1 2 1 580 70n
 preplace netloc axi_interconnect_0_M07_AXI 1 2 1 690 600n
+preplace netloc sparseDemo_0_C0 1 2 1 N 1050
 preplace netloc microblaze_0_axi_periph_M10_AXI 1 0 2 NJ 310 220J
-levelinfo -pg 1 -10 120 390 870 1040
-pagesize -pg 1 -db -bbox -sgen -140 -10 1160 1760
+levelinfo -pg 1 -10 120 400 890 1090
+pagesize -pg 1 -db -bbox -sgen -140 -10 1210 1950
 "
 }
-
+0

@@ -1,12 +1,12 @@
 WORKFLOW_OPERATION simulation,dialog;
 
-DEFINE_MEMORY_TYPE microblaze_0_local_memory_lmb_bram_64K_2_MEM_DEVICE [0x00010000] 32;
+DEFINE_MEMORY_TYPE microblaze_0_local_memory_lmb_bram_64K_1_MEM_DEVICE [0x00010000] 32;
 
 ADDRESS_MAP microblaze_0 MICROBLAZE-LE 100 microblaze_0
-   ADDRESS_SPACE microblaze_0_local_memory_lmb_bram_64K_2_ADDR_SPACE microblaze_0_local_memory_lmb_bram_64K_2_MEM_DEVICE ECC_COMBINED_FOR_SIMULATION [0x00000000:0x0000FFFF] microblaze_0_local_memory/dlmb_bram_if_cntlr
+   ADDRESS_SPACE microblaze_0_local_memory_lmb_bram_64K_1_ADDR_SPACE microblaze_0_local_memory_lmb_bram_64K_1_MEM_DEVICE ECC_COMBINED_FOR_SIMULATION [0x00000000:0x0000FFFF] microblaze_0_local_memory/dlmb_bram_if_cntlr
      BUS_BLOCK
-      microblaze_0_local_memory_lmb_bram_64K_2_BUS_BLK [39:8] INPUT = "design_1_lmb_bram_0.mem";
-      microblaze_0_local_memory_lmb_bram_64K_2_BUS_BLK_ECC ECCH32-7 [7:0];
+      microblaze_0_local_memory_lmb_bram_64K_1_BUS_BLK [39:8] INPUT = "design_1_lmb_bram_0.mem";
+      microblaze_0_local_memory_lmb_bram_64K_1_BUS_BLK_ECC ECCH32-7 [7:0];
      END_BUS_BLOCK;
    END_ADDRESS_SPACE;
 END_ADDRESS_MAP;

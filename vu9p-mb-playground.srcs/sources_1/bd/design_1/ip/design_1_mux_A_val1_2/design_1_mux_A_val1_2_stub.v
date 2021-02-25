@@ -1,11 +1,11 @@
 // Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2019.1_AR72944 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
-// Date        : Tue Feb 16 20:55:06 2021
+// Date        : Wed Feb 24 18:45:23 2021
 // Host        : TATE running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode synth_stub -rename_top design_1_mux_A_val1_2 -prefix
-//               design_1_mux_A_val1_2_ design_1_bram_mux_A_id0_1_stub.v
-// Design      : design_1_bram_mux_A_id0_1
+//               design_1_mux_A_val1_2_ design_1_mux_A_val0_1_stub.v
+// Design      : design_1_mux_A_val0_1
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xcvu9p-flga2104-2L-e
 // --------------------------------------------------------------------------------
